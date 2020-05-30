@@ -25,6 +25,7 @@ const RedCheckbox = withStyles({
 })((props) => <Checkbox color='default' {...props} />);
 
 const Security = ({ handlePasswordModal }) => {
+  //ToDo: TODO
   const [actualPass, setActualPass] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -55,34 +56,34 @@ const Security = ({ handlePasswordModal }) => {
     };
   }, [repeatNewPassword, actualPass, newPassword]);
 
-  useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      getPassword().then((res) => {
-        setActualPass(res.data);
-      });
-      return () => {
-        mounted = false;
-        clearTimeout(handleSubmit);
-      };
-    }
-  }, []);
+  // useEffect(() => {
+  //   let mounted = true;
+  //   if (mounted) {
+  //     getPassword().then((res) => {
+  //       setActualPass(res.data);
+  //     });
+  //     return () => {
+  //       mounted = false;
+  //       clearTimeout(handleSubmit);
+  //     };
+  //   }
+  // }, []);
 
   const handleSubmit = () => {
-    renewPassword(oldPassword, newPassword, actualPass)
-      .then(() => {
-        setMessage("Datos Actualizados");
-        setType("success");
-        openSnackBar();
-      })
-      .catch(() => {
-        setMessage("Inténtalo de nuevo");
-        setType("error");
-        openSnackBar();
-      });
-    setTimeout(() => {
-      handlePasswordModal();
-    }, 2500);
+  //   renewPassword(oldPassword, newPassword, actualPass)
+  //     .then(() => {
+  //       setMessage("Datos Actualizados");
+  //       setType("success");
+  //       openSnackBar();
+  //     })
+  //     .catch(() => {
+  //       setMessage("Inténtalo de nuevo");
+  //       setType("error");
+  //       openSnackBar();
+  //     });
+  //   setTimeout(() => {
+  //     handlePasswordModal();
+  //   }, 2500);
   };
 
   const step1 = () => {

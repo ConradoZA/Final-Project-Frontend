@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { API_URL } from "../../api-config";
+import { API_URL_IMAGES } from "../../api-config";
 import SnackBar from "../../Components/SnackBar";
 import PhotoModal from "./PhotoModal";
 import { connect } from "react-redux";
@@ -21,12 +21,13 @@ import CancelScheduleSendIcon from "@material-ui/icons/CancelScheduleSend";
 import SendIcon from "@material-ui/icons/Send";
 import Security from "./Security";
 
-const Profile = ({ user }) => {
+const Profile = (props) => {
+  const user = props.user.user;
   const [openPhoto, setOpenPhoto] = useState(false);
   const [openSecurity, setOpenSecurity] = useState(false);
   const [checkSwitch, setCheckSwitch] = useState(false);
-  const [name, setName] = useState(user.user.name);
-  const [email, setEmail] = useState(user.user.email);
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
   const [inputName, setInputName] = useState(true);
   const [inputMail, setInputMail] = useState(true);
   const [open, setOpen] = useState(false);
@@ -64,12 +65,12 @@ const Profile = ({ user }) => {
       email,
     };
     updateUser(userProfile)
-      .then((res) => {
+      .then((_res) => {
         setMessage("Datos Actualizados");
         setType("success");
         openSnackBar();
       })
-      .catch(() => {
+      .catch((_error) => {
         setMessage("Inténtalo de nuevo");
         setType("error");
         openSnackBar();
@@ -84,16 +85,16 @@ const Profile = ({ user }) => {
 
   return (
     <div>
-      {user.user && (
+      {user && (
         <>
           <Paper style={{ width: "80vw", margin: "3% auto" }}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <img
                 src={
-                  user.user.image.includes("http")
-                    ? user.user.image
-                    : user.user.image
-                    ? API_URL + "/uploads/" + user.user.image
+                  user.image_path.includes("http")
+                    ? user.image_path
+                    : user.image_path
+                    ? API_URL_IMAGES + user.image_path
                     : profile
                 }
                 alt=''
@@ -192,7 +193,10 @@ const Profile = ({ user }) => {
             </div>
           </Paper>
           <Dialog open={openPhoto} onClose={handlePhotoModal} fullWidth>
-            <PhotoModal image={user.user.image} handlePhotoModal={handlePhotoModal} />
+            <PhotoModal
+              image={user.image_path}
+              handlePhotoModal={handlePhotoModal}
+            />
           </Dialog>
           <SnackBar type={type} open={open} message={message} />
           <Dialog open={openSecurity} onClose={handleSecurityModal} fullWidth>

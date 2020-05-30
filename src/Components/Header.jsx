@@ -73,11 +73,13 @@ const Header = (props) => {
   };
   const handleLogoutMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
-    logout().finally(() => window.location.assign("/"));
+    logout()
+    // .finally(() => window.location.assign("/"));
   };
   const handleLogoutMenuClose = () => {
     setAnchorEl(null);
-    logout().finally(() => window.location.assign("/"));
+    logout()
+    // .finally(() => window.location.assign("/"));
   };
 
   const handleMenuClose = () => {

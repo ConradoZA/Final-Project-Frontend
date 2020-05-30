@@ -5,6 +5,7 @@ import { recoverPassword } from "../../Redux/actions/users";
 import SnackBar from "../../Components/SnackBar";
 
 const Recover = (props) => {
+  //ToDo: TODO
   const [newPassword, setNewPassword] = useState("");
   const [reNewPassword, setReNewPassword] = useState("");
   const token = props.match.params.passToken;
@@ -37,7 +38,7 @@ const Recover = (props) => {
 
   const handleSubmit = () => {
     recoverPassword(token, newPassword)
-      .then(() => {
+      .then((_res) => {
         setMessage("Contraseña cambiada con éxito");
         setType("success");
         openSnackBar();
@@ -45,7 +46,7 @@ const Recover = (props) => {
           props.history.push("/login");
         }, 2500);
       })
-      .catch(() => {
+      .catch((_error) => {
         setMessage("Vuelve a intentarlo");
         setType("error");
         openSnackBar();
