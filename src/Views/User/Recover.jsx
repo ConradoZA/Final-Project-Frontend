@@ -5,13 +5,12 @@ import { recoverPassword } from "../../Redux/actions/users";
 import SnackBar from "../../Components/SnackBar";
 
 const Recover = (props) => {
-  //ToDo: TODO
   const [newPassword, setNewPassword] = useState("");
   const [reNewPassword, setReNewPassword] = useState("");
-  const token = props.match.params.passToken;
   const [open, setOpen] = useState(false);
   const [type, setType] = useState("info");
   const [message, setMessage] = useState("");
+  const token = props.match.params.passToken;
 
   useEffect(() => {
       ValidatorForm.addValidationRule("isPasswordMatch", (value) => {

@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = (props) => {
+const Header = ({user}) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -73,13 +73,11 @@ const Header = (props) => {
   };
   const handleLogoutMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
-    logout()
-    // .finally(() => window.location.assign("/"));
+    logout().finally(() => window.location.assign("/"));
   };
   const handleLogoutMenuClose = () => {
     setAnchorEl(null);
-    logout()
-    // .finally(() => window.location.assign("/"));
+    logout().finally(() => window.location.assign("/"));
   };
 
   const handleMenuClose = () => {
@@ -117,7 +115,7 @@ const Header = (props) => {
           <Link href='/checkers/rules' style={{ all: "unset" }}>
             <MenuItem>Reglas</MenuItem>
           </Link>
-          {props.user ? (
+          {user ? (
             <Link href='/checkers' style={{ all: "unset" }}>
               <MenuItem style={{ fontWeight: "bold" }}>Jugar</MenuItem>
             </Link>
@@ -136,7 +134,7 @@ const Header = (props) => {
             <MenuItem>Reglas</MenuItem>
           </Link>
           {/* ToDo: poner el link adecuado */}
-          {props.user ? (
+          {user ? (
             <Link href='#' style={{ all: "unset" }}>
               <MenuItem style={{ fontWeight: "bold" }}>Jugar</MenuItem>
             </Link>
@@ -244,7 +242,7 @@ const Header = (props) => {
             Play 2 Games
           </Typography>
           <div className={classes.sectionDesktop}>
-            {props.user ? (
+            {user ? (
               <IconButton edge='end' color='inherit'>
                 <Badge badgeContent={4} color='error'>
                   <SmsIcon />
@@ -256,7 +254,7 @@ const Header = (props) => {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {props.user ? (
+            {user ? (
               <div>
                 <Button variant='outlined' onClick={handleLogoutMenuClose}>
                   Salir
@@ -277,7 +275,7 @@ const Header = (props) => {
               <></>
             )}
           </div>
-          {props.user ? (
+          {user ? (
             <div className={classes.sectionMobile}>
               <IconButton
                 aria-controls={mobileMenuId}

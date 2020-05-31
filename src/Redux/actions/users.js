@@ -54,7 +54,7 @@ export const getUserDetail = async () => {
 
 export const logout = async () => {
     try {
-        await axios.get(API_URL_2 + 'users/logout', {
+        const res = await axios.get(API_URL_2 + 'users/logout', {
             headers: {
                 Authorization: HEADER
             }
@@ -120,47 +120,20 @@ export const deleteUser = async () => {
 
 }
 
-//ToDo: Asegurarme de que no necesito eso
-// export const getPassword = async () => {
-//     try {
-//         const res = await axios.get(API_URL_2 + 'users/recover/get', {
-//             headers: {
-//                       Authorization: HEADER
-//             }
-//         });
-//         return res;
-//     } catch (error) {
-//         console.error(error)
-//     }
-// }
-//ToDo: modificar el componente para enviar también el email del usuario
-export const sendRecoverEmail = async (name, email) => {
+export const sendRecoverEmail = async (email) => {
     try {
-        const res = await axios.post(API_URL_2 + 'users/recover-mail', { name, email })
-        return res.data;
+        const res = await axios.post(API_URL_2 + 'users/password/forgotten', {email})
+        return res;
     } catch (error) {
         console.error(error)
     }
 }
-//ToDo: pasarlo a update
-// export const renewPassword = async (oldPassword, newPassword, actualPass) => {
-//     try {
-//         const res = await axios.post(API_URL_2 + 'users/recover/new', { oldPassword, newPassword , actualPass}, {
-//             headers: {
-//                                 Authorization: HEADER
-//             }
-//         });
-//         return res;
-//     } catch (error) {
-//         console.error(error)
-//     }
-// }
 
-//ToDo: Todavía no está en el backend el cambiar una contraseña olvidada, solo enviar mail
 export const recoverPassword = async (token, password) => {
     try {
-        const res = await axios.post(API_URL_2 + 'users/recover/password', { token, password });
-        return res.data;
+        const res = await axios.post(API_URL_2 + 'users/password/reset', { token, password });
+        console.log(res.data)
+        return res;
     } catch (error) {
         console.error(error)
     }

@@ -41,7 +41,6 @@ const Login = (props) => {
   const classes = useStyles();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
   const [sendMail, setSendMail] = useState(false);
   const [open, setOpen] = useState(false);
   const [type, setType] = useState("info");
@@ -62,17 +61,17 @@ const Login = (props) => {
 
   const handleSendMailPassword = (event) => {
     event.preventDefault();
-    sendRecoverEmail(name)
+    sendRecoverEmail(email)
       .then((res) => {
         if (!res) {
           setMessage("No existe ese usuario");
           setType("error");
         } else {
+          console.log(res.data);
           setMessage("Revisa tu cuenta de correo");
           setType("success");
         }
         openSnackBar();
-        setName("");
         setTimeout(() => {
           handleSendMail();
         }, 2500);
@@ -182,21 +181,20 @@ const Login = (props) => {
               alignItems: "center",
             }}>
             <p>
-              Por favor, escribe tu nombre de usuario.
+              Por favor, escribe el mail asociado a tu usuario.
               <br />
-              Enviaremos a tu dirección de e-mail un correo con un enlace, para que
-              puedas crear una nueva contraseña.
+              Te enviaremos un correo con un enlace para que puedas crear una nueva contraseña.
             </p>
             <br />
             <TextField
               variant='outlined'
-              name='name'
+              name='email'
               onChange={(event) => {
-                setName(event.target.value);
+                setEmail(event.target.value);
               }}
-              value={name}
+              value={email}
               required
-              label='Nombre de usuario'
+              label='Tu dirección de e-mail'
             />
             <br />
             <Button type='submit' variant='contained' color='primary'>

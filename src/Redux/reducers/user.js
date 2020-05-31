@@ -4,7 +4,7 @@ const userReducer = (state = {}, action) => {
         case 'DELETE_USER':
             return {
                 ...state,
-                user: undefined
+                user: false
             }
         case 'LOGIN':
         case 'GET_DETAIL':

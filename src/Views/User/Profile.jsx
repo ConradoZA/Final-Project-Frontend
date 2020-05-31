@@ -12,6 +12,7 @@ import {
   InputAdornment,
   FormControlLabel,
   Switch,
+  Link,
 } from "@material-ui/core";
 import profile from "../../assets/imgs/profile.jpg";
 import { updateUser } from "../../Redux/actions/users";
@@ -23,6 +24,7 @@ import Security from "./Security";
 
 const Profile = (props) => {
   const user = props.user.user;
+  console.log(user);
   const [openPhoto, setOpenPhoto] = useState(false);
   const [openSecurity, setOpenSecurity] = useState(false);
   const [checkSwitch, setCheckSwitch] = useState(false);
@@ -58,6 +60,20 @@ const Profile = (props) => {
   const handleInputMail = () => {
     setInputMail(!inputMail);
   };
+  const handleConfirmMail=()=>{
+    console.log(user.email)
+    //ToDo: hacerlo....
+    // .then((_res) => {
+    //   setMessage("Te hemos enviado un e-mail");
+    //   setType("info");
+    //   openSnackBar();
+    // })
+    // .catch((_error) => {
+    //   setMessage("Inténtalo de nuevo");
+    //   setType("error");
+    //   openSnackBar();
+    // });
+  }
 
   const handleEdit = () => {
     const userProfile = {
@@ -147,34 +163,49 @@ const Profile = (props) => {
                 <Divider />
                 <br />
                 <InputLabel>E-mail</InputLabel>
-                <Input
-                  disabled={inputMail}
-                  margin='dense'
-                  value={email}
-                  onChange={(event) => {
-                    setEmail(event.target.value);
-                  }}
-                  startAdornment={
-                    <InputAdornment>
-                      <EditIcon
-                        onClick={handleInputMail}
-                        style={{ cursor: "pointer" }}
-                      />
-                    </InputAdornment>
-                  }
-                  endAdornment={
-                    <InputAdornment>
-                      {inputMail ? (
-                        <CancelScheduleSendIcon style={{ cursor: "pointer" }} />
-                      ) : (
-                        <SendIcon
-                          onClick={handleEdit}
+                {user.email_verified ? (
+                  <Input disabled margin='dense' value={email} />
+                ) : (
+                  <Input
+                    disabled={inputMail}
+                    margin='dense'
+                    value={email}
+                    onChange={(event) => {
+                      setEmail(event.target.value);
+                    }}
+                    startAdornment={
+                      <InputAdornment>
+                        <EditIcon
+                          onClick={handleInputMail}
                           style={{ cursor: "pointer" }}
                         />
-                      )}
-                    </InputAdornment>
-                  }
-                />
+                      </InputAdornment>
+                    }
+                    endAdornment={
+                      <InputAdornment>
+                        {inputMail ? (
+                          <CancelScheduleSendIcon style={{ cursor: "pointer" }} />
+                        ) : (
+                          <SendIcon
+                            onClick={handleEdit}
+                            style={{ cursor: "pointer" }}
+                          />
+                        )}
+                      </InputAdornment>
+                    }
+                  />
+                )}
+                {user.email_verified ? (
+                  ""
+                ) : (
+                  <Link
+                    style={{ color: "blue", cursor: "pointer" }}
+                    onClick={handleConfirmMail}
+                    variant='body2'>
+                    Confirmar e-mail
+                  </Link>
+                )}
+
                 <br />
                 <Divider />
                 <br />
