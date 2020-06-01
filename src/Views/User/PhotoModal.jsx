@@ -30,8 +30,9 @@ const PhotoModal = ({ image, handlePhotoModal }) => {
     }, 2500);
   };
 
-  const handleEdit = () => {
-    const user = { image: direction };
+  const handleEdit = (event) => {
+    event.preventDefault();
+    const user = { image_path: direction };
     updateUser(user)
       .then((_res) => {
         setMessage("Datos Actualizados");
@@ -45,7 +46,7 @@ const PhotoModal = ({ image, handlePhotoModal }) => {
       });
     setTimeout(() => {
       handlePhotoModal();
-    }, 2500);
+    }, 2000);
   };
 
   const handleUpload = (event) => {

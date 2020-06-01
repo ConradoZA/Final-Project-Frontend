@@ -15,7 +15,7 @@ import {
   Link,
 } from "@material-ui/core";
 import profile from "../../assets/imgs/profile.jpg";
-import { updateUser } from "../../Redux/actions/users";
+import { updateUser, confirmMail } from "../../Redux/actions/users";
 
 import EditIcon from "@material-ui/icons/Edit";
 import CancelScheduleSendIcon from "@material-ui/icons/CancelScheduleSend";
@@ -24,7 +24,6 @@ import Security from "./Security";
 
 const Profile = (props) => {
   const user = props.user.user;
-  console.log(user);
   const [openPhoto, setOpenPhoto] = useState(false);
   const [openSecurity, setOpenSecurity] = useState(false);
   const [checkSwitch, setCheckSwitch] = useState(false);
@@ -60,20 +59,19 @@ const Profile = (props) => {
   const handleInputMail = () => {
     setInputMail(!inputMail);
   };
-  const handleConfirmMail=()=>{
-    console.log(user.email)
-    //ToDo: hacerlo....
-    // .then((_res) => {
-    //   setMessage("Te hemos enviado un e-mail");
-    //   setType("info");
-    //   openSnackBar();
-    // })
-    // .catch((_error) => {
-    //   setMessage("Inténtalo de nuevo");
-    //   setType("error");
-    //   openSnackBar();
-    // });
-  }
+  const handleConfirmMail = () => {
+    confirmMail()
+      .then((_res) => {
+        setMessage("Te hemos enviado un e-mail");
+        setType("info");
+        openSnackBar();
+      })
+      .catch((_error) => {
+        setMessage("Inténtalo de nuevo");
+        setType("error");
+        openSnackBar();
+      });
+  };
 
   const handleEdit = () => {
     const userProfile = {

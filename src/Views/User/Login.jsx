@@ -67,7 +67,6 @@ const Login = (props) => {
           setMessage("No existe ese usuario");
           setType("error");
         } else {
-          console.log(res.data);
           setMessage("Revisa tu cuenta de correo");
           setType("success");
         }

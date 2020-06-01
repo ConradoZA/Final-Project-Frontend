@@ -54,7 +54,7 @@ export const getUserDetail = async () => {
 
 export const logout = async () => {
     try {
-        const res = await axios.get(API_URL_2 + 'users/logout', {
+        await axios.get(API_URL_2 + 'users/logout', {
             headers: {
                 Authorization: HEADER
             }
@@ -122,7 +122,7 @@ export const deleteUser = async () => {
 
 export const sendRecoverEmail = async (email) => {
     try {
-        const res = await axios.post(API_URL_2 + 'users/password/forgotten', {email})
+        const res = await axios.post(API_URL_2 + 'users/password/forgotten', { email })
         return res;
     } catch (error) {
         console.error(error)
@@ -132,12 +132,38 @@ export const sendRecoverEmail = async (email) => {
 export const recoverPassword = async (token, password) => {
     try {
         const res = await axios.post(API_URL_2 + 'users/password/reset', { token, password });
-        console.log(res.data)
         return res;
     } catch (error) {
         console.error(error)
     }
 }
 
-//ToDo: Falta mandar correo de confirmar mail
-//ToDo: Falta confirmar dirección de correo confirmada
+export const confirmMail = async () => {
+    try {
+        const res = await axios.get(API_URL_2 + 'users/confirm-mail', {
+            headers: {
+                Authorization: HEADER
+            }
+        })
+        return res;
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const confirmedEmail = async (token) => {
+    try {
+        const res = await axios.post(API_URL_2 + 'users/mail-confirmed', { token }, {
+            headers: {
+                Authorization: HEADER
+            }
+        })
+        store.dispatch({
+            type: 'UPDATE_USER',
+            payload: res.data[0]
+        });
+        return res;
+    } catch (error) {
+        console.error(error)
+    }
+}
