@@ -9,7 +9,7 @@ import {
   TextField,
   CardMedia,
 } from "@material-ui/core";
-import { API_URL } from "../../api-config";
+import { API_URL_IMAGES } from "../../api-config";
 import profile from "../../assets/imgs/profile.jpg";
 import { updateUser, uploadImage } from "../../Redux/actions/users";
 
@@ -30,22 +30,23 @@ const PhotoModal = ({ image, handlePhotoModal }) => {
     }, 2500);
   };
 
-  const handleEdit = () => {
-    const user = { image: direction };
+  const handleEdit = (event) => {
+    event.preventDefault();
+    const user = { image_path: direction };
     updateUser(user)
-      .then((res) => {
+      .then((_res) => {
         setMessage("Datos Actualizados");
         setType("success");
         openSnackBar();
       })
-      .catch(() => {
+      .catch((_error) => {
         setMessage("Inténtalo de nuevo");
         setType("error");
         openSnackBar();
       });
     setTimeout(() => {
       handlePhotoModal();
-    }, 2500);
+    }, 2000);
   };
 
   const handleUpload = (event) => {
@@ -53,12 +54,12 @@ const PhotoModal = ({ image, handlePhotoModal }) => {
     const fd = new FormData();
     fd.append("image", imageUpload, imageUpload.name);
     uploadImage(fd)
-      .then((res) => {
+      .then((_res) => {
         setMessage("Imagen subida");
         setType("success");
         openSnackBar();
       })
-      .catch(() => {
+      .catch((_error) => {
         setMessage("Inténtalo de nuevo");
         setType("error");
         openSnackBar();
@@ -76,7 +77,7 @@ const PhotoModal = ({ image, handlePhotoModal }) => {
           image.includes("http")
             ? image
             : image
-            ? API_URL + "/uploads/" + image
+            ? API_URL_IMAGES + image
             : profile
         }
       />

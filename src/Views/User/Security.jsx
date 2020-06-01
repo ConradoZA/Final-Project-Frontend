@@ -5,10 +5,15 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
-import { getPassword, renewPassword, deleteUser } from "../../Redux/actions/users";
+import { updateUser, deleteUser } from "../../Redux/actions/users";
 import SnackBar from "../../Components/SnackBar";
 import RemoveCircleOutlineRoundedIcon from "@material-ui/icons/RemoveCircleOutlineRounded";
 import RemoveCircleRoundedIcon from "@material-ui/icons/RemoveCircleRounded";
@@ -25,13 +30,14 @@ const RedCheckbox = withStyles({
 })((props) => <Checkbox color='default' {...props} />);
 
 const Security = ({ handlePasswordModal }) => {
-  const [actualPass, setActualPass] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [repeatNewPassword, setRepeatNewPassword] = useState("");
   const [open, setOpen] = useState(false);
   const [type, setType] = useState("info");
   const [message, setMessage] = useState("");
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [step0, setStep0] = useState(false);
 
   const step1Ref = useRef();
   const step2Ref = useRef();
@@ -43,39 +49,23 @@ const Security = ({ handlePasswordModal }) => {
       }
       return true;
     });
-    ValidatorForm.addValidationRule("isPasswordCorrect", (value) => {
-      if (value !== actualPass) {
-        return false;
-      }
-      return true;
-    });
     return () => {
       ValidatorForm.removeValidationRule("isPasswordMatch");
-      ValidatorForm.removeValidationRule("isPasswordCorrect");
     };
-  }, [repeatNewPassword, actualPass, newPassword]);
-
-  useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      getPassword().then((res) => {
-        setActualPass(res.data);
-      });
-      return () => {
-        mounted = false;
-        clearTimeout(handleSubmit);
-      };
-    }
-  }, []);
+  }, [repeatNewPassword, newPassword]);
 
   const handleSubmit = () => {
-    renewPassword(oldPassword, newPassword, actualPass)
-      .then(() => {
+    const password = newPassword;
+    const userProfile = {
+      password
+    };
+    updateUser(userProfile)
+      .then((_res) => {
         setMessage("Datos Actualizados");
         setType("success");
         openSnackBar();
       })
-      .catch(() => {
+      .catch((_error) => {
         setMessage("Inténtalo de nuevo");
         setType("error");
         openSnackBar();
@@ -87,6 +77,7 @@ const Security = ({ handlePasswordModal }) => {
 
   const step1 = () => {
     step1Ref.current.style.display = "";
+    setStep0(true);
   };
 
   const step2 = () => {
@@ -94,14 +85,21 @@ const Security = ({ handlePasswordModal }) => {
     step2Ref.current.style.color = "red";
   };
 
+  const handleDeleteModal = () => {
+    setDeleteModal(!deleteModal);
+    setStep0(false);
+    step1Ref.current.style.display = "none";
+    step2Ref.current.style.display = "none";
+  };
+
   const handleDeleteUser = () => {
     deleteUser()
-      .then(() => {
+      .then((_res) => {
         setMessage("Te echaremos de menos");
         setType("warning");
         openSnackBar();
       })
-      .catch(() => {
+      .catch((_error) => {
         setMessage("Inténtalo de nuevo");
         setType("info");
         openSnackBar();
@@ -193,7 +191,7 @@ const Security = ({ handlePasswordModal }) => {
       <br />
       <FormGroup row style={{ margin: "1% 10%" }}>
         <FormControlLabel
-          control={<Checkbox onChange={step1} name='erase1' />}
+          control={<Checkbox onChange={step1} checked={step0} name='erase1' />}
           label='Borrar Usuario'
           color='primary'
         />
@@ -210,7 +208,7 @@ const Security = ({ handlePasswordModal }) => {
             <RedCheckbox
               icon={<RemoveCircleOutlineRoundedIcon />}
               checkedIcon={<RemoveCircleRoundedIcon />}
-              onChange={handleDeleteUser}
+              onChange={handleDeleteModal}
             />
           }
           name='erase3'
@@ -218,6 +216,26 @@ const Security = ({ handlePasswordModal }) => {
         />
       </FormGroup>
       <SnackBar type={type} open={open} message={message} />
+      <Dialog open={deleteModal} onClose={handleDeleteModal}>
+        <DialogTitle>¿Seguro que quieres borrar tu usuario?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Última oportunidad, va en serio.
+            <br />
+            Toda tu información y tus partidas se perderán...
+            <br />
+            Como lágrimas en la lluvia.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteModal} autoFocus>
+            Cancelar
+          </Button>
+          <Button onClick={handleDeleteUser} color='primary'>
+            Sí, borrar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Paper>
   );
 };
