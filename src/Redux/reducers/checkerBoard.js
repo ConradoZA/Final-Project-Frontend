@@ -1,6 +1,17 @@
-import undoable from 'redux-undo'
+// import undoable from 'redux-undo'
+const initialState = {
+    playerOne: "",
+    playerTwo: "",
+    turn: 0,
+    past: [[[]]],
+    present: [[]],
+    future: [[]],
+    whitePCaptured: 0,
+    blackPCaptured: 0,
+    winner: "",
+}
 
-const checkerBoardReducer = (state = { tablePosition: [], alreadyMoved: false, whiteTurn: true, }, action) => {
+const checkerBoardReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'SET_INITIAL_POSITION':
 
@@ -14,13 +25,13 @@ const checkerBoardReducer = (state = { tablePosition: [], alreadyMoved: false, w
                 tablePosition: action.payload,
                 alreadyMoved: true
             }
-            case 'SEND_NEW_POSITION':
-                return {
-                    ...state,
-                    tablePosition: action.tablePosition,
-                    alreadyMoved: false,
-                    whiteTurn: action.newTurn
-                }
+        case 'SEND_NEW_POSITION':
+            return {
+                ...state,
+                tablePosition: action.tablePosition,
+                alreadyMoved: false,
+                whiteTurn: action.newTurn
+            }
         default:
             return state;
     }
