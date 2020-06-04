@@ -137,7 +137,7 @@ const Header = ({ user }) => {
       <Link href='/profile' style={{ all: "unset" }}>
         <MenuItem>Perfil</MenuItem>
       </Link>
-      //ToDo: hacer componente y poner link
+      {/* ToDo: hacer componente y poner link */}
       <Link href='#' style={{ all: "unset" }}>
         <MenuItem>
           <Badge

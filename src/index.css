@@ -1,0 +1,57 @@
+:root {
+	--drawerWidth: 190px;
+}
+.root {
+	display: "flex";
+}
+.toolbar {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	padding: 0;
+	min-height: 64px;
+}
+.drawerPaper {
+	width: var(--drawerWidth);
+}
+.drawer {
+	width: var(--drawerWidth);
+	flex-shrink: 0;
+	z-index: -1;
+}
+
+.flex-center {
+	display: flex;
+	justify-content: space-between;
+	height: 100%;
+	padding: 7vmin;
+}
+.space-between {
+	display: flex;
+	justify-content: space-between;
+}
+.space-evenly {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	height: 100%;
+}
+.pointer {
+	cursor: pointer;
+}
+.flex-column {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+.center{
+	align-items: center;
+}
+.img-profile {
+	max-width: 25vw;
+	margin: 1rem;
+	object-fit: contain;
+}
+.absolute {
+	position: absolute;
+}
