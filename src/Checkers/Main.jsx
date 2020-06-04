@@ -2,7 +2,7 @@ import React, { useState, Fragment } from "react";
 import { connect } from "react-redux";
 import Board from "./Board";
 import "./checkers.css";
-import { sendNewTablePosition } from "../Redux/actions/checkerBoardLocales";
+import { sendNewTablePosition } from "../Redux/actions/checkerPlays";
 import UndoRedo from "../Components/UndoRedo.jsx";
 
 const Main = ({ checkerBoard }) => {
