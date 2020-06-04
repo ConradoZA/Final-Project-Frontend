@@ -6,39 +6,63 @@ import WQueen from "./WQueen";
 import BPawn from "./BPawn";
 import BQueen from "./BQueen";
 import "./checkers.css";
-import store from "../Redux/store";
-import { setInitialPosition } from "../Redux/actions/checkerBoard.js";
+import { setInitialPosition } from "../Redux/actions/checkerBoardLocales.js";
 
 const Board = (props) => {
-  const state = store.getState();
-  const tablePosition = state.checkerBoard.present.tablePosition;
+  let tablePosition = props.checkerBoard.present.tablePosition;
   const SQUARES = [];
-  let newGame = [];
 
-  const createNewGamePieces = (i, x, y) => {
-    if ((x + y) % 2 === 0 && y < 4) {
-      newGame.push([x, y, "wp", i]);
-    } else if ((x + y) % 2 === 0 && y > 5) {
-      newGame.push([x, y, "bp", i]);
-    }
-    if (newGame.length === 40 && i === 0 && tablePosition.length === 0) {
-      setInitialPosition(newGame);
-    }
-  };
-  const crownPawn = (piece, y) => {
-    if (y === 9 && piece[2] === "wp") {
-      return [piece[0], piece[1], "wq", piece[3]];
-    } else if (y === 0 && piece[2] === "bp") {
-      return [piece[0], piece[1], "bq", piece[3]];
-    }
+  const createNewGamePieces = () => {
+    const newGame = [
+      [9, 9, "bp", 99],
+      [7, 9, "bp", 97],
+      [5, 9, "bp", 95],
+      [3, 9, "bp", 93],
+      [1, 9, "bp", 91],
+      [8, 8, "bp", 88],
+      [6, 8, "bp", 86],
+      [4, 8, "bp", 84],
+      [2, 8, "bp", 82],
+      [0, 8, "bp", 80],
+      [9, 7, "bp", 79],
+      [7, 7, "bp", 77],
+      [5, 7, "bp", 75],
+      [3, 7, "bp", 73],
+      [1, 7, "bp", 71],
+      [8, 6, "bp", 68],
+      [6, 6, "bp", 66],
+      [4, 6, "bp", 64],
+      [2, 6, "bp", 62],
+      [0, 6, "bp", 60],
+      [9, 3, "wp", 39],
+      [7, 3, "wp", 37],
+      [5, 3, "wp", 35],
+      [3, 3, "wp", 33],
+      [1, 3, "wp", 31],
+      [8, 2, "wp", 28],
+      [6, 2, "wp", 26],
+      [4, 2, "wp", 24],
+      [2, 2, "wp", 22],
+      [0, 2, "wp", 20],
+      [9, 1, "wp", 19],
+      [7, 1, "wp", 17],
+      [5, 1, "wp", 15],
+      [3, 1, "wp", 13],
+      [1, 1, "wp", 11],
+      [8, 0, "wp", 8],
+      [6, 0, "wp", 6],
+      [4, 0, "wp", 4],
+      [2, 0, "wp", 2],
+      [0, 0, "wp", 0],
+    ];
+    setInitialPosition(newGame);
   };
   const renderIfThereIsPiece = (i, x, y) => {
     if (props.start) {
-      createNewGamePieces(i, x, y);
+      createNewGamePieces();
     }
     return tablePosition.map((piece) => {
       const id = piece[3];
-      crownPawn(piece, y);
       if (x === piece[0] && y === piece[1]) {
         switch (piece[2]) {
           case "wp":
@@ -59,9 +83,9 @@ const Board = (props) => {
     let X = i % 10;
     let Y = Math.floor(i / 10);
     return (
-        <BoardSquare x={X} y={Y} key={i}>
-          {renderIfThereIsPiece(i, X, Y)}
-        </BoardSquare>
+      <BoardSquare x={X} y={Y} key={i}>
+        {renderIfThereIsPiece(i, X, Y)}
+      </BoardSquare>
     );
   };
   const createBoard = () => {
@@ -76,8 +100,6 @@ const Board = (props) => {
   return <div className='board'>{createBoard()}</div>;
 };
 
-const mapStateToProps = (state) => ({
-  checkerBoard: state.checkerBoard.present.tablePosition,
-});
+const mapStateToProps = (state) => ({ checkerBoard: state.checkerBoard });
 export default connect(mapStateToProps)(Board);
 // export default Board;

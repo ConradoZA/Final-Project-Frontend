@@ -1,9 +1,9 @@
 import store from '../Redux/store';
-import { printNewTablePosition } from "../Redux/actions/checkerBoard"
+import { printNewTablePosition } from "../Redux/actions/checkerBoardLocales"
 import { whiteMoves, whiteResults } from "./WhiteMoves";
 import { blackMoves, blackResults } from "./BlackMoves"
 const state = store.getState();
-const pieces = state.checkerBoard.present.tablePosition;
+const pieces = state.checkerBoard?.present.tablePosition;
 
 let actualPiece = [];
 let letra = "";

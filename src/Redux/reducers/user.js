@@ -1,4 +1,4 @@
-const userReducer = (state = {}, action) => {
+const userReducer = (state = {}, action={}) => {
     switch (action.type) {
         case 'LOGOUT':
         case 'DELETE_USER':
