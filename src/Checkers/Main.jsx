@@ -2,14 +2,14 @@ import React, { useState, Fragment } from "react";
 import { connect } from "react-redux";
 import Board from "./Board";
 import "./checkers.css";
-import store from "../Redux/store";
-import { sendNewTablePosition } from "../Redux/actions/checkerBoard";
+import { sendNewTablePosition } from "../Redux/actions/checkerPlays";
 import UndoRedo from "../Components/UndoRedo.jsx";
 
-const Main = () => {
-  const state = store.getState();
-  const tablePosition = state.checkerBoard.present.tablePosition;
+const Main = ({ checkerBoard }) => {
+  const tablePosition = checkerBoard.present.tablePosition;
+  console.log(tablePosition);
   const [start, setStart] = useState(false);
+  const whiteTurn = checkerBoard.present.whiteTurn;
 
   const createNewGame = () => {
     setStart(true);
@@ -17,15 +17,23 @@ const Main = () => {
       setStart(false);
     }, 100);
   };
+  const crownPawn = () => {
+    const lastPiece = tablePosition[-1];
+    if (lastPiece[1] === 9 && whiteTurn && lastPiece[3] === "wp") {
+      lastPiece[3] = "wq";
+    } else if (lastPiece[1] === 0 && !whiteTurn && lastPiece[3] === "bp") {
+      lastPiece[3] = "bq";
+    }
+  };
 
   const sendMove = () => {
-    const changeTurn = state.checkerBoard.present.whiteTurn;
-    sendNewTablePosition(tablePosition, changeTurn);
+    crownPawn();
+    sendNewTablePosition(tablePosition, !whiteTurn);
   };
 
   return (
     <Fragment>
-      {tablePosition.length === 0 ? (
+      {tablePosition.length === 1 ? (
         <button onClick={createNewGame}>Iniciar Partida</button>
       ) : (
         <span></span>
@@ -38,7 +46,5 @@ const Main = () => {
     </Fragment>
   );
 };
-const mapStateToProps = (state) => ({
-  checkerBoard: state.checkerBoard.present.tablePosition,
-});
+const mapStateToProps = (state) => ({ checkerBoard: state.checkerBoard });
 export default connect(mapStateToProps)(Main);

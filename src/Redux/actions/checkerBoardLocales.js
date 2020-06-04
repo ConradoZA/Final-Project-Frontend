@@ -12,11 +12,3 @@ export const printNewTablePosition =(tablePosition)=>{
 		payload:tablePosition
 	})
 }
-export const sendNewTablePosition =(tablePosition,changeTurn)=>{
-	const newTurn=!changeTurn
-	store.dispatch({
-		type:'SEND_NEW_POSITION',
-		tablePosition,
-		newTurn
-	})
-}

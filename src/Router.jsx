@@ -7,6 +7,7 @@ import Register from "./Views/User/Register";
 import Checkers from "./Checkers/Checkers";
 import CheckersRules from "./Checkers/CheckersRules";
 import Profile from "./Views/User/Profile";
+import Profile2 from "./Views/User/Profile2";
 import Recover from "./Views/User/Recover";
 import MailConfirmed from "./Views/User/MailConfirmed";
 
@@ -16,6 +17,7 @@ function Router() {
       <Header />
       <Switch>
         <Route path='/' component={Home} exact />
+        <Route path='/temporal' component={Profile2} exact />
         <Route path='/login' component={Login} exact />
         <Route path='/register' component={Register} exact />
         <Route path='/profile' component={Profile} exact />
