@@ -2,7 +2,7 @@ import React from "react";
 import { useDrag } from "react-dnd";
 import peonB from "../assets/imgs/peon blanco.png";
 import "./checkers.css";
-import { checkTurn } from "../Checkers/GameRules";
+import { checkTurn } from "./Rules/GameRules";
 
 const WPawn = ({ color, id }) => {
   const turn=checkTurn();

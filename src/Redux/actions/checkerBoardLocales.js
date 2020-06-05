@@ -1,8 +1,8 @@
 import store from "../store"
 
-export const setInitialPosition =(tablePosition)=>{
+export const setTablePosition =(tablePosition)=>{
 	store.dispatch({
-		type:'SET_INITIAL_POSITION',
+		type:'SET_TABLE_POSITION',
 		payload:tablePosition
 	})
 }

@@ -1,4 +1,4 @@
-import undoable from 'redux-undo'
+// import undoable from 'redux-undo'
 
 const initialState = {
     tablePosition: [[]],
@@ -6,8 +6,8 @@ const initialState = {
 
 const checkerBoardLocalReducer = (state = initialState, action = {}) => {
     switch (action.type) {
-        case 'SET_INITIAL_POSITION':
-        case 'PRINT_NEW_POSITION':
+        case 'SET_TABLE_POSITION':
+        // case 'PRINT_NEW_POSITION':
         // case 'SEND_NEW_POSITION':
             return {
                 ...state,
@@ -18,5 +18,6 @@ const checkerBoardLocalReducer = (state = initialState, action = {}) => {
     }
 };
 
-const undoableCheckerBoardLocalReducer = undoable(checkerBoardLocalReducer);
-export default undoableCheckerBoardLocalReducer;
+// const undoableCheckerBoardLocalReducer = undoable(checkerBoardLocalReducer);
+// export default undoableCheckerBoardLocalReducer;
+export default checkerBoardLocalReducer;

@@ -2,7 +2,7 @@ import React from "react";
 import { useDrag } from "react-dnd";
 import damaB from "../assets/imgs/dama blanca.png";
 import "./checkers.css";
-import { checkTurn } from "../Checkers/GameRules";
+import { checkTurn } from "./Rules/GameRules";
 
 const WQueen = ({ color, id }) => {
   const turn=checkTurn();

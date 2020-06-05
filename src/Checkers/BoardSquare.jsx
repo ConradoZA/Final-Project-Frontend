@@ -1,7 +1,7 @@
 import React from "react";
 import { useDrop } from "react-dnd";
 import Square from "./Square";
-import { canMove, move } from "./GameRules";
+import { canMove, move } from "./Rules/GameRules";
 import Overlay from "./Overlay";
 
 const BoardSquare = ({ x, y, children }, props) => {
