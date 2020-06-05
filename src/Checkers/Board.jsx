@@ -9,7 +9,7 @@ import "./checkers.css";
 import { setInitialPosition } from "../Redux/actions/checkerBoardLocales.js";
 
 const Board = (props) => {
-  let tablePosition = props.checkerBoard.present.tablePosition;
+  let tablePosition = props.checkerBoardLocal.present.tablePosition;
   const SQUARES = [];
 
   const createNewGamePieces = () => {
@@ -100,6 +100,6 @@ const Board = (props) => {
   return <div className='board'>{createBoard()}</div>;
 };
 
-const mapStateToProps = (state) => ({ checkerBoard: state.checkerBoard });
+const mapStateToProps = (state) => ({ checkerBoardLocal: state.checkerBoardLocal });
 export default connect(mapStateToProps)(Board);
 // export default Board;

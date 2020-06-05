@@ -3,7 +3,7 @@ import { printNewTablePosition } from "../Redux/actions/checkerBoardLocales"
 import { whiteMoves, whiteResults } from "./WhiteMoves";
 import { blackMoves, blackResults } from "./BlackMoves"
 const state = store.getState();
-const pieces = state.checkerBoard?.present.tablePosition;
+const pieces = state.checkerBoardLocal?.present.tablePosition;
 
 let actualPiece = [];
 let letra = "";
@@ -12,9 +12,9 @@ let R = [];
 
 
 const checkWhoseTurnItIs = () => {
-    if (state.checkerBoard.present.whiteTurn && letra === "") {
+    if (state.checkerBoardLocal.present.whiteTurn && letra === "") {
         letra = "w"
-    } else if (!state.checkerBoard.present.whiteTurn && letra === "") {
+    } else if (!state.checkerBoardLocal.present.whiteTurn && letra === "") {
         letra = "b"
     }
 }
