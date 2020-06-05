@@ -62,7 +62,7 @@ const Board = forwardRef((props, ref) => {
 		if (props.start) {
 			createNewGamePieces();
 		}
-		let newArray = tablePosition.map((piece) => {
+		var newArray = tablePosition.map((piece) => {
 			const id = piece[3];
 			if (x === piece[0] && y === piece[1]) {
 				switch (piece[2]) {
@@ -101,7 +101,7 @@ const Board = forwardRef((props, ref) => {
 
 	useImperativeHandle(ref, () => ({
 		sendMove() {
-      console.log(newArray);
+      console.log(this.newArray);
 			// sendNewTablePosition(newArray);
 		},
 	}));

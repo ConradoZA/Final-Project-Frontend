@@ -1,6 +1,6 @@
 import store from "../../Redux/store";
 import { printNewTablePosition } from "../../Redux/actions/checkerBoardLocales";
-import { whiteMoves, whiteResults } from "../WhiteMoves";
+import { whiteMoves, whiteResults } from "./WhiteMoves";
 import { blackMoves, blackResults } from "./BlackMoves";
 const state = store.getState();
 const pieces = state.checkerBoardLocal?.present.tablePosition;

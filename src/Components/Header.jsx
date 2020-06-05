@@ -5,23 +5,15 @@ import {
 	AppBar,
 	Toolbar,
 	IconButton,
-	Typography,
-	Badge,
 	Menu,
 	MenuItem,
 	Link,
 	Button,
 	Grow,
-	ExpansionPanel,
-	ExpansionPanelSummary,
-	ExpansionPanelDetails,
-	Divider,
 } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import CasinoIcon from "@material-ui/icons/Casino";
 import logo from "../assets/imgs/logo.png";
 import { logout } from "../Redux/actions/users";
@@ -57,11 +49,9 @@ const Header = ({ user }) => {
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-	const [optionsAnchorEl, setOptionsAnchorEl] = useState(null);
 
 	const isMenuOpen = Boolean(anchorEl);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-	const isOptionsOpen = Boolean(optionsAnchorEl);
 
 	const handleProfileMenuOpen = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -84,46 +74,7 @@ const Header = ({ user }) => {
 		setAnchorEl(null);
 		logout().finally(() => window.location.assign("/"));
 	};
-	const handleOptionsClose = () => {
-		setOptionsAnchorEl(null);
-	};
-	const handleOptionsMenuOpen = (event) => {
-		setOptionsAnchorEl(event.currentTarget);
-	};
 
-	const renderOptions = (
-		<Menu
-			anchorEl={optionsAnchorEl}
-			anchorOrigin={{ vertical: "top", horizontal: "left" }}
-			id='menu'
-			keepMounted
-			transformOrigin={{ vertical: -55, horizontal: "left" }}
-			open={isOptionsOpen}
-			onClose={handleOptionsClose}
-			TransitionComponent={Grow}>
-			<ExpansionPanel square style={{ boxShadow: "none" }}>
-				<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-					<Typography>Damas</Typography>
-				</ExpansionPanelSummary>
-				<ExpansionPanelDetails>
-					<Link href='/checkers/rules' style={{ all: "unset" }}>
-						<MenuItem>Reglas</MenuItem>
-					</Link>
-				</ExpansionPanelDetails>
-			</ExpansionPanel>
-			<Divider />
-			<ExpansionPanel square style={{ boxShadow: "none" }}>
-				<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-					<Typography>Awale</Typography>
-				</ExpansionPanelSummary>
-				<ExpansionPanelDetails>
-					<Link href='#' style={{ all: "unset" }}>
-						<MenuItem>Reglas</MenuItem>
-					</Link>
-				</ExpansionPanelDetails>
-			</ExpansionPanel>
-		</Menu>
-	);
 	const renderMenu = (
 		<Menu
 			anchorEl={anchorEl}
@@ -137,19 +88,8 @@ const Header = ({ user }) => {
 			<Link href='/profile' style={{ all: "unset" }}>
 				<MenuItem>Perfil</MenuItem>
 			</Link>
-			{/* ToDo: Poner el componente de los juegos que tienes en marcha*/}
-			<Link href='/checkers' style={{ all: "unset" }}>
-				<MenuItem>
-					<Badge
-						variant='dot'
-						color='error'
-						anchorOrigin={{
-							vertical: "top",
-							horizontal: "left",
-						}}>
-						Mis partidas
-					</Badge>
-				</MenuItem>
+			<Link href='/myGames' style={{ all: "unset" }}>
+				<MenuItem>Mis partidas</MenuItem>
 			</Link>
 		</Menu>
 	);
@@ -172,13 +112,10 @@ const Header = ({ user }) => {
 					<p>Perfil</p>
 				</Link>
 			</MenuItem>
-			//ToDo: Poner el componente de los juegos que tienes en marcha
 			<MenuItem>
-				<Link href='/checkers' style={{ color: "black", display: "flex" }}>
+				<Link href='/myGames' style={{ color: "black", display: "flex" }}>
 					<IconButton color='inherit'>
-						<Badge badgeContent={1} color='error'>
-							<CasinoIcon />
-						</Badge>
+						<CasinoIcon />
 					</IconButton>
 					<p>Mis Partidas</p>
 				</Link>
@@ -196,23 +133,12 @@ const Header = ({ user }) => {
 		<div className={classes.grow}>
 			<AppBar position='static'>
 				<Toolbar>
-					<IconButton
-						edge='start'
-						className={classes.menuButton}
-						color='inherit'
-						onClick={handleOptionsMenuOpen}>
-						<MenuIcon />
-					</IconButton>
 					<Link href='/'>
 						<img src={logo} alt='' style={{ height: "3rem", marginRight: "1rem" }} />
 					</Link>
-					<Typography
-						className={classes.title}
-						variant='h6'
-						noWrap
-						style={{ userSelect: "none" }}>
-						Play 2 Games
-					</Typography>
+					<Link href='/'>
+						<h2 style={{ userSelect: "none", color: "black" }}>Play 2 Games</h2>
+					</Link>
 					<div className={classes.grow} />
 					<div className={classes.sectionDesktop}>
 						{user ? (
@@ -222,9 +148,7 @@ const Header = ({ user }) => {
 								</Button>
 
 								<IconButton edge='end' onClick={handleProfileMenuOpen} color='inherit'>
-									<Badge badgeContent={1} color='error'>
-										<AccountCircle />
-									</Badge>
+									<AccountCircle />
 								</IconButton>
 							</div>
 						) : (
@@ -234,9 +158,7 @@ const Header = ({ user }) => {
 					{user ? (
 						<div className={classes.sectionMobile}>
 							<IconButton onClick={handleMobileMenuOpen} color='inherit'>
-								<Badge badgeContent={1} color='error'>
-									<MoreIcon />
-								</Badge>
+								<MoreIcon />
 							</IconButton>
 						</div>
 					) : (
@@ -248,7 +170,6 @@ const Header = ({ user }) => {
 					)}
 				</Toolbar>
 			</AppBar>
-			{renderOptions}
 			{renderMobileMenu}
 			{renderMenu}
 		</div>
