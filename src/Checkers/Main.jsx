@@ -5,11 +5,11 @@ import "./checkers.css";
 import { sendNewTablePosition } from "../Redux/actions/checkerPlays";
 import UndoRedo from "../Components/UndoRedo.jsx";
 
-const Main = ({ checkerBoard }) => {
-  const tablePosition = checkerBoard.present.tablePosition;
+const Main = ({ checkerBoardLocal }) => {
+  const tablePosition = checkerBoardLocal.present.tablePosition;
   console.log(tablePosition);
   const [start, setStart] = useState(false);
-  const whiteTurn = checkerBoard.present.whiteTurn;
+  const whiteTurn = checkerBoardLocal.present.whiteTurn;
 
   const createNewGame = () => {
     setStart(true);
@@ -46,5 +46,5 @@ const Main = ({ checkerBoard }) => {
     </Fragment>
   );
 };
-const mapStateToProps = (state) => ({ checkerBoard: state.checkerBoard });
+const mapStateToProps = (state) => ({ checkerBoardLocal: state.checkerBoardLocal });
 export default connect(mapStateToProps)(Main);
