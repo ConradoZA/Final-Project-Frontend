@@ -8,7 +8,6 @@ import CancelScheduleSendIcon from "@material-ui/icons/CancelScheduleSend";
 import SendIcon from "@material-ui/icons/Send";
 
 import { updateUser, confirmMail } from "../Redux/actions/users";
-import profile from "../assets/imgs/profile.jpg";
 
 const Profile = (props) => {
 	const user = props.user.user;
@@ -81,14 +80,12 @@ const Profile = (props) => {
 						src={
 							user.image_path.includes("http")
 								? user.image_path
-								: user.image_path
-								? API_URL_IMAGES + user.image_path
-								: profile
+								: API_URL_IMAGES + user.image_path
 						}
 						alt='user'
 						className='img-profile'
 					/>
-					<div className='flex-column'>
+					<div className='flex-column-evenly'>
 						<InputLabel>Nombre</InputLabel>
 						<Input
 							disabled={inputName}

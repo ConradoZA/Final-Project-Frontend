@@ -1,15 +1,15 @@
 const initialState = {
-	turn: 0,
-	past: [[]],
-	present: [[]],
-	whitePCaptured: 0,
-	blackPCaptured: 0,
-	captureTimer: 0,
+all:[],
 }
 
 const allInfoCheckersReducer = (state = initialState, action = {}) => {
 	switch (action.type) {
 		//ToDo: hacer
+		case 'ALL_GAMES':
+			return{
+				...state,
+				all:action.payload
+			}
 
 		default:
 			return state;

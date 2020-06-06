@@ -1,8 +1,8 @@
 import React from "react";
 import { useDrag } from "react-dnd";
-import peonB from "../assets/imgs/peon blanco.png";
 import "./checkers.css";
 import { checkTurn } from "./Rules/GameRules";
+import { API_URL_IMAGES } from "../api-config";
 
 const WPawn = ({ color, id }) => {
   const turn=checkTurn();
@@ -20,7 +20,7 @@ const WPawn = ({ color, id }) => {
       id={id}
       className='pieceSize'
       ref={drag}
-      src={peonB}
+      src={API_URL_IMAGES+"peon blanco.png"}
       alt=''
       style={{
         opacity: isDragging ? 0.5 : 1,

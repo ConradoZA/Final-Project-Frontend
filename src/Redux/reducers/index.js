@@ -1,13 +1,15 @@
 import { combineReducers } from "redux";
 import user from "./user";
+import allCheckersGame from "./allCheckersGame";
 import checkerBoardLocal from "./checkerBoardLocal";
-import checkerGame from "./checkerGame";
-import checkerPlay from "./checkerPlay";
+import checkersGame from "./checkersGame";
+import checkersPlay from "./checkersPlay";
 
 const reducer = combineReducers({
     user,
+    allCheckersGame,
     checkerBoardLocal,
-    checkerGame,
-    checkerPlay
+    checkersGame,
+    checkersPlay
 })
 export default reducer;

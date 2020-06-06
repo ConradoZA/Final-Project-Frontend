@@ -4,7 +4,6 @@ import Header from "./Components/Header";
 import Home from "./Views/Home/Home";
 import Login from "./Views/User/Login";
 import Register from "./Views/User/Register";
-import Checkers from "./Checkers/Checkers";
 import Profile from "./Views/User/Profile";
 import Recover from "./Views/User/Recover";
 import MailConfirmed from "./Views/User/MailConfirmed";
@@ -21,7 +20,6 @@ function Router() {
         <Route path='/profile' component={Profile} exact />
         <Route path='/recover/:passToken' component={Recover} exact />
         <Route path='/myGames' component={MainDrawer} exact />
-        <Route path='/checkers' component={Checkers} exact />
         <Route path='/confirm/:passToken' component={MailConfirmed} exact />
       </Switch>
     </BrowserRouter>

@@ -1,8 +1,8 @@
 import React from "react";
 import { useDrag } from "react-dnd";
-import damaB from "../assets/imgs/dama blanca.png";
 import "./checkers.css";
 import { checkTurn } from "./Rules/GameRules";
+import { API_URL_IMAGES } from "../api-config";
 
 const WQueen = ({ color, id }) => {
   const turn=checkTurn();
@@ -20,7 +20,7 @@ const WQueen = ({ color, id }) => {
       id={id}
       className='pieceSize'
       ref={drag}
-      src={damaB}
+      src={API_URL_IMAGES+"dama blanca.png"}
       alt=''
       style={{
         opacity: isDragging ? 0.5 : 1,

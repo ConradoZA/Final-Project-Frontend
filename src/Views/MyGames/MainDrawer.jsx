@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useImperativeHandle } from "react";
 import AllGames from "./AllGames";
 import CheckersGame from "./CheckersGame";
 import { connect } from "react-redux";
@@ -68,19 +68,28 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const MainDrawer = (props) => {
+const MainDrawer = (props, ref) => {
 	const window = props.window;
 	const classes = useStyles();
 	const theme = useTheme();
 	const [mobileOpen, setMobileOpen] = useState(false);
+	const [showRules, setShowRules] = useState(false);
+	let showOne = !props.checkersGame.unset;
+	let showAll = !showOne;
 
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen);
 	};
 
-	const handleMain = () => {};
+	const handleMain = () => {
+		setShowRules(false);
+		showAll = true;
+	};
 
-	const handleCheckersRules = () => {};
+	const handleCheckersRules = () => {
+		setShowRules(true);
+		showAll = false;
+	};
 	const handleNewCheckersGame = () => {};
 	const handleDrawCheckersGame = () => {};
 	const handleLoseCheckersGame = () => {};
@@ -108,24 +117,30 @@ const MainDrawer = (props) => {
 					</ListItemIcon>
 					<ListItemText primary='Reglas' />
 				</ListItem>
-				<ListItem onClick={handleNewCheckersGame} className='pointer'>
-					<ListItemIcon>
-						<AddCircleOutlineRoundedIcon />
-					</ListItemIcon>
-					<ListItemText primary='Nueva Partida' />
-				</ListItem>
-				<ListItem onClick={handleDrawCheckersGame} className='pointer'>
-					<ListItemIcon>
-						<AllInclusiveRoundedIcon />
-					</ListItemIcon>
-					<ListItemText primary='Ofrecer Tablas' />
-				</ListItem>
-				<ListItem onClick={handleLoseCheckersGame} className='pointer'>
-					<ListItemIcon>
-						<HighlightOffRoundedIcon />
-					</ListItemIcon>
-					<ListItemText primary='Rendirse' />
-				</ListItem>
+				{showAll && (
+					<ListItem onClick={handleNewCheckersGame} className='pointer'>
+						<ListItemIcon>
+							<AddCircleOutlineRoundedIcon />
+						</ListItemIcon>
+						<ListItemText primary='Nueva Partida' />
+					</ListItem>
+				)}
+				{showOne && (
+					<ListItem onClick={handleDrawCheckersGame} className='pointer'>
+						<ListItemIcon>
+							<AllInclusiveRoundedIcon />
+						</ListItemIcon>
+						<ListItemText primary='Ofrecer Tablas' />
+					</ListItem>
+				)}
+				{showOne && (
+					<ListItem onClick={handleLoseCheckersGame} className='pointer'>
+						<ListItemIcon>
+							<HighlightOffRoundedIcon />
+						</ListItemIcon>
+						<ListItemText primary='Rendirse' />
+					</ListItem>
+				)}
 			</List>
 			<Divider />
 			<List subheader={<ListSubheader component='div'>Awale</ListSubheader>}>
@@ -199,9 +214,9 @@ const MainDrawer = (props) => {
 						</Hidden>
 					</nav>
 					<main className={classes.content}>
-						<CheckersRules />
-						<AllGames />
-						<CheckersGame />
+						{showRules && <CheckersRules />}
+						{showAll && <AllGames />}
+						{showOne && <CheckersGame />}
 					</main>
 				</>
 			)}
@@ -211,6 +226,8 @@ const MainDrawer = (props) => {
 
 const mapStateToProps = (state) => ({
 	user: state.user.user,
+	allCheckersGame: state.allCheckersGame,
 	checkersGame: state.checkersGame,
+	checkersPlay: state.checkersPlay,
 });
 export default connect(mapStateToProps)(MainDrawer);

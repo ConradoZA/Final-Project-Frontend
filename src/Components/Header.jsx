@@ -15,8 +15,8 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import CasinoIcon from "@material-ui/icons/Casino";
-import logo from "../assets/imgs/logo.png";
 import { logout } from "../Redux/actions/users";
+import { API_URL_IMAGES } from "../api-config";
 
 const useStyles = makeStyles((theme) => ({
 	grow: {
@@ -134,7 +134,7 @@ const Header = ({ user }) => {
 			<AppBar position='static'>
 				<Toolbar>
 					<Link href='/'>
-						<img src={logo} alt='' style={{ height: "3rem", marginRight: "1rem" }} />
+						<img src={API_URL_IMAGES+"logo.png"} alt='' style={{ height: "3rem", marginRight: "1rem" }} />
 					</Link>
 					<Link href='/'>
 						<h2 style={{ userSelect: "none", color: "black" }}>Play 2 Games</h2>

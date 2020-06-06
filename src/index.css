@@ -1,8 +1,8 @@
 :root {
 	--drawerWidth: 190px;
 }
-.root {
-	display: "flex";
+.flex {
+	display: flex;
 }
 .toolbar {
 	display: flex;
@@ -11,7 +11,9 @@
 	padding: 0;
 	min-height: 64px;
 }
-
+.paper {
+	min-width: 25vw;
+}
 .flex-center {
 	display: flex;
 	justify-content: space-between;
@@ -31,12 +33,17 @@
 .pointer {
 	cursor: pointer;
 }
-.flex-column {
+.flex-column-evenly {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
 }
-.center{
+.flex-column {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+.center {
 	align-items: center;
 }
 .img-profile {
@@ -44,6 +51,18 @@
 	margin: 1rem;
 	object-fit: contain;
 }
+.img-small {
+	max-width: 10rem;
+	/* margin: 1rem; */
+	object-fit: contain;
+}
 .absolute {
 	position: absolute;
+}
+.container {
+	margin: 2vmin auto;
+	height: 80vmin;
+	width: 80vmin;
+	box-sizing: initial;
+	border: 2px solid black;
 }

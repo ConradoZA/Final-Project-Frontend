@@ -7,9 +7,11 @@ import BPawn from "./BPawn";
 import BQueen from "./BQueen";
 import "./checkers.css";
 import { setTablePosition } from "../Redux/actions/checkerBoardLocales.js";
-import { sendNewTablePosition } from "../Redux/actions/checkerPlays";
 
 const Board = forwardRef((props, ref) => {
+	console.log(ref);
+	const sendMoveRef = useRef();
+	console.log(ref);
 	let tablePosition = props.checkerBoardLocal;
 	const SQUARES = [];
 
@@ -99,10 +101,9 @@ const Board = forwardRef((props, ref) => {
 		}
 	};
 
-	useImperativeHandle(ref, () => ({
+	useImperativeHandle(sendMoveRef, () => ({
 		sendMove() {
       console.log(this.newArray);
-			// sendNewTablePosition(newArray);
 		},
 	}));
 
