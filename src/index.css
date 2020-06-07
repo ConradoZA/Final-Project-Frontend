@@ -13,6 +13,7 @@
 }
 .paper {
 	min-width: 25vw;
+	margin: 1rem;
 }
 .flex-center {
 	display: flex;
@@ -65,4 +66,7 @@
 	width: 80vmin;
 	box-sizing: initial;
 	border: 2px solid black;
+}
+.fullW{
+	width: 100%;
 }

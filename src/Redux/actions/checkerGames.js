@@ -8,13 +8,28 @@ var user = state.user.user;
 export const waitForAproval = async (playerTwo) => {
 	const payload = { playerOne: user.name, playerTwo };
 	const res = await axios.post(API_URL_1 + "checkers/games/invitation", payload);
-	console.log(res.data);
-	// 	store.dispatch({
-	// 		type: 'NEW_INVITATION',
-	// 		payload: res.data
-	//   })
+	const invitation = {
+		id: res.data.invite._id,
+		initiated: res.data.invite.initiated,
+		playerOne: res.data.invite.playerOne,
+		playerTwo: res.data.invite.playerTwo,
+	};
+	store.dispatch({
+		type: "NEW_INVITATION",
+		payload: invitation,
+	});
 	return res;
 };
+
+export const answerInvitation = async (answer, gameId) => {
+	await axios.put(API_URL_1 + "checkers/games/answer", {
+		answer,
+		gameId,
+	});
+	const updatedGames = getAllGames();
+	return updatedGames;
+};
+
 export const getAllGames = async () => {
 	const res = await axios.get(API_URL_1 + `checkers/games/getAll=${user.name}`);
 	store.dispatch({
@@ -23,8 +38,11 @@ export const getAllGames = async () => {
 	});
 	return res;
 };
+export const getOneGame = async (gameId) => {
+	const res = await axios.get(API_URL_1 + `checkers/games/get=${gameId}`);
+	return res;
+};
 export const setGame = async (game) => {
-	console.log(game);
 	store.dispatch({
 		type: "SET_GAME",
 		id: game._id,
@@ -36,6 +54,7 @@ export const setGame = async (game) => {
 	});
 	store.dispatch({
 		type: "SET_PLAY",
+		id:game.gamePlay._id,
 		past: game.gamePlay.past,
 		present: game.gamePlay.present,
 		turn: game.gamePlay.turn,
@@ -48,4 +67,8 @@ export const unsetGame = async (game) => {
 	store.dispatch({
 		type: "UNSET_GAME",
 	});
+	store.dispatch({
+		type: "UNSET_PLAY",
+	});
+	return true;
 };

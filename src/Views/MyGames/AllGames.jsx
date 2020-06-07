@@ -8,18 +8,15 @@ import store from "../../Redux/store";
 const AllGames = (props) => {
 	const state = store.getState();
 	const username = state.user.user.name;
+	const stillPlaying = props.allCheckersGame.filter((game) => game.winner === "");
 	useEffect(() => {
-		getAllGames()
-			.then((_res) => {
-				console.log(_res.data);
-			})
-			.catch();
+		getAllGames();
 	}, []);
 
 	return (
 		<>
-			{props.allCheckersGame.map((game) => {
-				return <CheckerSkeleton game={game} name={username} />;
+			{stillPlaying.map((game) => {
+				return <CheckerSkeleton game={game} name={username} key={game._id} />;
 			})}
 		</>
 	);

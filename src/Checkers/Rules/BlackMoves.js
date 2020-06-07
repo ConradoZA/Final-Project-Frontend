@@ -1,6 +1,6 @@
 import store from '../../Redux/store';
 const state = store.getState();
-const pieces = state.checkerBoardLocal?.tablePosition;
+const pieces = state.checkersPlay?.present;
 
 var toDelete1 = [];
 var toDelete2 = [];

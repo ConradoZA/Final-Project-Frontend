@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import BoardSquare from "./BoardSquare.jsx";
 import WPawn from "./WPawn";
@@ -6,64 +6,12 @@ import WQueen from "./WQueen";
 import BPawn from "./BPawn";
 import BQueen from "./BQueen";
 import "./checkers.css";
-import { setTablePosition } from "../Redux/actions/checkerBoardLocales.js";
 
-const Board = forwardRef((props, ref) => {
-	console.log(ref);
-	const sendMoveRef = useRef();
-	console.log(ref);
-	let tablePosition = props.checkerBoardLocal;
+const Board = (props) => {
+	let tablePosition = props.checkersPlay;
 	const SQUARES = [];
 
-	const createNewGamePieces = () => {
-		const newGamePieces = [
-			[9, 9, "bp", 99],
-			[7, 9, "bp", 97],
-			[5, 9, "bp", 95],
-			[3, 9, "bp", 93],
-			[1, 9, "bp", 91],
-			[8, 8, "bp", 88],
-			[6, 8, "bp", 86],
-			[4, 8, "bp", 84],
-			[2, 8, "bp", 82],
-			[0, 8, "bp", 80],
-			[9, 7, "bp", 79],
-			[7, 7, "bp", 77],
-			[5, 7, "bp", 75],
-			[3, 7, "bp", 73],
-			[1, 7, "bp", 71],
-			[8, 6, "bp", 68],
-			[6, 6, "bp", 66],
-			[4, 6, "bp", 64],
-			[2, 6, "bp", 62],
-			[0, 6, "bp", 60],
-			[9, 3, "wp", 39],
-			[7, 3, "wp", 37],
-			[5, 3, "wp", 35],
-			[3, 3, "wp", 33],
-			[1, 3, "wp", 31],
-			[8, 2, "wp", 28],
-			[6, 2, "wp", 26],
-			[4, 2, "wp", 24],
-			[2, 2, "wp", 22],
-			[0, 2, "wp", 20],
-			[9, 1, "wp", 19],
-			[7, 1, "wp", 17],
-			[5, 1, "wp", 15],
-			[3, 1, "wp", 13],
-			[1, 1, "wp", 11],
-			[8, 0, "wp", 8],
-			[6, 0, "wp", 6],
-			[4, 0, "wp", 4],
-			[2, 0, "wp", 2],
-			[0, 0, "wp", 0],
-		];
-		setTablePosition(newGamePieces);
-	};
-	const renderIfThereIsPiece = (i, x, y) => {
-		if (props.start) {
-			createNewGamePieces();
-		}
+	const renderIfThereIsPiece = (x, y) => {
 		var newArray = tablePosition.map((piece) => {
 			const id = piece[3];
 			if (x === piece[0] && y === piece[1]) {
@@ -88,7 +36,7 @@ const Board = forwardRef((props, ref) => {
 		let Y = Math.floor(i / 10);
 		return (
 			<BoardSquare x={X} y={Y} key={i}>
-				{renderIfThereIsPiece(i, X, Y)}
+				{renderIfThereIsPiece(X, Y)}
 			</BoardSquare>
 		);
 	};
@@ -101,16 +49,10 @@ const Board = forwardRef((props, ref) => {
 		}
 	};
 
-	useImperativeHandle(sendMoveRef, () => ({
-		sendMove() {
-      console.log(this.newArray);
-		},
-	}));
-
 	return <div className='board'>{createBoard()}</div>;
-});
+};
 
 const mapStateToProps = (state) => ({
-	checkerBoardLocal: state.checkerBoardLocal.tablePosition,
+	checkersPlay: state.checkersPlay.present,
 });
 export default connect(mapStateToProps)(Board);

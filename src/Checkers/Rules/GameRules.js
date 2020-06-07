@@ -1,9 +1,9 @@
 import store from "../../Redux/store";
-import { printNewTablePosition } from "../../Redux/actions/checkerBoardLocales";
+import { setNewMove } from "../../Redux/actions/checkerPlays";
 import { whiteMoves, whiteResults } from "./WhiteMoves";
 import { blackMoves, blackResults } from "./BlackMoves";
 const state = store.getState();
-const pieces = state.checkerBoardLocal?.tablePosition;
+const pieces = state.checkersPlay?.present;
 
 let actualPiece = [];
 let letra = "";
@@ -11,9 +11,9 @@ let SIDE = "";
 let R = [];
 
 const checkWhoseTurnItIs = () => {
-	if (state.checkerBoardLocal.present.whiteTurn && letra === "") {
+	if (state.checkersPlay?.turn%2===1 && letra === "") {
 		letra = "w";
-	} else if (!state.checkerBoardLocal.present.whiteTurn && letra === "") {
+	} else if (state.checkersPlay?.turn%2===0 && letra === "") {
 		letra = "b";
 	}
 };
@@ -61,5 +61,5 @@ export function move(toX, toY) {
 	}
 
 	newBoard.push(newPiecePosition);
-	printNewTablePosition(newBoard);
+	setNewMove(newBoard);
 }

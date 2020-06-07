@@ -4,7 +4,7 @@ const initialState = {
 
 const checkersGameReducer = (state = initialState, action = {}) => {
 	switch (action.type) {
-		//ToDo: hacer
+
 		case "SET_GAME":
 			return {
 				id:action.id,

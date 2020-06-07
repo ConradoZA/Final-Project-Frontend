@@ -15,6 +15,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import CasinoIcon from "@material-ui/icons/Casino";
+import EmojiEventsRoundedIcon from "@material-ui/icons/EmojiEventsRounded";
 import { logout } from "../Redux/actions/users";
 import { API_URL_IMAGES } from "../api-config";
 
@@ -91,6 +92,9 @@ const Header = ({ user }) => {
 			<Link href='/myGames' style={{ all: "unset" }}>
 				<MenuItem>Mis partidas</MenuItem>
 			</Link>
+			<Link href='/myRecord' style={{ all: "unset" }}>
+				<MenuItem>Partidas Terminadas</MenuItem>
+			</Link>
 		</Menu>
 	);
 
@@ -120,6 +124,14 @@ const Header = ({ user }) => {
 					<p>Mis Partidas</p>
 				</Link>
 			</MenuItem>
+			<MenuItem>
+				<Link href='/myRecord' style={{ color: "black", display: "flex" }}>
+					<IconButton color='inherit'>
+						<EmojiEventsRoundedIcon />
+					</IconButton>
+					<p>Partidas Terminadas</p>
+				</Link>
+			</MenuItem>
 			<MenuItem onClick={handleLogoutMobileMenuClose}>
 				<IconButton color='inherit'>
 					<ExitToAppIcon />
@@ -134,7 +146,11 @@ const Header = ({ user }) => {
 			<AppBar position='static'>
 				<Toolbar>
 					<Link href='/'>
-						<img src={API_URL_IMAGES+"logo.png"} alt='' style={{ height: "3rem", marginRight: "1rem" }} />
+						<img
+							src={API_URL_IMAGES + "logo.png"}
+							alt=''
+							style={{ height: "3rem", marginRight: "1rem" }}
+						/>
 					</Link>
 					<Link href='/'>
 						<h2 style={{ userSelect: "none", color: "black" }}>Play 2 Games</h2>

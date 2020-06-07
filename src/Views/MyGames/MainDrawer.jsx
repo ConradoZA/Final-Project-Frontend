@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle } from "react";
+import React, { useState } from "react";
 import AllGames from "./AllGames";
 import CheckersGame from "./CheckersGame";
 import { connect } from "react-redux";
@@ -12,8 +12,8 @@ import {
 	ListItemIcon,
 	ListItemText,
 	Toolbar,
-	Dialog,
 	ListSubheader,
+	Dialog,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import CasinoRoundedIcon from "@material-ui/icons/CasinoRounded";
@@ -24,6 +24,8 @@ import HighlightOffRoundedIcon from "@material-ui/icons/HighlightOffRounded";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import CheckersRules from "../../Components/CheckersRules";
+import { unsetGame } from "../../Redux/actions/checkerGames";
+import SendInvitation from "./SendInvitation";
 
 const drawerWidth = 190;
 
@@ -68,29 +70,30 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const MainDrawer = (props, ref) => {
+const MainDrawer = (props) => {
 	const window = props.window;
 	const classes = useStyles();
 	const theme = useTheme();
 	const [mobileOpen, setMobileOpen] = useState(false);
-	const [showRules, setShowRules] = useState(false);
-	let showOne = !props.checkersGame.unset;
-	let showAll = !showOne;
+	const [openRules, setOpenRules] = useState(false);
+	const [openInvitation, setOpenInvitation] = useState(false);
+	const showOne = !props.checkersGame.unset;
+	const showAll = !showOne;
 
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen);
 	};
 
 	const handleMain = () => {
-		setShowRules(false);
-		showAll = true;
+		unsetGame();
 	};
 
 	const handleCheckersRules = () => {
-		setShowRules(true);
-		showAll = false;
+		setOpenRules(!openRules);
 	};
-	const handleNewCheckersGame = () => {};
+	const handleInvitationModal = () => {
+		setOpenInvitation(!openInvitation);
+	};
 	const handleDrawCheckersGame = () => {};
 	const handleLoseCheckersGame = () => {};
 
@@ -118,7 +121,7 @@ const MainDrawer = (props, ref) => {
 					<ListItemText primary='Reglas' />
 				</ListItem>
 				{showAll && (
-					<ListItem onClick={handleNewCheckersGame} className='pointer'>
+					<ListItem onClick={handleInvitationModal} className='pointer'>
 						<ListItemIcon>
 							<AddCircleOutlineRoundedIcon />
 						</ListItemIcon>
@@ -214,10 +217,15 @@ const MainDrawer = (props, ref) => {
 						</Hidden>
 					</nav>
 					<main className={classes.content}>
-						{showRules && <CheckersRules />}
 						{showAll && <AllGames />}
 						{showOne && <CheckersGame />}
 					</main>
+					<Dialog open={openRules} onClose={handleCheckersRules} fullWidth>
+						<CheckersRules />
+					</Dialog>
+					<Dialog open={openInvitation} onClose={handleInvitationModal} fullWidth>
+						<SendInvitation handleInvitationModal={handleInvitationModal} />
+					</Dialog>
 				</>
 			)}
 		</div>

@@ -1,15 +1,19 @@
 const initialState = {
-all:[],
-}
+	all: [],
+};
 
 const allInfoCheckersReducer = (state = initialState, action = {}) => {
 	switch (action.type) {
-		//ToDo: hacer
-		case 'ALL_GAMES':
-			return{
+		case "ALL_GAMES":
+			return {
 				...state,
-				all:action.payload
-			}
+				all: action.payload,
+			};
+		case "NEW_INVITATION":
+			return {
+				...state,
+				all: [...state.all, action.payload],
+			};
 
 		default:
 			return state;

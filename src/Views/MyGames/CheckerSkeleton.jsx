@@ -1,16 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { API_URL_IMAGES } from "../../api-config";
-import { Paper } from "@material-ui/core";
+import { Paper, Dialog } from "@material-ui/core";
 import { setGame } from "../../Redux/actions/checkerGames";
+import AcceptInvitation from "./AcceptInvitation";
 
 const CheckerSkeleton = ({ game, name }) => {
-	const id = game.gamePlay._id;
+	const checkTurnNumber = () => {
+		if (game.gamePlay) {
+			return game.gamePlay.turn;
+		} else {
+			return 0;
+		}
+	};
+	const gameId = game._id;
 	const playerOne = game.playerOne;
 	const playerTwo = game.playerTwo;
 	const initiated = game.initiated;
 	const winner = game.winner;
 	const drawOffered = game.drawOffered;
-	const turn = game.gamePlay.turn;
+	const turn = checkTurnNumber();
+	const [openAcceptTicket, setOpenAcceptTicket] = useState(false);
 
 	const checkTurn = () => {
 		if (
@@ -22,9 +31,16 @@ const CheckerSkeleton = ({ game, name }) => {
 			return false;
 		}
 	};
+
+	const handleAcceptInvitation = () => {
+		setOpenAcceptTicket(!openAcceptTicket);
+	};
+
 	const goToGame = () => {
-		if (checkTurn) {
+		if (checkTurn() && initiated) {
 			setGame(game);
+		} else if (!initiated && playerTwo === name) {
+			handleAcceptInvitation();
 		}
 	};
 
@@ -50,13 +66,20 @@ const CheckerSkeleton = ({ game, name }) => {
 					) : (
 						<h4>Invitación enviada</h4>
 					)}
-					{checkTurn ? (
-						<h3 style={{ color: "darkred" }}>Te toca</h3>
+					{checkTurn() && initiated ? (
+						<h3 style={{ color: "red" }}>Te toca</h3>
 					) : (
 						<h3>Esperando respuesta</h3>
 					)}
 				</div>
 			</div>
+			<Dialog open={openAcceptTicket} onClose={handleAcceptInvitation} fullWidth>
+				<AcceptInvitation
+					id={gameId}
+					playerOne={playerOne}
+					handleAcceptInvitation={handleAcceptInvitation}
+				/>
+			</Dialog>
 		</Paper>
 	);
 };
