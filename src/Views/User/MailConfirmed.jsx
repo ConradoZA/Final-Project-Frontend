@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import background from "../../assets/imgs/boardgames.jpg";
+
 import { confirmedEmail } from "../../Redux/actions/users";
+import { API_URL_IMAGES } from "../../api-config";
 
 const MailConfirmed = (props) => {
   const token = props.match.params.passToken;
@@ -26,7 +27,7 @@ const MailConfirmed = (props) => {
         margin: "0 auto",
         width:"100%"
       }}
-      src={background}
+      src={API_URL_IMAGES+"boardgames.jpg"}
       alt='Congrats, mail confirmed'
     />
   );
