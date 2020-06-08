@@ -32,13 +32,11 @@ const SendInvitation = ({ handleInvitationModal }) => {
 			setType("info");
 		}, 2500);
 	};
-	// ToDo: No se actualiza antes de que se monte el componente
 	useEffect(() => {
 		getAllUsers().then((res) => {
 			setUsers(res.data.users);
 		});
-		console.log(users);
-	}, [users]);
+	}, []);
 
 	const handleSelect = () => {
 		setOpenSelect(!openSelect);
@@ -66,26 +64,25 @@ const SendInvitation = ({ handleInvitationModal }) => {
 			<CardHeader title='Busca un oponente' />
 			<CardContent className='space-between'>
 				<FormControl>
-					<InputLabel>Usuarios</InputLabel>
+					<InputLabel id='users'>Usuarios</InputLabel>
 					<Select
+						labelId='users'
 						variant='outlined'
-						open={open}
-						onClose={handleSelect}
-						onOpen={handleSelect}
 						value={user}
 						onChange={handleChange}
 						style={{ minWidth: "10rem" }}>
 						<MenuItem value='' key={"none"}>
 							<em>Nadie</em>
 						</MenuItem>
-						{users.map((user) => {
-							if (user.name !== myself) {
+						{users?.map((gamer) => {
+							if (gamer.name !== myself) {
 								return (
-									<MenuItem key={user.name} value={user.name}>
-										{user.name}
+									<MenuItem key={gamer.name} value={gamer.name}>
+										{gamer.name}
 									</MenuItem>
 								);
 							}
+							return "";
 						})}
 					</Select>
 				</FormControl>

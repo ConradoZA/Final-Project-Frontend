@@ -1,6 +1,7 @@
 const initialState = {
 	id:"",
 	turn: 0,
+	moved:false,
 	past: [],
 	present: [],
 	whitePCaptured: 0,
@@ -16,6 +17,7 @@ const allInfoCheckersReducer = (state = initialState, action = {}) => {
 				past: action.past,
 				present: action.present,
 				turn: action.turn,
+				moved:false,
 				whitePCaptured: action.whitePCaptured,
 				blackPCaptured: action.blackPCaptured,
 				captureTimer: action.captureTimer,
@@ -24,6 +26,7 @@ const allInfoCheckersReducer = (state = initialState, action = {}) => {
 			return {
 				id:"",
 				turn: 0,
+				moved:false,
 				past: [],
 				present: [],
 				whitePCaptured: 0,
@@ -33,7 +36,8 @@ const allInfoCheckersReducer = (state = initialState, action = {}) => {
 		case "SET_TABLE_POSITION":
 			return {
 				...state,
-				present: action.payload,
+				moved:action.moved,
+				present: action.present,
 			};
 
 		default:

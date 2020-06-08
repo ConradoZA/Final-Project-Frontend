@@ -3,6 +3,7 @@ import { API_URL_IMAGES } from "../../api-config";
 import { Paper, Dialog } from "@material-ui/core";
 import { setGame } from "../../Redux/actions/checkerGames";
 import AcceptInvitation from "./AcceptInvitation";
+import AcceptDraw from "./AcceptDraw";
 
 const CheckerSkeleton = ({ game, name }) => {
 	const checkTurnNumber = () => {
@@ -20,6 +21,7 @@ const CheckerSkeleton = ({ game, name }) => {
 	const drawOffered = game.drawOffered;
 	const turn = checkTurnNumber();
 	const [openAcceptTicket, setOpenAcceptTicket] = useState(false);
+	const [openDrawTicket, setOpenDrawTicket] = useState(false);
 
 	const checkTurn = () => {
 		if (
@@ -35,12 +37,17 @@ const CheckerSkeleton = ({ game, name }) => {
 	const handleAcceptInvitation = () => {
 		setOpenAcceptTicket(!openAcceptTicket);
 	};
+	const handleDrawInvitation = () => {
+		setOpenDrawTicket(!openDrawTicket);
+	};
 
 	const goToGame = () => {
 		if (checkTurn() && initiated) {
 			setGame(game);
 		} else if (!initiated && playerTwo === name) {
 			handleAcceptInvitation();
+		} else if (drawOffered) {
+			handleDrawInvitation();
 		}
 	};
 
@@ -78,6 +85,13 @@ const CheckerSkeleton = ({ game, name }) => {
 					id={gameId}
 					playerOne={playerOne}
 					handleAcceptInvitation={handleAcceptInvitation}
+				/>
+			</Dialog>
+			<Dialog open={openDrawTicket} onClose={handleDrawInvitation} fullWidth>
+				<AcceptDraw
+					id={gameId}
+					playerOne={playerOne}
+					handleAcceptInvitation={handleDrawInvitation}
 				/>
 			</Dialog>
 		</Paper>

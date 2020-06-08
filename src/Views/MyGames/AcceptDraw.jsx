@@ -4,7 +4,7 @@ import { answerInvitation } from "../../Redux/actions/checkerGames";
 import SnackBar from "../../Components/SnackBar";
 import store from "../../Redux/store";
 
-const AcceptInvitation = (props) => {
+const AcceptDraw = (props) => {
 	const [open, setOpen] = useState(false);
 	const [type, setType] = useState("info");
 	const [message, setMessage] = useState("");
@@ -27,7 +27,7 @@ const AcceptInvitation = (props) => {
 				setType("error");
 				openSnackBar();
 				setTimeout(() => {
-					props.handleAcceptInvitation();
+					props.handleAcceptDraw();
 				}, 2500);
 			})
 			.catch((error) => {
@@ -41,7 +41,7 @@ const AcceptInvitation = (props) => {
 				setType("success");
 				openSnackBar();
 				setTimeout(() => {
-					props.handleAcceptInvitation();
+					props.handleAcceptDraw();
 				}, 2500);
 			})
 			.catch((error) => {
@@ -71,4 +71,4 @@ const AcceptInvitation = (props) => {
 		</Card>
 	);
 };
-export default AcceptInvitation;
+export default AcceptDraw;

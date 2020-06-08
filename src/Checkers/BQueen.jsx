@@ -1,13 +1,13 @@
 import React from "react";
 import { useDrag } from "react-dnd";
 import "./checkers.css";
-import { checkTurn } from "./Rules/GameRules";
 import { API_URL_IMAGES } from "../api-config";
+import { checkTurn } from "./Rules/GameRules";
 
 const BQueen = ({ color, id }) => {
-  const turn=checkTurn();
-  const [{ canDrag, isDragging }, drag] = useDrag({
-    canDrag: (turn==="b"),
+	const myTurn = checkTurn();
+	const [{ canDrag, isDragging }, drag] = useDrag({
+		canDrag: myTurn.includes("b"),
     item: { type: "queen", id: id },
     collect: (monitor) => ({
       canDrag: !!monitor.canDrag(),

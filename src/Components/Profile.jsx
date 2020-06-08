@@ -86,8 +86,9 @@ const Profile = (props) => {
 						className='img-profile'
 					/>
 					<div className='flex-column-evenly'>
-						<InputLabel>Nombre</InputLabel>
+						<InputLabel id='name'>Nombre</InputLabel>
 						<Input
+							labelId='name'
 							disabled={inputName}
 							value={name}
 							margin='dense'
@@ -110,11 +111,12 @@ const Profile = (props) => {
 							}
 						/>
 						<br />
-						<InputLabel>E-mail</InputLabel>
+						<InputLabel id='email'>E-mail</InputLabel>
 						{user.email_verified ? (
-							<Input disabled margin='dense' value={email} />
+							<Input lanelId='email' disabled margin='dense' value={email} />
 						) : (
 							<Input
+								labelId='email'
 								disabled={inputMail}
 								margin='dense'
 								value={email}

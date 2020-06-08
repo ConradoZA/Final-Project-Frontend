@@ -1,65 +1,50 @@
 import store from "../../Redux/store";
-import { setNewMove } from "../../Redux/actions/checkerPlays";
-import { whiteMoves, whiteResults } from "./WhiteMoves";
-import { blackMoves, blackResults } from "./BlackMoves";
-const state = store.getState();
-const pieces = state.checkersPlay?.present;
+import { whitePawnMove, whitePawnResults, whiteQueenMove } from "./WhiteMoves";
+import { blackPawnMove, blackPawnResults, backQueenMove } from "./BlackMoves";
 
-let actualPiece = [];
-let letra = "";
-let SIDE = "";
-let R = [];
-
-const checkWhoseTurnItIs = () => {
-	if (state.checkersPlay?.turn%2===1 && letra === "") {
-		letra = "w";
-	} else if (state.checkersPlay?.turn%2===0 && letra === "") {
-		letra = "b";
-	}
-};
 export function checkTurn() {
-	checkWhoseTurnItIs();
-	return letra;
+	const state = store.getState();
+	const turn = state.checkersPlay.turn;
+	const moved = state.checkersPlay.moved;
+	if (turn % 2 === 1 && moved === false) {
+		return "w";
+	} else if (turn % 2 === 0 && moved === false) {
+		return "b";
+	} else {
+		return "no";
+	}
 }
 
 export function canMove(toX, toY, item) {
-	actualPiece = pieces.filter((piece) => item.id === piece[3]);
-	SIDE = actualPiece[0][2];
-	if (SIDE.includes(letra)) {
-		if (SIDE.includes("b")) {
-			return blackMoves(toX, toY, item, actualPiece);
-		} else if (SIDE.includes("w")) {
-			return whiteMoves(toX, toY, item, actualPiece);
+	const state = store.getState();
+	const pieces = state.checkersPlay.present;
+	const actualPiece = pieces.find((piece) => item.id === piece[3]);
+	const SIDE = actualPiece[2];
+	if (SIDE.includes("b")) {
+		if (SIDE.includes("p")) {
+			return blackPawnMove(toX, toY, actualPiece);
+		} else {
+			return backQueenMove(toX, toY, actualPiece);
+		}
+	} else if (SIDE.includes("w")) {
+		if (SIDE.includes("p")) {
+			return whitePawnMove(toX, toY, actualPiece);
+		} else {
+			return whiteQueenMove(toX, toY, actualPiece);
 		}
 	}
 }
-export function move(toX, toY) {
-	R = [];
-	const newPiecePosition = [toX, toY, actualPiece[0][2], actualPiece[0][3]];
-	let newBoard = pieces.filter((piece) => actualPiece[0][3] !== piece[3]);
-	if (SIDE.includes("b")) {
-		R = blackResults();
-	} else if (SIDE.includes("w")) {
-		R = whiteResults();
+export function move(toX, toY, item) {
+	const state = store.getState();
+	const pieces = state.checkersPlay.present;
+	const actualPiece = pieces.find((piece) => item.id === piece[3]);
+	const newPiecePosition = [toX, toY, actualPiece[2], actualPiece[3]];
+	const newBoard = pieces.filter((piece) => actualPiece[3] !== piece[3]);
+	if (actualPiece[2] === "bp") {
+		blackPawnResults(newPiecePosition);
+	} else if (actualPiece[2] === "wp") {
+		whitePawnResults(newPiecePosition);
+	} else if (actualPiece[2] === "bq") {
+	} else if (actualPiece[2] === "wq") {
 	}
-	let toDelete1 = R[0];
-	let toDelete2 = R[1];
-	let toDelete3 = R[2];
-	let toDelete4 = R[3];
-	let option1 = R[4];
-	let option2 = R[5];
-	let option3 = R[6];
-	let option4 = R[7];
-	if (toDelete1.length > 0 && option1[0] === toX && option1[1] === toY) {
-		newBoard = newBoard.filter((piece) => toDelete1[3] !== piece[3]);
-	} else if (toDelete2.length > 0 && option2[0] === toX && option2[1] === toY) {
-		newBoard = newBoard.filter((piece) => toDelete2[3] !== piece[3]);
-	} else if (toDelete3.length > 0 && option3[0] === toX && option3[1] === toY) {
-		newBoard = newBoard.filter((piece) => toDelete3[3] !== piece[3]);
-	} else if (toDelete4.length > 0 && option4[0] === toX && option4[1] === toY) {
-		newBoard = newBoard.filter((piece) => toDelete4[3] !== piece[3]);
-	}
-
-	newBoard.push(newPiecePosition);
-	setNewMove(newBoard);
 }
