@@ -10,7 +10,6 @@ const GameList = () => {
 	const username = state.user.user.name;
 	const allGames = state.allCheckersGame.all;
 	const gamesEnded = allGames.filter((game) => game.winner !== "");
-	console.log(gamesEnded);
 	useEffect(() => {
 		getAllGames();
 	}, []);

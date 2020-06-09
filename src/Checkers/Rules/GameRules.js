@@ -1,65 +1,120 @@
 import store from "../../Redux/store";
-import { setNewMove } from "../../Redux/actions/checkerPlays";
-import { whiteMoves, whiteResults } from "./WhiteMoves";
-import { blackMoves, blackResults } from "./BlackMoves";
-const state = store.getState();
-const pieces = state.checkersPlay?.present;
+import {
+	whitePawnMove,
+	whitePawnResults,
+	whiteQueenMove,
+	whitePawnCanCapture,
+} from "./WhiteMoves";
+import {
+	blackPawnMove,
+	blackPawnResults,
+	backQueenMove,
+	blackPawnCanCapture,
+} from "./BlackMoves";
+import { endGame, acceptDraw } from "../../Redux/actions/checkerGames";
 
-let actualPiece = [];
-let letra = "";
-let SIDE = "";
-let R = [];
-
-const checkWhoseTurnItIs = () => {
-	if (state.checkersPlay?.turn%2===1 && letra === "") {
-		letra = "w";
-	} else if (state.checkersPlay?.turn%2===0 && letra === "") {
-		letra = "b";
+export function winningCondition() {
+	const state = store.getState();
+	const playerOne = state.checkersGame.playerOne;
+	const playerTwo = state.checkersGame.playerTwo;
+	const gameId = state.checkersGame.id;
+	const captureTimer=state.checkersGame.captureTimer;
+	const whiteSide = state.checkersPlay.present.filter((piece) => piece[2].includes("w"));
+	const whitePawns = state.checkersPlay.present.filter((piece) =>
+		piece[2].includes("wp")
+	);
+	const blackSide = state.checkersPlay.present.filter((piece) => piece[2].includes("b"));
+	const blackPawns = state.checkersPlay.present.filter((piece) =>
+		piece[2].includes("bp")
+	);
+	if (whiteSide.length === 0) {
+		endGame(gameId, playerTwo);
+	} else if (blackSide.length === 0) {
+		endGame(gameId, playerOne);
+	} else if (whiteSide.length > 2 && whitePawns.length <= 2) {
+		endGame(gameId, playerTwo);
+	} else if (blackSide.length > 2 && blackPawns.length <= 2) {
+		endGame(gameId, playerOne);
 	}
-};
-export function checkTurn() {
-	checkWhoseTurnItIs();
-	return letra;
+	if (captureTimer >= 25) {
+		acceptDraw(gameId);
+	}
 }
 
+export function checkTurn(id) {
+	const state = store.getState();
+	const turn = state.checkersPlay.turn;
+	const moved = state.checkersPlay.moved;
+	if (turn % 2 === 1 && moved === false) {
+		const allCaptures = [];
+		const me = state.checkersPlay.present.find((piece) => piece[3] === id);
+		const ownSide = state.checkersPlay.present.filter((piece) => piece[2].includes("w"));
+		ownSide.map((piece) => allCaptures.push(whitePawnCanCapture(piece)));
+		if (allCaptures.flat().length > 0) {
+			const iCan = whitePawnCanCapture(me);
+			if (iCan.length > 0) {
+				return "w";
+			} else {
+				return "no";
+			}
+		}
+		return "w";
+	} else if (turn % 2 === 0 && moved === false) {
+		const allCaptures = [];
+		const me = state.checkersPlay.present.find((piece) => piece[3] === id);
+		const ownSide = state.checkersPlay.present.filter((piece) => piece[2].includes("b"));
+		ownSide.map((piece) => allCaptures.push(blackPawnCanCapture(piece)));
+		if (allCaptures.flat().length > 0) {
+			const iCan = blackPawnCanCapture(me);
+			if (iCan.length > 0) {
+				return "b";
+			} else {
+				return "no";
+			}
+		}
+		return "b";
+	} else {
+		return "no";
+	}
+}
+
+export function doesCapture (arr1, arr2) {
+	if (arr1.length === arr2.length) {
+		return false;
+	} else {
+		return true;
+	}
+};
+
 export function canMove(toX, toY, item) {
-	actualPiece = pieces.filter((piece) => item.id === piece[3]);
-	SIDE = actualPiece[0][2];
-	if (SIDE.includes(letra)) {
-		if (SIDE.includes("b")) {
-			return blackMoves(toX, toY, item, actualPiece);
-		} else if (SIDE.includes("w")) {
-			return whiteMoves(toX, toY, item, actualPiece);
+	const state = store.getState();
+	const pieces = state.checkersPlay.present;
+	const actualPiece = pieces.find((piece) => item.id === piece[3]);
+	const SIDE = actualPiece[2];
+	if (SIDE.includes("b")) {
+		if (SIDE.includes("p")) {
+			return blackPawnMove(toX, toY, actualPiece);
+		} else {
+			return backQueenMove(toX, toY, actualPiece);
+		}
+	} else if (SIDE.includes("w")) {
+		if (SIDE.includes("p")) {
+			return whitePawnMove(toX, toY, actualPiece);
+		} else {
+			return whiteQueenMove(toX, toY, actualPiece);
 		}
 	}
 }
-export function move(toX, toY) {
-	R = [];
-	const newPiecePosition = [toX, toY, actualPiece[0][2], actualPiece[0][3]];
-	let newBoard = pieces.filter((piece) => actualPiece[0][3] !== piece[3]);
-	if (SIDE.includes("b")) {
-		R = blackResults();
-	} else if (SIDE.includes("w")) {
-		R = whiteResults();
+export function move(toX, toY, item) {
+	const state = store.getState();
+	const pieces = state.checkersPlay.present;
+	const actualPiece = pieces.find((piece) => item.id === piece[3]);
+	const newPiecePosition = [toX, toY, actualPiece[2], actualPiece[3]];
+	if (actualPiece[2] === "bp") {
+		blackPawnResults(newPiecePosition);
+	} else if (actualPiece[2] === "wp") {
+		whitePawnResults(newPiecePosition);
+	} else if (actualPiece[2] === "bq") {
+	} else if (actualPiece[2] === "wq") {
 	}
-	let toDelete1 = R[0];
-	let toDelete2 = R[1];
-	let toDelete3 = R[2];
-	let toDelete4 = R[3];
-	let option1 = R[4];
-	let option2 = R[5];
-	let option3 = R[6];
-	let option4 = R[7];
-	if (toDelete1.length > 0 && option1[0] === toX && option1[1] === toY) {
-		newBoard = newBoard.filter((piece) => toDelete1[3] !== piece[3]);
-	} else if (toDelete2.length > 0 && option2[0] === toX && option2[1] === toY) {
-		newBoard = newBoard.filter((piece) => toDelete2[3] !== piece[3]);
-	} else if (toDelete3.length > 0 && option3[0] === toX && option3[1] === toY) {
-		newBoard = newBoard.filter((piece) => toDelete3[3] !== piece[3]);
-	} else if (toDelete4.length > 0 && option4[0] === toX && option4[1] === toY) {
-		newBoard = newBoard.filter((piece) => toDelete4[3] !== piece[3]);
-	}
-
-	newBoard.push(newPiecePosition);
-	setNewMove(newBoard);
 }

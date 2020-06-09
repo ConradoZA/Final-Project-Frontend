@@ -1,46 +1,57 @@
 import React from "react";
 import { connect } from "react-redux";
-import BoardSquare from "./BoardSquare.jsx";
+import Square from "./Square.jsx";
 import WPawn from "./WPawn";
 import WQueen from "./WQueen";
 import BPawn from "./BPawn";
 import BQueen from "./BQueen";
 import "./checkers.css";
+import { whitePawnCanCapture } from "./Rules/WhiteMoves.js";
+import { blackPawnCanCapture } from "./Rules/BlackMoves.js";
 
 const Board = (props) => {
-	let tablePosition = props.checkersPlay;
+	let tablePosition = props.checkersPlay.present;
+	const turn = props.checkersPlay.turn;
 	const SQUARES = [];
 
 	const renderIfThereIsPiece = (x, y) => {
-		var newArray = tablePosition.map((piece) => {
+		var piece = tablePosition.map((piece) => {
 			const id = piece[3];
+			var hasToCapture = false;
 			if (x === piece[0] && y === piece[1]) {
 				switch (piece[2]) {
 					case "wp":
-						return <WPawn color={"wp"} id={id} key={id} />;
+						if (whitePawnCanCapture(piece).length > 0) {
+							hasToCapture = true;
+						}
+						return <WPawn color={"wp"} id={id} key={id} hasToCapture={hasToCapture} />;
 					case "wq":
-						return <WQueen color={"wq"} id={id} key={id} />;
+						return <WQueen color={"wq"} id={id} key={id} hasToCapture={hasToCapture} />;
 					case "bp":
-						return <BPawn color={"bp"} id={id} key={id} />;
+						if (blackPawnCanCapture(piece).length > 0) {
+							hasToCapture = true;
+						}
+						return <BPawn color={"bp"} id={id} key={id} hasToCapture={hasToCapture} />;
 					case "bq":
-						return <BQueen color={"bq"} id={id} key={id} />;
+						return <BQueen color={"bq"} id={id} key={id} hasToCapture={hasToCapture} />;
 					default:
-						return <></>;
+						return "";
 				}
 			}
 		});
-		return newArray;
+		return piece;
 	};
 	const addSquare = (i) => {
 		let X = i % 10;
 		let Y = Math.floor(i / 10);
+		const hasPiece = renderIfThereIsPiece(X, Y);
 		return (
-			<BoardSquare x={X} y={Y} key={i}>
-				{renderIfThereIsPiece(X, Y)}
-			</BoardSquare>
+			<Square x={X} y={Y} key={i}>
+				{hasPiece}
+			</Square>
 		);
 	};
-	const createBoard = () => {
+	const createWhiteBoard = () => {
 		for (let i = 99; i >= 0; i--) {
 			SQUARES.push(addSquare(i));
 			if (i === 0) {
@@ -48,11 +59,22 @@ const Board = (props) => {
 			}
 		}
 	};
-
-	return <div className='board'>{createBoard()}</div>;
+	const createBlackBoard = () => {
+		for (let i = 0; i <= 99; i++) {
+			SQUARES.push(addSquare(i));
+			if (i === 99) {
+				return SQUARES;
+			}
+		}
+	};
+	return (
+		<div className='board'>
+			{turn % 2 === 1 ? createWhiteBoard() : createBlackBoard()}
+		</div>
+	);
 };
 
 const mapStateToProps = (state) => ({
-	checkersPlay: state.checkersPlay.present,
+	checkersPlay: state.checkersPlay,
 });
 export default connect(mapStateToProps)(Board);

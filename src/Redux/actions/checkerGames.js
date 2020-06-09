@@ -2,10 +2,9 @@ import store from "../store";
 import axios from "axios";
 import { API_URL_1 } from "../../api-config";
 
-const state = store.getState();
-var user = state.user.user;
-
 export const waitForAproval = async (playerTwo) => {
+	const state = store.getState();
+	const user = state.user.user;
 	const payload = { playerOne: user.name, playerTwo };
 	const res = await axios.post(API_URL_1 + "checkers/games/invitation", payload);
 	const invitation = {
@@ -22,15 +21,16 @@ export const waitForAproval = async (playerTwo) => {
 };
 
 export const answerInvitation = async (answer, gameId) => {
-	await axios.put(API_URL_1 + "checkers/games/answer", {
+	const res = await axios.put(API_URL_1 + "checkers/games/answer", {
 		answer,
 		gameId,
 	});
-	const updatedGames = getAllGames();
-	return updatedGames;
+	return res;
 };
 
 export const getAllGames = async () => {
+	const state = store.getState();
+	const user = state.user.user;
 	const res = await axios.get(API_URL_1 + `checkers/games/getAll=${user.name}`);
 	store.dispatch({
 		type: "ALL_GAMES",
@@ -42,7 +42,7 @@ export const getOneGame = async (gameId) => {
 	const res = await axios.get(API_URL_1 + `checkers/games/get=${gameId}`);
 	return res;
 };
-export const setGame = async (game) => {
+export const setGame = (game) => {
 	store.dispatch({
 		type: "SET_GAME",
 		id: game._id,
@@ -54,7 +54,7 @@ export const setGame = async (game) => {
 	});
 	store.dispatch({
 		type: "SET_PLAY",
-		id:game.gamePlay._id,
+		id: game.gamePlay._id,
 		past: game.gamePlay.past,
 		present: game.gamePlay.present,
 		turn: game.gamePlay.turn,
@@ -63,7 +63,7 @@ export const setGame = async (game) => {
 		captureTimer: game.gamePlay.captureTimer,
 	});
 };
-export const unsetGame = async (game) => {
+export const unsetGame = () => {
 	store.dispatch({
 		type: "UNSET_GAME",
 	});
@@ -71,4 +71,30 @@ export const unsetGame = async (game) => {
 		type: "UNSET_PLAY",
 	});
 	return true;
+};
+export const offerDraw = async (playId) => {
+	const res = await axios.put(API_URL_1 + "checkers/games/draw-offered", { playId });
+	return res;
+};
+export const acceptDraw = async (gameId) => {
+	await axios.put(API_URL_1 + "checkers/games/draw-accepted", { gameId });
+	getAllGames();
+};
+export const rejectDraw = async (gameId) => {
+	await axios.put(API_URL_1 + "checkers/games/draw-rejected", { gameId });
+	getAllGames();
+};
+export const surrender = async (playId, winner) => {
+	const res = await axios.put(API_URL_1 + "checkers/games/surrender", {
+		playId,
+		winner,
+	});
+	return res;
+};
+export const endGame = async (gameId, winner) => {
+	const res = await axios.put(API_URL_1 + "checkers/games/game-finished", {
+		gameId,
+		winner,
+	});
+	return res;
 };
