@@ -16,7 +16,7 @@ var PIECE_TO_CAPTURE_2 = [];
 
 export function blackPawnCanCapture(actualPiece) {
 	const state = store.getState();
-	const pieces = state.checkersPlay.present;
+	const pieces = state.checkersPlay?.present;
 	const SIDE = actualPiece[2][0];
 	const MX = actualPiece[0];
 	const MY = actualPiece[1];

@@ -30,6 +30,7 @@ const CheckersGame = (props) => {
 			setType("info");
 		}, 2500);
 	};
+
 	useEffect(() => {
 		getPlay(id).then((res) => {
 			oldMove = res.data.present;
@@ -58,7 +59,7 @@ const CheckersGame = (props) => {
 
 	const sendMove = () => {
 		if (doesMove(present, oldMove)) {
-			turn = props.checkersPlay.turn+1;
+			turn = props.checkersPlay.turn + 1;
 			if (doesCapture(present, oldMove)) {
 				captureTimer = 0;
 			} else {

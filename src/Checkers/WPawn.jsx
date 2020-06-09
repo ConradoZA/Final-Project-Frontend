@@ -5,7 +5,7 @@ import { API_URL_IMAGES } from "../api-config";
 import { checkTurn } from "./Rules/GameRules";
 
 const WPawn = ({ color, id, hasToCapture }) => {
-	const myTurn = checkTurn();
+	const myTurn = checkTurn(id);
 	const [{ canDrag, isDragging }, drag] = useDrag({
 		canDrag: myTurn.includes("w"),
 		item: { type: "pawn", id: id },
