@@ -3,12 +3,10 @@ import { useEffect } from "react";
 import { getAllGames } from "../../Redux/actions/checkerGames";
 import CheckerSkeleton from "./CheckerSkeleton";
 import { connect } from "react-redux";
-import store from "../../Redux/store";
 
-const AllGames = (props) => {
-	const state = store.getState();
-	const username = state.user.user.name;
-	const stillPlaying = props.allCheckersGame.filter((game) => game.winner === "");
+const AllGames = ({ allCheckersGame, user }) => {
+	const username = user.name;
+	const stillPlaying = allCheckersGame.filter((game) => game.winner === "");
 	useEffect(() => {
 		getAllGames();
 	}, []);
@@ -21,5 +19,8 @@ const AllGames = (props) => {
 		</>
 	);
 };
-const mapStateToProps = (state) => ({ allCheckersGame: state.allCheckersGame.all });
+const mapStateToProps = (state) => ({
+	allCheckersGame: state.allCheckersGame.all,
+	user: state.use.user,
+});
 export default connect(mapStateToProps)(AllGames);

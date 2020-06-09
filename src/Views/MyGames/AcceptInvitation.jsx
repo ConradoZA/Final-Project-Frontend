@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, Button, CardActions } from "@material-ui/core";
 import { answerInvitation } from "../../Redux/actions/checkerGames";
 import SnackBar from "../../Components/SnackBar";
-import store from "../../Redux/store";
 
 const AcceptInvitation = (props) => {
 	const [open, setOpen] = useState(false);
 	const [type, setType] = useState("info");
 	const [message, setMessage] = useState("");
-	const state = store.getState();
-	var myself = state.user.user.name;
 
 	const openSnackBar = () => {
 		setOpen(true);
@@ -21,7 +18,7 @@ const AcceptInvitation = (props) => {
 	};
 
 	const sayNo = () => {
-		answerInvitation("no",props.id)
+		answerInvitation("no", props.id)
 			.then((_res) => {
 				setMessage("Ahora no, que me duele la cabeza");
 				setType("error");
@@ -35,7 +32,7 @@ const AcceptInvitation = (props) => {
 			});
 	};
 	const sayYes = () => {
-		answerInvitation("yes",props.id)
+		answerInvitation("yes", props.id)
 			.then((_res) => {
 				setMessage("Challenge accepted... Las damas primero ;)");
 				setType("success");

@@ -17,7 +17,6 @@ import SnackBar from "../../Components/SnackBar";
 const SendInvitation = ({ handleInvitationModal }) => {
 	const [user, setUser] = useState("");
 	const [users, setUsers] = useState([]);
-	const [openSelect, setOpenSelect] = useState(false);
 	const [open, setOpen] = useState(false);
 	const [type, setType] = useState("info");
 	const [message, setMessage] = useState("");
@@ -38,9 +37,6 @@ const SendInvitation = ({ handleInvitationModal }) => {
 		});
 	}, []);
 
-	const handleSelect = () => {
-		setOpenSelect(!openSelect);
-	};
 	const handleChange = (event) => {
 		setUser(event.target.value);
 	};
@@ -60,7 +56,7 @@ const SendInvitation = ({ handleInvitationModal }) => {
 	};
 
 	return (
-		<Card>
+		<Card className='flex-column center'>
 			<CardHeader title='Busca un oponente' />
 			<CardContent className='space-between'>
 				<FormControl>

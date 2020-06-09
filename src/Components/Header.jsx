@@ -7,7 +7,6 @@ import {
 	IconButton,
 	Menu,
 	MenuItem,
-	Link,
 	Button,
 	Grow,
 } from "@material-ui/core";
@@ -18,6 +17,7 @@ import CasinoIcon from "@material-ui/icons/Casino";
 import EmojiEventsRoundedIcon from "@material-ui/icons/EmojiEventsRounded";
 import { logout } from "../Redux/actions/users";
 import { API_URL_IMAGES } from "../api-config";
+import { Link, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
 	grow: {
@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = ({ user }) => {
+	const history= useHistory();
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -69,11 +70,11 @@ const Header = ({ user }) => {
 	};
 	const handleLogoutMobileMenuClose = () => {
 		setMobileMoreAnchorEl(null);
-		logout().finally(() => window.location.assign("/"));
+		logout().finally(() => history.push("/"));
 	};
 	const handleLogoutMenuClose = () => {
 		setAnchorEl(null);
-		logout().finally(() => window.location.assign("/"));
+		logout().finally(() =>history.push("/"));
 	};
 
 	const renderMenu = (
@@ -86,13 +87,13 @@ const Header = ({ user }) => {
 			open={isMenuOpen}
 			onClose={handleMenuClose}
 			TransitionComponent={Grow}>
-			<Link href='/profile' style={{ all: "unset" }}>
+			<Link to='/profile' style={{ all: "unset" }}>
 				<MenuItem>Perfil</MenuItem>
 			</Link>
-			<Link href='/myGames' style={{ all: "unset" }}>
+			<Link to='/myGames' style={{ all: "unset" }}>
 				<MenuItem>Mis partidas</MenuItem>
 			</Link>
-			<Link href='/myRecord' style={{ all: "unset" }}>
+			<Link to='/myRecord' style={{ all: "unset" }}>
 				<MenuItem>Partidas Terminadas</MenuItem>
 			</Link>
 		</Menu>
@@ -109,7 +110,7 @@ const Header = ({ user }) => {
 			onClose={handleMobileMenuClose}
 			TransitionComponent={Grow}>
 			<MenuItem>
-				<Link href='/profile' style={{ color: "black", display: "flex" }}>
+				<Link to='/profile' style={{ color: "black", display: "flex" }}>
 					<IconButton color='inherit'>
 						<AccountCircle />
 					</IconButton>
@@ -117,7 +118,7 @@ const Header = ({ user }) => {
 				</Link>
 			</MenuItem>
 			<MenuItem>
-				<Link href='/myGames' style={{ color: "black", display: "flex" }}>
+				<Link to='/myGames' style={{ color: "black", display: "flex" }}>
 					<IconButton color='inherit'>
 						<CasinoIcon />
 					</IconButton>
@@ -125,7 +126,7 @@ const Header = ({ user }) => {
 				</Link>
 			</MenuItem>
 			<MenuItem>
-				<Link href='/myRecord' style={{ color: "black", display: "flex" }}>
+				<Link to='/myRecord' style={{ color: "black", display: "flex" }}>
 					<IconButton color='inherit'>
 						<EmojiEventsRoundedIcon />
 					</IconButton>
@@ -145,14 +146,14 @@ const Header = ({ user }) => {
 		<div className={classes.grow}>
 			<AppBar position='static'>
 				<Toolbar>
-					<Link href='/'>
+					<Link to='/'>
 						<img
 							src={API_URL_IMAGES + "logo.png"}
 							alt=''
 							style={{ height: "3rem", marginRight: "1rem" }}
 						/>
 					</Link>
-					<Link href='/'>
+					<Link to='/'>
 						<h2 style={{ userSelect: "none", color: "black" }}>Play 2 Games</h2>
 					</Link>
 					<div className={classes.grow} />
@@ -178,7 +179,7 @@ const Header = ({ user }) => {
 							</IconButton>
 						</div>
 					) : (
-						<Link href='/login'>
+						<Link to='/login'>
 							<Button variant='contained' color='secondary'>
 								Conectar
 							</Button>

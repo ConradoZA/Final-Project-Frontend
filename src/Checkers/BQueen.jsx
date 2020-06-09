@@ -5,7 +5,7 @@ import { API_URL_IMAGES } from "../api-config";
 import { checkTurn } from "./Rules/GameRules";
 
 const BQueen = ({ color, id }) => {
-	const myTurn = checkTurn();
+	const myTurn = checkTurn(id);
 	const [{ canDrag, isDragging }, drag] = useDrag({
 		canDrag: myTurn.includes("b"),
     item: { type: "queen", id: id },

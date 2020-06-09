@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { API_URL_IMAGES } from "../api-config";
 import SnackBar from "./SnackBar";
 import { connect } from "react-redux";
-import { Paper, InputLabel, Input, InputAdornment, Link } from "@material-ui/core";
+import { Paper, InputLabel, Input, InputAdornment } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import CancelScheduleSendIcon from "@material-ui/icons/CancelScheduleSend";
 import SendIcon from "@material-ui/icons/Send";
 
 import { updateUser, confirmMail } from "../Redux/actions/users";
+import { Link } from "react-router-dom";
 
 const Profile = (props) => {
 	const user = props.user.user;

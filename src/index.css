@@ -1,6 +1,10 @@
 :root {
 	--drawerWidth: 190px;
 }
+a {
+	all: unset;
+	cursor: pointer;
+}
 .flex {
 	display: flex;
 }

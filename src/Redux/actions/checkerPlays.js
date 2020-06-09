@@ -17,11 +17,3 @@ export const sendMoveToOponent = (newTurn) => {
 	const res = Axios.put(API_URL_1 + "checkers/plays/new-turn", newTurn);
 	return res;
 };
-export const offerDraw = (playId) => {
-	const res = Axios.put(API_URL_1 + "/checkers/games/draw-offered", playId);
-	return res;
-};
-export const acceptDraw = (playId) => {
-	const res = Axios.put(API_URL_1 + "/checkers/games/draw-accepted", playId);
-	return res;
-};

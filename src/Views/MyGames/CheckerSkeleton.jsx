@@ -17,7 +17,6 @@ const CheckerSkeleton = ({ game, name }) => {
 	const playerOne = game.playerOne;
 	const playerTwo = game.playerTwo;
 	const initiated = game.initiated;
-	const winner = game.winner;
 	const drawOffered = game.drawOffered;
 	const turn = checkTurnNumber();
 	const [openAcceptTicket, setOpenAcceptTicket] = useState(false);
@@ -42,10 +41,14 @@ const CheckerSkeleton = ({ game, name }) => {
 	};
 
 	const goToGame = () => {
-		if (checkTurn() && initiated) {
+		if (drawOffered && checkTurn()) {
+			return "";
+		} else if (checkTurn() && initiated) {
 			setGame(game);
 		} else if (!initiated && playerTwo === name) {
 			handleAcceptInvitation();
+		} else if (drawOffered && checkTurn()) {
+			return "";
 		} else if (drawOffered) {
 			handleDrawInvitation();
 		}
@@ -67,14 +70,19 @@ const CheckerSkeleton = ({ game, name }) => {
 						<strong>Turno de:</strong> {turn % 2 === 0 ? "Negras" : "Blancas"}
 					</p>
 					{!initiated && playerTwo === name ? (
-						<h4 style={{ color: "darkred" }}>¿Quieres jugar?</h4>
+						<h4 style={{ color: "red" }}>¿Quieres jugar?</h4>
 					) : initiated ? (
 						<></>
 					) : (
 						<h4>Invitación enviada</h4>
 					)}
-					{checkTurn() && initiated ? (
+					{drawOffered && !checkTurn() && (
+						<h4 style={{ color: "gold" }}>Te ofrecen tablas</h4>
+					)}
+					{checkTurn() && initiated && !drawOffered ? (
 						<h3 style={{ color: "red" }}>Te toca</h3>
+					) : checkTurn() && drawOffered ? (
+						<h3>Has pedido tablas</h3>
 					) : (
 						<h3>Esperando respuesta</h3>
 					)}
@@ -88,11 +96,7 @@ const CheckerSkeleton = ({ game, name }) => {
 				/>
 			</Dialog>
 			<Dialog open={openDrawTicket} onClose={handleDrawInvitation} fullWidth>
-				<AcceptDraw
-					id={gameId}
-					playerOne={playerOne}
-					handleAcceptInvitation={handleDrawInvitation}
-				/>
+				<AcceptDraw id={gameId} handleDrawInvitation={handleDrawInvitation} />
 			</Dialog>
 		</Paper>
 	);

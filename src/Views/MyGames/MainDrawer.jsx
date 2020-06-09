@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AllGames from "./AllGames";
 import CheckersGame from "./CheckersGame";
 import { connect } from "react-redux";
@@ -26,6 +26,8 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import CheckersRules from "../../Components/CheckersRules";
 import { unsetGame } from "../../Redux/actions/checkerGames";
 import SendInvitation from "./SendInvitation";
+import SendDraw from "./SendDraw";
+import SendSurrender from "./SendSurrender";
 
 const drawerWidth = 190;
 
@@ -77,8 +79,16 @@ const MainDrawer = (props) => {
 	const [mobileOpen, setMobileOpen] = useState(false);
 	const [openRules, setOpenRules] = useState(false);
 	const [openInvitation, setOpenInvitation] = useState(false);
+	const [openDraw, setOpenDraw] = useState(false);
+	const [openSurrender, setOpenSurrender] = useState(false);
 	const showOne = !props.checkersGame.unset;
 	const showAll = !showOne;
+
+	useEffect(() => {
+		return () => {
+			unsetGame();
+		};
+	}, []);
 
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen);
@@ -94,9 +104,12 @@ const MainDrawer = (props) => {
 	const handleInvitationModal = () => {
 		setOpenInvitation(!openInvitation);
 	};
-	const handleDrawCheckersGame = () => {};
-	const handleLoseCheckersGame = () => {};
-
+	const handleDrawModal = () => {
+		setOpenDraw(!openDraw);
+	};
+	const handleSurrenderModal = () => {
+		setOpenSurrender(!openSurrender);
+	};
 	const handleAwaleRules = () => {};
 	const handleNewAwaleGame = () => {};
 	const handleDrawAwaleGame = () => {};
@@ -129,7 +142,7 @@ const MainDrawer = (props) => {
 					</ListItem>
 				)}
 				{showOne && (
-					<ListItem onClick={handleDrawCheckersGame} className='pointer'>
+					<ListItem onClick={handleDrawModal} className='pointer'>
 						<ListItemIcon>
 							<AllInclusiveRoundedIcon />
 						</ListItemIcon>
@@ -137,7 +150,7 @@ const MainDrawer = (props) => {
 					</ListItem>
 				)}
 				{showOne && (
-					<ListItem onClick={handleLoseCheckersGame} className='pointer'>
+					<ListItem onClick={handleSurrenderModal} className='pointer'>
 						<ListItemIcon>
 							<HighlightOffRoundedIcon />
 						</ListItemIcon>
@@ -225,6 +238,15 @@ const MainDrawer = (props) => {
 					</Dialog>
 					<Dialog open={openInvitation} onClose={handleInvitationModal} fullWidth>
 						<SendInvitation handleInvitationModal={handleInvitationModal} />
+					</Dialog>
+					<Dialog open={openDraw} onClose={handleDrawModal} fullWidth>
+						<SendDraw id={props.checkersPlay.id} handleDrawModal={handleDrawModal} />
+					</Dialog>
+					<Dialog open={openSurrender} onClose={handleSurrenderModal} fullWidth>
+						<SendSurrender
+							id={props.checkersPlay.id}
+							handleSurrenderModal={handleSurrenderModal}
+						/>
 					</Dialog>
 				</>
 			)}

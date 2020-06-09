@@ -3,12 +3,12 @@ import { setNewMove } from "../../Redux/actions/checkerPlays";
 
 var toDelete1 = [];
 var toDelete2 = [];
-var toDelete3 = [];
-var toDelete4 = [];
+// var toDelete3 = [];
+// var toDelete4 = [];
 var option1 = [];
 var option2 = [];
-var option3 = [];
-var option4 = [];
+// var option3 = [];
+// var option4 = [];
 var PAWN_CAN_MOVE_1 = false;
 var PAWN_CAN_MOVE_2 = false;
 var PIECE_TO_CAPTURE_1 = [];

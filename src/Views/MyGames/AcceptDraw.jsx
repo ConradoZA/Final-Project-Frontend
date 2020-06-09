@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, Button, CardActions } from "@material-ui/core";
-import { answerInvitation } from "../../Redux/actions/checkerGames";
 import SnackBar from "../../Components/SnackBar";
-import store from "../../Redux/store";
+import { acceptDraw, rejectDraw } from "../../Redux/actions/checkerGames";
 
 const AcceptDraw = (props) => {
 	const [open, setOpen] = useState(false);
 	const [type, setType] = useState("info");
 	const [message, setMessage] = useState("");
-	const state = store.getState();
-	var myself = state.user.user.name;
 
 	const openSnackBar = () => {
 		setOpen(true);
@@ -21,13 +18,13 @@ const AcceptDraw = (props) => {
 	};
 
 	const sayNo = () => {
-		answerInvitation("no",props.id)
+		rejectDraw(props.id)
 			.then((_res) => {
-				setMessage("Ahora no, que me duele la cabeza");
+				setMessage("¡Hasta la muerte!");
 				setType("error");
 				openSnackBar();
 				setTimeout(() => {
-					props.handleAcceptDraw();
+					props.handleDrawInvitation();
 				}, 2500);
 			})
 			.catch((error) => {
@@ -35,13 +32,13 @@ const AcceptDraw = (props) => {
 			});
 	};
 	const sayYes = () => {
-		answerInvitation("yes",props.id)
+		acceptDraw(props.id)
 			.then((_res) => {
-				setMessage("Challenge accepted... Las damas primero ;)");
+				setMessage("Ha sido una buena partida");
 				setType("success");
 				openSnackBar();
 				setTimeout(() => {
-					props.handleAcceptDraw();
+					props.handleDrawInvitation();
 				}, 2500);
 			})
 			.catch((error) => {
@@ -51,19 +48,18 @@ const AcceptDraw = (props) => {
 
 	return (
 		<Card className='flex-column center'>
-			<CardHeader title='Te han desafiado' />
+			<CardHeader title='Propuesta de tablas' />
 			<CardContent className='space-between'>
 				<p>
-					¿Deseas jugar con y contra "<strong>{props.playerOne}</strong>", hasta que la
-					victoria y la derrota os separe?
+					Tu oponente te está ofreciendo una oportunidad para acabar la partida en empate.
 				</p>
 			</CardContent>
-			<CardActions className={"space-evenly fullW"}>
-				<Button variant='contained' color='primary' onClick={sayNo}>
-					Contigo no, bicho
+			<CardActions className='space-evenly fullW'>
+				<Button variant='contained' color='secondary' onClick={sayNo}>
+					¡Nunca!
 				</Button>
-				<Button variant='contained' color='secondary' onClick={sayYes}>
-					Sí, quiero
+				<Button variant='contained' color='primary' onClick={sayYes}>
+					Está bien
 				</Button>
 			</CardActions>
 

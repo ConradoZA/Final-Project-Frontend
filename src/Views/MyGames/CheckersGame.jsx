@@ -3,14 +3,13 @@ import Board from "../../Checkers/Board";
 import { DndProvider } from "react-dnd-multi-backend";
 import HTML5toTouch from "react-dnd-multi-backend/dist/cjs/HTML5toTouch";
 import { connect } from "react-redux";
-import { getPlay, sendMoveToOponent, acceptDraw } from "../../Redux/actions/checkerPlays";
+import { getPlay, sendMoveToOponent } from "../../Redux/actions/checkerPlays";
 import { Button } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
 import SnackBar from "../../Components/SnackBar";
 import { unsetGame } from "../../Redux/actions/checkerGames";
+import { winningCondition, doesCapture } from "../../Checkers/Rules/GameRules";
 
 const CheckersGame = (props) => {
-	let history = useHistory();
 	let oldMove = [];
 	let turn = 0;
 	let whitePCaptured = 0;
@@ -49,13 +48,6 @@ const CheckersGame = (props) => {
 		}
 		return result;
 	};
-	const doesCapture = (arr1, arr2) => {
-		if (arr1.length === arr2.length) {
-			return false;
-		} else {
-			return true;
-		}
-	};
 
 	const sendMove = () => {
 		if (doesMove(present, oldMove)) {
@@ -65,23 +57,20 @@ const CheckersGame = (props) => {
 			} else {
 				captureTimer = props.checkersPlay.captureTimer + 1;
 			}
-			if (captureTimer !== 25) {
-				whitePCaptured = 20 - present.filter((piece) => piece[2].includes("w")).length;
-				blackPCaptured = 20 - present.filter((piece) => piece[2].includes("b")).length;
-				const newTurn = {
-					id,
-					turn,
-					present,
-					whitePCaptured,
-					blackPCaptured,
-					captureTimer,
-				};
-				sendMoveToOponent(newTurn).then((_res) => {
-					unsetGame();
-				});
-			} else {
-				acceptDraw(props.checkersPlay.present.id);
-			}
+			whitePCaptured = 20 - present.filter((piece) => piece[2].includes("w")).length;
+			blackPCaptured = 20 - present.filter((piece) => piece[2].includes("b")).length;
+			const newTurn = {
+				id,
+				turn,
+				present,
+				whitePCaptured,
+				blackPCaptured,
+				captureTimer,
+			};
+			sendMoveToOponent(newTurn).then((_res) => {
+				winningCondition();
+				unsetGame();
+			});
 		} else {
 			setMessage("No has movido");
 			setType("error");
@@ -95,7 +84,9 @@ const CheckersGame = (props) => {
 				<Board />
 			</div>
 			<SnackBar type={type} open={open} message={message} />
-			<Button onClick={sendMove}>Enviar Movimiento</Button>
+			<Button variant='contained' color='secondary' onClick={sendMove}>
+				Enviar Movimiento
+			</Button>
 		</DndProvider>
 	);
 };
