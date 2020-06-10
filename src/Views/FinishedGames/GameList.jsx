@@ -20,7 +20,7 @@ const GameList = () => {
 				<Paper className='paper flex-column center'>
 					<h2>Primero termina una partida</h2>
 					<img
-						style={{ maxWidth: "80vw" }}
+						className='vw80'
 						src={API_URL_IMAGES + "Egyptian Checkers Players.jpg"}
 						alt='finish a game first'
 					/>

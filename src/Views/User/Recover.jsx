@@ -53,22 +53,13 @@ const Recover = (props) => {
 	};
 
 	return (
-		<Card
-			raised
-			style={{
-				maxWidth: "30rem",
-				margin: "10% auto 1%",
-			}}>
+		<Card raised className='card'>
 			<CardHeader title='Aquí puedes crear una nueva contraseña para tu cuenta.' />
 			<CardContent>
 				<ValidatorForm
 					onSubmit={handleSubmit}
 					onError={(errors) => console.log(errors)}
-					style={{
-						display: "flex",
-						flexDirection: "column",
-						alignItems: "center",
-					}}>
+					className='flex-column center'>
 					<TextValidator
 						name='newPassword'
 						onChange={(event) => {

@@ -1,11 +1,6 @@
 import React, { useRef, useState } from "react";
 import SnackBar from "../../../Components/SnackBar";
-import {
-	Card,
-	CardHeader,
-	CardContent,
-	Button,
-} from "@material-ui/core";
+import { Card, CardHeader, CardContent, Button } from "@material-ui/core";
 import { uploadImage } from "../../../Redux/actions/users";
 
 const UploadModal = ({ handleUploadModal }) => {
@@ -48,13 +43,7 @@ const UploadModal = ({ handleUploadModal }) => {
 		<Card>
 			<CardHeader title='Carga tu imagen' />
 			<CardContent>
-				<form
-					onSubmit={handleUpload}
-					style={{
-						display: "flex",
-						flexDirection: "column",
-						alignItems: "center",
-					}}>
+				<form onSubmit={handleUpload} className='flex-column center'>
 					<Button
 						variant='contained'
 						color='primary'
@@ -71,10 +60,10 @@ const UploadModal = ({ handleUploadModal }) => {
 							setImageUpload(event.target.files[0]);
 						}}
 						type='file'
-						style={{ display: "none" }}
+						className='display-none'
 						ref={uploadRef}
 					/>
-					<input disabled type='text' value={imageUpload.name} style={{ width: "80%" }} />
+					<input disabled type='text' value={imageUpload.name} className='vw80' />
 					<br />
 					<Button type='submit' size='small' variant='contained' color='primary'>
 						Subir

@@ -41,13 +41,7 @@ const HttpModal = ({ image, handleHttpModal }) => {
 		<Card>
 			<CardHeader title='Busca una imagen en internet' />
 			<CardContent>
-				<form
-					onSubmit={handleEdit}
-					style={{
-						display: "flex",
-						flexDirection: "column",
-						alignItems: "center",
-					}}>
+				<form onSubmit={handleEdit} className='flex-column center'>
 					<TextField
 						name='image'
 						variant='outlined'

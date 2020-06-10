@@ -46,7 +46,6 @@ const DeleteModal = ({ handleDeleteModal }) => {
 	};
 	const step2 = () => {
 		step2Ref.current.style.display = "";
-		step2Ref.current.style.color = "red";
 	};
 
 	const handleFinalModal = () => {
@@ -86,19 +85,21 @@ const DeleteModal = ({ handleDeleteModal }) => {
 	return (
 		<Paper className='flex-column center'>
 			<h3>¿Nos dejas?</h3>
-			<FormGroup row style={{ margin: "1% 10%" }}>
+			<FormGroup row className='delete'>
 				<FormControlLabel
 					control={<Checkbox onChange={step1} checked={step0} name='erase1' />}
 					label='Borrar Usuario'
 					color='primary'
 				/>
 				<FormControlLabel
-					style={{ display: "none", color: "red" }}
+					className='red-main'
+					style={{ display: "none" }}
 					ref={step1Ref}
 					control={<Checkbox onChange={step2} name='erase2' />}
 					label='¿Seguro?'
 				/>
 				<FormControlLabel
+					className='red-main'
 					style={{ display: "none" }}
 					ref={step2Ref}
 					control={

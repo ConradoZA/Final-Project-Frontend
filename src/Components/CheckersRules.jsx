@@ -2,9 +2,9 @@ import React from "react";
 
 const CheckersRules = () => {
   return (
-    <main style={{padding:"5% 10%", textAlign:"justify", verticalAlign:"middle"}}>
-      <h2 style={{marginBottom:"0", textAlign:"center"}}>Reglas del juego de las Damas Internacionales</h2>
-      <h4 style={{marginTop:"0", textAlign:"center"}}>También llamadas "Damas Polacas"</h4>
+    <main className="text-modal">
+      <h2>Reglas del juego de las Damas Internacionales</h2>
+      <h4>También llamadas "Damas Polacas"</h4>
 
       <h3>Objetivo del juego</h3>
       <ul>

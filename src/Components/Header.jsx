@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = ({ user }) => {
-	const history= useHistory();
+	const history = useHistory();
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -74,7 +74,7 @@ const Header = ({ user }) => {
 	};
 	const handleLogoutMenuClose = () => {
 		setAnchorEl(null);
-		logout().finally(() =>history.push("/"));
+		logout().finally(() => history.push("/"));
 	};
 
 	const renderMenu = (
@@ -87,15 +87,16 @@ const Header = ({ user }) => {
 			open={isMenuOpen}
 			onClose={handleMenuClose}
 			TransitionComponent={Grow}>
-			<Link to='/profile' style={{ all: "unset" }}>
+			<Link to='/profile' className='unset' onClick={handleMenuClose}>
 				<MenuItem>Perfil</MenuItem>
 			</Link>
-			<Link to='/myGames' style={{ all: "unset" }}>
+			<Link to='/myGames' className='unset' onClick={handleMenuClose}>
 				<MenuItem>Mis partidas</MenuItem>
 			</Link>
-			<Link to='/myRecord' style={{ all: "unset" }}>
+			<Link to='/myRecord' className='unset' onClick={handleMenuClose}>
 				<MenuItem>Partidas Terminadas</MenuItem>
 			</Link>
+			<MenuItem onClick={handleLogoutMenuClose}>Desconectar</MenuItem>
 		</Menu>
 	);
 
@@ -109,24 +110,24 @@ const Header = ({ user }) => {
 			open={isMobileMenuOpen}
 			onClose={handleMobileMenuClose}
 			TransitionComponent={Grow}>
-			<MenuItem>
-				<Link to='/profile' style={{ color: "black", display: "flex" }}>
+			<MenuItem onClick={handleMobileMenuClose}>
+				<Link to='/profile' className='mobile-menu'>
 					<IconButton color='inherit'>
 						<AccountCircle />
 					</IconButton>
 					<p>Perfil</p>
 				</Link>
 			</MenuItem>
-			<MenuItem>
-				<Link to='/myGames' style={{ color: "black", display: "flex" }}>
+			<MenuItem onClick={handleMobileMenuClose}>
+				<Link to='/myGames' className='mobile-menu'>
 					<IconButton color='inherit'>
 						<CasinoIcon />
 					</IconButton>
 					<p>Mis Partidas</p>
 				</Link>
 			</MenuItem>
-			<MenuItem>
-				<Link to='/myRecord' style={{ color: "black", display: "flex" }}>
+			<MenuItem onClick={handleMobileMenuClose}>
+				<Link to='/myRecord' className='mobile-menu'>
 					<IconButton color='inherit'>
 						<EmojiEventsRoundedIcon />
 					</IconButton>
@@ -147,23 +148,15 @@ const Header = ({ user }) => {
 			<AppBar position='static'>
 				<Toolbar>
 					<Link to='/'>
-						<img
-							src={API_URL_IMAGES + "logo.png"}
-							alt=''
-							style={{ height: "3rem", marginRight: "1rem" }}
-						/>
+						<img src={API_URL_IMAGES + "logo.png"} alt='' id='title-img' />
 					</Link>
 					<Link to='/'>
-						<h2 style={{ userSelect: "none", color: "black" }}>Play 2 Games</h2>
+						<h2 id='title-name'>Play 2 Games</h2>
 					</Link>
 					<div className={classes.grow} />
 					<div className={classes.sectionDesktop}>
 						{user ? (
 							<div>
-								<Button variant='outlined' onClick={handleLogoutMenuClose}>
-									Salir
-								</Button>
-
 								<IconButton edge='end' onClick={handleProfileMenuOpen} color='inherit'>
 									<AccountCircle />
 								</IconButton>

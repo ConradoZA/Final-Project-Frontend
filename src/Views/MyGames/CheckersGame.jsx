@@ -36,7 +36,7 @@ const CheckersGame = (props) => {
 			setOldMove(res.data.present);
 			setPastMoves(res.data.past);
 		});
-	}, []);
+	}, [id]);
 	const doesMove = (arr1, arr2) => {
 		const last1 = arr1[arr1.length - 1];
 		const last2 = arr2[arr2.length - 1];

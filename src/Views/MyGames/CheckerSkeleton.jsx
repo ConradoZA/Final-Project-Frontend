@@ -70,21 +70,19 @@ const CheckerSkeleton = ({ game, name }) => {
 						<strong>Turno de:</strong> {turn % 2 === 0 ? "Negras" : "Blancas"}
 					</p>
 					{!initiated && playerTwo === name ? (
-						<h4 style={{ color: "red" }}>¿Quieres jugar?</h4>
+						<h4 className='red'>¿Quieres jugar?</h4>
 					) : initiated ? (
 						<></>
 					) : (
 						<h4>Invitación enviada</h4>
 					)}
-					{drawOffered && !checkTurn() && (
-						<h4 style={{ color: "gold" }}>Te ofrecen tablas</h4>
-					)}
+					{drawOffered && !checkTurn() && <h4 className='win'>Te ofrecen tablas</h4>}
 					{checkTurn() && initiated && !drawOffered ? (
-						<h3 style={{ color: "red" }}>Te toca</h3>
+						<h4 className='red'>Te toca</h4>
 					) : checkTurn() && drawOffered ? (
-						<h3>Has pedido tablas</h3>
+						<h4>Has pedido tablas</h4>
 					) : (
-						<h3>Esperando respuesta</h3>
+						<h4>Esperando respuesta</h4>
 					)}
 				</div>
 			</div>

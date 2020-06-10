@@ -15,7 +15,7 @@ const Board = (props) => {
 	const SQUARES = [];
 
 	const renderIfThereIsPiece = (x, y) => {
-		var piece = tablePosition.map((piece) => {
+		const piece = tablePosition.map((piece) => {
 			const id = piece[3];
 			var hasToCapture = false;
 			if (x === piece[0] && y === piece[1]) {

@@ -78,3 +78,68 @@ a {
 .fullW {
 	width: 100%;
 }
+.text-modal {
+	padding: 5% 10%;
+	text-align: justify;
+	vertical-align: middle;
+}
+.text-modal h2 {
+	margin-bottom: 0;
+	text-align: center;
+}
+.text-modal h4 {
+	margin-top: 0;
+	text-align: center;
+}
+.unset {
+	all: unset;
+}
+.mobile-menu {
+	color: black;
+	display: flex;
+}
+#title-img {
+	height: 3rem;
+	margin-right: 1rem;
+}
+#title-name {
+	user-select: none;
+	color: black;
+}
+.link-like {
+	color: blue;
+	cursor: pointer;
+}
+.vw80 {
+	max-width: 80vw;
+}
+.win {
+	color: goldenrod;
+}
+.draw {
+	color: blue;
+}
+.lose {
+	color: darkred;
+}
+.red-main {
+	color: rgb(199, 0, 0);
+}
+.img-100 {
+	object-fit: cover;
+	margin: 0 auto;
+	width: 100%;
+}
+.card {
+	max-width: 30rem;
+	margin: 10% auto 1%;
+}
+.display-none {
+	display: none;
+}
+.delete {
+	margin: 1% 10%;
+}
+.input-width {
+	min-width: 10rem;
+}

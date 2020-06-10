@@ -15,6 +15,7 @@ const RecordBoard = ({ tablePosition }) => {
 								src={API_URL_IMAGES + "peon blanco.png"}
 								alt=''
 								className='pieceSize'
+								key={piece[3]}
 							/>
 						);
 					case "wq":
@@ -23,15 +24,26 @@ const RecordBoard = ({ tablePosition }) => {
 								src={API_URL_IMAGES + "dama blanca.png"}
 								alt=''
 								className='pieceSize'
+								key={piece[3]}
 							/>
 						);
 					case "bp":
 						return (
-							<img src={API_URL_IMAGES + "peon rojo.png"} alt='' className='pieceSize' />
+							<img
+								src={API_URL_IMAGES + "peon rojo.png"}
+								alt=''
+								className='pieceSize'
+								key={piece[3]}
+							/>
 						);
 					case "bq":
 						return (
-							<img src={API_URL_IMAGES + "dama roja.png"} alt='' className='pieceSize' />
+							<img
+								src={API_URL_IMAGES + "dama roja.png"}
+								alt=''
+								className='pieceSize'
+								key={piece[3]}
+							/>
 						);
 					default:
 						return "";
@@ -45,7 +57,11 @@ const RecordBoard = ({ tablePosition }) => {
 		let Y = Math.floor(i / 10);
 		const hasPiece = renderIfThereIsPiece(X, Y);
 		const backgroundColor = (X + Y) % 2 === 0 ? "black" : "white";
-		return <div className={backgroundColor}>{hasPiece}</div>;
+		return (
+			<div className={backgroundColor} key={i}>
+				{hasPiece}
+			</div>
+		);
 	};
 	const createBoard = () => {
 		for (let i = 99; i >= 0; i--) {

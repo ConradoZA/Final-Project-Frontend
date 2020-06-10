@@ -9,8 +9,9 @@ const Home = () => {
 			<h3>¡Conéctate ya!</h3>
 			<img
 				className='img-home'
+				alt=''
 				src={API_URL_IMAGES + "board-games-for-couples-1.jpg"}></img>
-			<img className='img-home' src={API_URL_IMAGES + "als_ich_kan.jpg"}></img>
+			<img className='img-home' alt='' src={API_URL_IMAGES + "als_ich_kan.jpg"}></img>
 		</main>
 	);
 };

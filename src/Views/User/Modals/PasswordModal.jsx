@@ -60,12 +60,9 @@ const PasswordModal = ({ handlePasswordModal }) => {
 			<ValidatorForm
 				onSubmit={handleSubmit}
 				onError={(errors) => console.log(errors)}
-				style={{
-					display: "flex",
-					flexDirection: "column",
-					alignItems: "center",
-				}}>
+				className='flex-column center'>
 				<TextValidator
+					className='input-width'
 					name='oldPassword'
 					onChange={(event) => {
 						setOldPassword(event.target.value);
@@ -86,6 +83,7 @@ const PasswordModal = ({ handlePasswordModal }) => {
 				/>
 				<br />
 				<TextValidator
+					className='input-width'
 					name='newPassword'
 					onChange={(event) => {
 						setNewPassword(event.target.value);
@@ -106,6 +104,7 @@ const PasswordModal = ({ handlePasswordModal }) => {
 				/>
 				<br />
 				<TextValidator
+					className='input-width'
 					name='repeatNewPassword'
 					onChange={(event) => {
 						setRepeatNewPassword(event.target.value);
@@ -122,7 +121,7 @@ const PasswordModal = ({ handlePasswordModal }) => {
 				<Button type='submit' variant='contained' color='secondary' size='small'>
 					Cambiar contraseña
 				</Button>
-				<br/>
+				<br />
 			</ValidatorForm>
 			<SnackBar type={type} open={open} message={message} />
 		</Paper>

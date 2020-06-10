@@ -90,6 +90,7 @@ const Profile = (props) => {
 						<InputLabel id='name'>Nombre</InputLabel>
 						<Input
 							labelId='name'
+							className='input-width'
 							disabled={inputName}
 							value={name}
 							margin='dense'
@@ -114,9 +115,16 @@ const Profile = (props) => {
 						<br />
 						<InputLabel id='email'>E-mail</InputLabel>
 						{user.email_verified ? (
-							<Input lanelId='email' disabled margin='dense' value={email} />
+							<Input
+								className='input-width'
+								labelId='email'
+								disabled
+								margin='dense'
+								value={email}
+							/>
 						) : (
 							<Input
+								className='input-width'
 								labelId='email'
 								disabled={inputMail}
 								margin='dense'
@@ -144,7 +152,8 @@ const Profile = (props) => {
 							""
 						) : (
 							<Link
-								style={{ color: "blue", cursor: "pointer" }}
+								to='#'
+								className='link-like'
 								onClick={handleConfirmMail}
 								variant='body2'>
 								Confirmar e-mail

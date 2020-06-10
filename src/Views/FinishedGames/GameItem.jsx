@@ -17,7 +17,7 @@ const GameItem = () => {
 			setPast(res.data.gamePlay.past);
 			setTurns(res.data.gamePlay.past.length);
 		});
-	}, []);
+	}, [gameId]);
 
 	const handlePage = (event, value) => {
 		setPage(value);

@@ -18,7 +18,6 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { makeStyles } from "@material-ui/core/styles";
 import { login, sendRecoverEmail } from "../../Redux/actions/users";
-import { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -115,12 +114,6 @@ const Login = () => {
 		event.preventDefault();
 	};
 
-	useEffect(() => {
-		return () => {
-			clearTimeout(handleSubmit);
-		};
-	}, []);
-
 	return (
 		<Container component='main' maxWidth='xs'>
 			<div className={classes.paper}>
@@ -180,16 +173,12 @@ const Login = () => {
 					</Button>
 					<Grid container>
 						<Grid item xs>
-							<Link
-								to='#'
-								style={{ color: "blue", cursor: "pointer" }}
-								onClick={handleSendMail}
-								variant='body2'>
+							<Link to='#' className='link-like' onClick={handleSendMail} variant='body2'>
 								¿Te olvidaste la contraseña?
 							</Link>
 						</Grid>
 						<Grid item>
-							<Link style={{ color: "blue" }} to='/register' variant='body2'>
+							<Link className='link-like' to='/register' variant='body2'>
 								¡Regístrate!
 							</Link>
 						</Grid>
@@ -199,13 +188,7 @@ const Login = () => {
 			<Dialog open={sendMail} onClose={handleSendMail} fullWidth>
 				<DialogTitle>¿No recuerdas tu contraseña?</DialogTitle>
 				<DialogContent>
-					<form
-						onSubmit={handleSendMailPassword}
-						style={{
-							display: "flex",
-							flexDirection: "column",
-							alignItems: "center",
-						}}>
+					<form onSubmit={handleSendMailPassword} className='flex-column center'>
 						<p>
 							Por favor, escribe el mail asociado a tu usuario.
 							<br />

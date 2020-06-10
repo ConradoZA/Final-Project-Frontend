@@ -20,15 +20,11 @@ const MailConfirmed = (props) => {
 		return () => {
 			clearTimeout();
 		};
-	}, [token]);
+	}, [token, history]);
 
 	return (
 		<img
-			style={{
-				objectFit: "cover",
-				margin: "0 auto",
-				width: "100%",
-			}}
+			className='img-100'
 			src={API_URL_IMAGES + "boardgames.jpg"}
 			alt='Congrats, mail confirmed'
 		/>

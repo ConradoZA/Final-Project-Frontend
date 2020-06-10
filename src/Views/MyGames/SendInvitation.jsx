@@ -66,7 +66,7 @@ const SendInvitation = ({ handleInvitationModal }) => {
 						variant='outlined'
 						value={user}
 						onChange={handleChange}
-						style={{ minWidth: "10rem" }}>
+						className='input-width'>
 						<MenuItem value='' key={"none"}>
 							<em>Nadie</em>
 						</MenuItem>

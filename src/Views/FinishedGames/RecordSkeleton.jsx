@@ -33,11 +33,11 @@ const RecordSkeleton = ({ game, name }) => {
 						<strong>Resultado:</strong>
 					</p>
 					{winner === name ? (
-						<h4 style={{ color: "gold" }}>GANASTE</h4>
+						<h4 className='win'>GANASTE</h4>
 					) : winner === "draw" ? (
-						<h4 style={{ color: "blue" }}>EMPATE</h4>
+						<h4 className='draw'>EMPATE</h4>
 					) : (
-						<h4 style={{ color: "darkred" }}>PERDISTE</h4>
+						<h4 className='lose'>PERDISTE</h4>
 					)}
 				</div>
 			</div>
