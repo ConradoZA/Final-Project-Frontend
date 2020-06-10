@@ -21,6 +21,6 @@ const AllGames = ({ allCheckersGame, user }) => {
 };
 const mapStateToProps = (state) => ({
 	allCheckersGame: state.allCheckersGame.all,
-	user: state.use.user,
+	user: state.user.user,
 });
 export default connect(mapStateToProps)(AllGames);

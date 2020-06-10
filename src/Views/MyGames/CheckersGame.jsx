@@ -10,13 +10,14 @@ import { unsetGame } from "../../Redux/actions/checkerGames";
 import { winningCondition, doesCapture } from "../../Checkers/Rules/GameRules";
 
 const CheckersGame = (props) => {
-	let oldMove = [];
 	let turn = 0;
 	let whitePCaptured = 0;
 	let blackPCaptured = 0;
 	let captureTimer = 0;
 	const present = props.checkersPlay.present;
 	const id = props.checkersPlay.id;
+	const [oldMove, setOldMove] = useState([]);
+	const [pastMoves, setPastMoves] = useState([]);
 	const [open, setOpen] = useState(false);
 	const [type, setType] = useState("info");
 	const [message, setMessage] = useState("");
@@ -32,10 +33,10 @@ const CheckersGame = (props) => {
 
 	useEffect(() => {
 		getPlay(id).then((res) => {
-			oldMove = res.data.present;
+			setOldMove(res.data.present);
+			setPastMoves(res.data.past);
 		});
-	}, [present]);
-
+	}, []);
 	const doesMove = (arr1, arr2) => {
 		const last1 = arr1[arr1.length - 1];
 		const last2 = arr2[arr2.length - 1];
@@ -59,9 +60,11 @@ const CheckersGame = (props) => {
 			}
 			whitePCaptured = 20 - present.filter((piece) => piece[2].includes("w")).length;
 			blackPCaptured = 20 - present.filter((piece) => piece[2].includes("b")).length;
+			pastMoves.push(present);
 			const newTurn = {
 				id,
 				turn,
+				past:pastMoves,
 				present,
 				whitePCaptured,
 				blackPCaptured,
