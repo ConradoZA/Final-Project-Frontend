@@ -6,8 +6,8 @@ import WQueen from "./WQueen";
 import BPawn from "./BPawn";
 import BQueen from "./BQueen";
 import "./checkers.css";
-import { whitePawnCanCapture } from "./Rules/WhiteMoves.js";
-import { blackPawnCanCapture } from "./Rules/BlackMoves.js";
+import { whitePawnCanCapture, whiteQueenCanCapture } from "./Rules/WhiteMoves.js";
+import { blackPawnCanCapture, blackQueenCanCapture } from "./Rules/BlackMoves.js";
 
 const Board = (props) => {
 	let tablePosition = props.checkersPlay.present;
@@ -26,6 +26,9 @@ const Board = (props) => {
 						}
 						return <WPawn color={"wp"} id={id} key={id} hasToCapture={hasToCapture} />;
 					case "wq":
+						if (whiteQueenCanCapture(piece).length > 0) {
+							hasToCapture = true;
+						}
 						return <WQueen color={"wq"} id={id} key={id} hasToCapture={hasToCapture} />;
 					case "bp":
 						if (blackPawnCanCapture(piece).length > 0) {
@@ -33,6 +36,9 @@ const Board = (props) => {
 						}
 						return <BPawn color={"bp"} id={id} key={id} hasToCapture={hasToCapture} />;
 					case "bq":
+						if (blackQueenCanCapture(piece).length > 0) {
+							hasToCapture = true;
+						}
 						return <BQueen color={"bq"} id={id} key={id} hasToCapture={hasToCapture} />;
 					default:
 						return "";

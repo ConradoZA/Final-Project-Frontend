@@ -4,12 +4,14 @@ import {
 	whitePawnResults,
 	whiteQueenMove,
 	whitePawnCanCapture,
+	whiteQueenResults,
 } from "./WhiteMoves";
 import {
 	blackPawnMove,
 	blackPawnResults,
-	backQueenMove,
+	blackQueenMove,
 	blackPawnCanCapture,
+	blackQueenResults,
 } from "./BlackMoves";
 import { endGame, acceptDraw } from "../../Redux/actions/checkerGames";
 
@@ -18,7 +20,7 @@ export function winningCondition() {
 	const playerOne = state.checkersGame.playerOne;
 	const playerTwo = state.checkersGame.playerTwo;
 	const gameId = state.checkersGame.id;
-	const captureTimer=state.checkersGame.captureTimer;
+	const captureTimer = state.checkersGame.captureTimer;
 	const whiteSide = state.checkersPlay.present.filter((piece) => piece[2].includes("w"));
 	const whitePawns = state.checkersPlay.present.filter((piece) =>
 		piece[2].includes("wp")
@@ -78,13 +80,24 @@ export function checkTurn(id) {
 	}
 }
 
-export function doesCapture (arr1, arr2) {
+export function doesCapture(arr1, arr2) {
 	if (arr1.length === arr2.length) {
 		return false;
 	} else {
 		return true;
 	}
-};
+}
+
+export function crownPawn(tablePosition) {
+	tablePosition.map((piece) => {
+		if (piece[2] === "wp" && piece[1] === 9) {
+			piece[2] = "wq";
+		}
+		if (piece[2] === "bp" && piece[1] === 0) {
+			piece[2] = "bq";
+		}
+	});
+}
 
 export function canMove(toX, toY, item) {
 	const state = store.getState();
@@ -95,7 +108,7 @@ export function canMove(toX, toY, item) {
 		if (SIDE.includes("p")) {
 			return blackPawnMove(toX, toY, actualPiece);
 		} else {
-			return backQueenMove(toX, toY, actualPiece);
+			return blackQueenMove(toX, toY, actualPiece);
 		}
 	} else if (SIDE.includes("w")) {
 		if (SIDE.includes("p")) {
@@ -115,6 +128,8 @@ export function move(toX, toY, item) {
 	} else if (actualPiece[2] === "wp") {
 		whitePawnResults(newPiecePosition);
 	} else if (actualPiece[2] === "bq") {
+		blackQueenResults(newPiecePosition);
 	} else if (actualPiece[2] === "wq") {
+		whiteQueenResults(newPiecePosition);
 	}
 }

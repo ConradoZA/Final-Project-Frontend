@@ -4,7 +4,7 @@ import "./checkers.css";
 import { canMove, move } from "./Rules/GameRules";
 import Overlay from "./Overlay";
 
-const Square = ({ x, y, hasToCapture, children }) => {
+const Square = ({ x, y, children }) => {
 	const backgroundColor = (x + y) % 2 === 0 ? "black" : "white";
 	const TYPES = ["pawn", "queen"];
 	const [{ isOver, canDrop }, drop] = useDrop({
