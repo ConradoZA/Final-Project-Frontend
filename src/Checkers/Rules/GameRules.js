@@ -1,18 +1,7 @@
 import store from "../../Redux/store";
-import {
-	whitePawnMove,
-	whitePawnResults,
-	whiteQueenMove,
-	whitePawnCanCapture,
-	whiteQueenResults,
-} from "./WhiteMoves";
-import {
-	blackPawnMove,
-	blackPawnResults,
-	blackQueenMove,
-	blackPawnCanCapture,
-	blackQueenResults,
-} from "./BlackMoves";
+import { whitePawnMove, whitePawnResults, whitePawnCanCapture } from "./WhitePawnMoves";
+import { blackPawnMove, blackPawnResults, blackPawnCanCapture } from "./BlackPawnMoves";
+import { queenMove, queenResults, queenCanCapture } from "./QueenMoves";
 import { endGame, acceptDraw } from "../../Redux/actions/checkerGames";
 
 export function winningCondition() {
@@ -44,35 +33,90 @@ export function winningCondition() {
 }
 
 export function checkTurn(id) {
+	var iCan = [];
 	const state = store.getState();
+	const present = state.checkersPlay.present;
 	const turn = state.checkersPlay.turn;
 	const moved = state.checkersPlay.moved;
+	const allPawnCaptures = [];
+	const allQueenCaptures = [];
 	if (turn % 2 === 1 && moved === false) {
-		const allCaptures = [];
-		const me = state.checkersPlay.present.find((piece) => piece[3] === id);
-		const ownSide = state.checkersPlay.present.filter((piece) => piece[2].includes("w"));
-		ownSide.map((piece) => allCaptures.push(whitePawnCanCapture(piece)));
-		if (allCaptures.flat().length > 0) {
-			const iCan = whitePawnCanCapture(me);
+		const me = present.find((piece) => piece[3] === id);
+		const ownSide = present.filter((piece) => piece[2].includes("w"));
+		ownSide.map((piece) => {
+			if (piece[2].includes("p")) allPawnCaptures.push(whitePawnCanCapture(piece));
+		});
+		ownSide.map((piece) => {
+			if (piece[2].includes("q")) allQueenCaptures.push(queenCanCapture(piece));
+		});
+
+		if (allPawnCaptures.flat().length > 0 && me[2].includes("p")) {
+			iCan = whitePawnCanCapture(me);
 			if (iCan.length > 0) {
 				return "w";
 			} else {
 				return "no";
 			}
+		} else if (
+			allPawnCaptures.flat().length === 0 &&
+			allQueenCaptures.flat().length > 0 &&
+			me[2].includes("p")
+		) {
+			return "no";
+		}
+
+		if (allQueenCaptures.flat().length > 0 && me[2].includes("q")) {
+			iCan = queenCanCapture(me);
+			if (iCan.length > 0) {
+				return "w";
+			} else {
+				return "no";
+			}
+		} else if (
+			allQueenCaptures.flat().length === 0 &&
+			allPawnCaptures.flat().length > 0 &&
+			me[2].includes("q")
+		) {
+			return "no";
 		}
 		return "w";
 	} else if (turn % 2 === 0 && moved === false) {
-		const allCaptures = [];
-		const me = state.checkersPlay.present.find((piece) => piece[3] === id);
-		const ownSide = state.checkersPlay.present.filter((piece) => piece[2].includes("b"));
-		ownSide.map((piece) => allCaptures.push(blackPawnCanCapture(piece)));
-		if (allCaptures.flat().length > 0) {
-			const iCan = blackPawnCanCapture(me);
+		const me = present.find((piece) => piece[3] === id);
+		const ownSide = present.filter((piece) => piece[2].includes("b"));
+		ownSide.map((piece) => {
+			if (piece[2].includes("p")) allPawnCaptures.push(blackPawnCanCapture(piece));
+		});
+		ownSide.map((piece) => {
+			if (piece[2].includes("q")) allQueenCaptures.push(queenCanCapture(piece));
+		});
+		if (allPawnCaptures.flat().length > 0 && me[2].includes("p")) {
+			iCan = blackPawnCanCapture(me);
 			if (iCan.length > 0) {
 				return "b";
 			} else {
 				return "no";
 			}
+		} else if (
+			allPawnCaptures.flat().length === 0 &&
+			allQueenCaptures.flat().length > 0 &&
+			me[2].includes("p")
+		) {
+			return "no";
+		}
+
+		if (allQueenCaptures.flat().length > 0 && me[2].includes("q")) {
+			iCan = queenCanCapture(me);
+			if (iCan.length > 0) {
+				return "b";
+			} else {
+				return "no";
+			}
+		} else if (
+			allQueenCaptures.flat().length === 0 &&
+			allPawnCaptures.flat().length > 0 &&
+			me[2].includes("q")
+		) {
+			return "no";
 		}
 		return "b";
 	} else {
@@ -108,28 +152,27 @@ export function canMove(toX, toY, item) {
 		if (SIDE.includes("p")) {
 			return blackPawnMove(toX, toY, actualPiece);
 		} else {
-			return blackQueenMove(toX, toY, actualPiece);
+			return queenMove(toX, toY, actualPiece);
 		}
 	} else if (SIDE.includes("w")) {
 		if (SIDE.includes("p")) {
 			return whitePawnMove(toX, toY, actualPiece);
 		} else {
-			return whiteQueenMove(toX, toY, actualPiece);
+			return queenMove(toX, toY, actualPiece);
 		}
 	}
 }
 export function move(toX, toY, item) {
 	const state = store.getState();
 	const pieces = state.checkersPlay.present;
+	const moved = state.checkersPlay.moved;
 	const actualPiece = pieces.find((piece) => item.id === piece[3]);
 	const newPiecePosition = [toX, toY, actualPiece[2], actualPiece[3]];
-	if (actualPiece[2] === "bp") {
+	if (actualPiece[2] === "bp" && moved === false) {
 		blackPawnResults(newPiecePosition);
-	} else if (actualPiece[2] === "wp") {
+	} else if (actualPiece[2] === "wp" && moved === false) {
 		whitePawnResults(newPiecePosition);
-	} else if (actualPiece[2] === "bq") {
-		blackQueenResults(newPiecePosition);
-	} else if (actualPiece[2] === "wq") {
-		whiteQueenResults(newPiecePosition);
+	} else if (actualPiece[2].includes("q") && moved === false) {
+		queenResults(newPiecePosition);
 	}
 }
