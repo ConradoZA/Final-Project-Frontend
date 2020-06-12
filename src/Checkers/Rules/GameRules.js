@@ -165,14 +165,13 @@ export function canMove(toX, toY, item) {
 export function move(toX, toY, item) {
 	const state = store.getState();
 	const pieces = state.checkersPlay.present;
-	const moved = state.checkersPlay.moved;
 	const actualPiece = pieces.find((piece) => item.id === piece[3]);
 	const newPiecePosition = [toX, toY, actualPiece[2], actualPiece[3]];
-	if (actualPiece[2] === "bp" && moved === false) {
+	if (actualPiece[2] === "bp") {
 		blackPawnResults(newPiecePosition);
-	} else if (actualPiece[2] === "wp" && moved === false) {
+	} else if (actualPiece[2] === "wp") {
 		whitePawnResults(newPiecePosition);
-	} else if (actualPiece[2].includes("q") && moved === false) {
+	} else if (actualPiece[2].includes("q")) {
 		queenResults(newPiecePosition);
 	}
 }

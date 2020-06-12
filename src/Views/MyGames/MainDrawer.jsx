@@ -33,31 +33,31 @@ const drawerWidth = 190;
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		[theme.breakpoints.up("sm")]: {
+		[theme.breakpoints.up("md")]: {
 			display: "flex",
 		},
 	},
 	drawer: {
-		[theme.breakpoints.down("sm")]: {
+		[theme.breakpoints.down("md")]: {
 			width: drawerWidth,
 			flexShrink: 0,
 		},
 	},
 	appBar: {
-		[theme.breakpoints.up("sm")]: {
+		[theme.breakpoints.up("md")]: {
 			width: `calc(100% - ${drawerWidth}px)`,
 			marginLeft: drawerWidth,
 		},
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
-		[theme.breakpoints.up("sm")]: {
+		[theme.breakpoints.up("md")]: {
 			display: "none",
 		},
 	},
 	drawerPaper: {
 		width: drawerWidth,
-		[theme.breakpoints.up("sm")]: {
+		[theme.breakpoints.up("md")]: {
 			marginTop: "70px",
 		},
 	},
@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 		paddingRight: theme.spacing(3),
 		paddingLeft: theme.spacing(1),
 		paddingTop: theme.spacing(3),
-		[theme.breakpoints.up("sm")]: {
+		[theme.breakpoints.up("md")]: {
 			paddingLeft: drawerWidth,
 		},
 	},
@@ -110,14 +110,11 @@ const MainDrawer = (props) => {
 	const handleSurrenderModal = () => {
 		setOpenSurrender(!openSurrender);
 	};
-	const handleAwaleRules = () => {};
-	const handleNewAwaleGame = () => {};
-	const handleDrawAwaleGame = () => {};
-	const handleLoseAwaleGame = () => {};
 
 	const drawer = (
 		<div>
 			<List>
+			<Toolbar className={classes.appbar}/>
 				<ListItem onClick={handleMain} className='pointer'>
 					<ListItemIcon>
 						<CasinoRoundedIcon />
@@ -159,32 +156,6 @@ const MainDrawer = (props) => {
 				)}
 			</List>
 			<Divider />
-			<List subheader={<ListSubheader component='div'>Awale</ListSubheader>}>
-				<ListItem disabled onClick={handleAwaleRules} className='pointer'>
-					<ListItemIcon>
-						<DescriptionRoundedIcon />
-					</ListItemIcon>
-					<ListItemText primary='Reglas' />
-				</ListItem>
-				<ListItem disabled onClick={handleNewAwaleGame} className='pointer'>
-					<ListItemIcon>
-						<AddCircleOutlineRoundedIcon />
-					</ListItemIcon>
-					<ListItemText primary='Nueva Partida' />
-				</ListItem>
-				<ListItem disabled onClick={handleDrawAwaleGame} className='pointer'>
-					<ListItemIcon>
-						<AllInclusiveRoundedIcon />
-					</ListItemIcon>
-					<ListItemText primary='Ofrecer Tablas' />
-				</ListItem>
-				<ListItem disabled onClick={handleLoseAwaleGame} className='pointer'>
-					<ListItemIcon>
-						<HighlightOffRoundedIcon />
-					</ListItemIcon>
-					<ListItemText primary='Rendirse' />
-				</ListItem>
-			</List>
 		</div>
 	);
 
@@ -218,7 +189,7 @@ const MainDrawer = (props) => {
 								{drawer}
 							</Drawer>
 						</Hidden>
-						<Hidden xsDown implementation='css'>
+						<Hidden smDown implementation='css'>
 							<Drawer
 								classes={{
 									paper: classes.drawerPaper,

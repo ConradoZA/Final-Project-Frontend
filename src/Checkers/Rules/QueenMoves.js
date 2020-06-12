@@ -249,6 +249,8 @@ export function queenResults(newPiecePosition) {
 		if (chain.length > 0) {
 			moved = false;
 		}
+	} else {
+		moved = true;
 	}
 
 	newBoard.push(newPiecePosition);

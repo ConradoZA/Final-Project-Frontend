@@ -143,3 +143,16 @@ a {
 .input-width {
 	min-width: 10rem;
 }
+.justify-center {
+	text-align: justify;
+	text-align-last: center;
+	margin: 0 1rem;
+	margin-top: 1rem;
+}
+.strong {
+	font-weight: bold;
+	font-style: 1.2rem;
+}
+.margin-top-results {
+	margin-top: 2.3rem;
+}

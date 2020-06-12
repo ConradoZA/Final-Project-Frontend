@@ -50,27 +50,13 @@ const Header = ({ user }) => {
 	const history = useHistory();
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = useState(null);
-	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-
 	const isMenuOpen = Boolean(anchorEl);
-	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
 	const handleProfileMenuOpen = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
-	const handleMobileMenuOpen = (event) => {
-		setMobileMoreAnchorEl(event.currentTarget);
-	};
-	const handleMobileMenuClose = () => {
-		setMobileMoreAnchorEl(null);
-	};
 	const handleMenuClose = () => {
 		setAnchorEl(null);
-		handleMobileMenuClose();
-	};
-	const handleLogoutMobileMenuClose = () => {
-		setMobileMoreAnchorEl(null);
-		logout().finally(() => history.push("/"));
 	};
 	const handleLogoutMenuClose = () => {
 		setAnchorEl(null);
@@ -81,36 +67,13 @@ const Header = ({ user }) => {
 		<Menu
 			anchorEl={anchorEl}
 			anchorOrigin={{ vertical: "top", horizontal: "right" }}
-			id='menu'
+			id='mobileMenu'
 			keepMounted
 			transformOrigin={{ vertical: -55, horizontal: "right" }}
 			open={isMenuOpen}
 			onClose={handleMenuClose}
 			TransitionComponent={Grow}>
-			<Link to='/profile' className='unset' onClick={handleMenuClose}>
-				<MenuItem>Perfil</MenuItem>
-			</Link>
-			<Link to='/myGames' className='unset' onClick={handleMenuClose}>
-				<MenuItem>Mis partidas</MenuItem>
-			</Link>
-			<Link to='/myRecord' className='unset' onClick={handleMenuClose}>
-				<MenuItem>Partidas Terminadas</MenuItem>
-			</Link>
-			<MenuItem onClick={handleLogoutMenuClose}>Desconectar</MenuItem>
-		</Menu>
-	);
-
-	const renderMobileMenu = (
-		<Menu
-			anchorEl={mobileMoreAnchorEl}
-			anchorOrigin={{ vertical: "top", horizontal: "right" }}
-			id='mobileMenu'
-			keepMounted
-			transformOrigin={{ vertical: -55, horizontal: "right" }}
-			open={isMobileMenuOpen}
-			onClose={handleMobileMenuClose}
-			TransitionComponent={Grow}>
-			<MenuItem onClick={handleMobileMenuClose}>
+			<MenuItem onClick={handleMenuClose}>
 				<Link to='/profile' className='mobile-menu'>
 					<IconButton color='inherit'>
 						<AccountCircle />
@@ -118,7 +81,7 @@ const Header = ({ user }) => {
 					<p>Perfil</p>
 				</Link>
 			</MenuItem>
-			<MenuItem onClick={handleMobileMenuClose}>
+			<MenuItem onClick={handleMenuClose}>
 				<Link to='/myGames' className='mobile-menu'>
 					<IconButton color='inherit'>
 						<CasinoIcon />
@@ -126,7 +89,7 @@ const Header = ({ user }) => {
 					<p>Mis Partidas</p>
 				</Link>
 			</MenuItem>
-			<MenuItem onClick={handleMobileMenuClose}>
+			<MenuItem onClick={handleMenuClose}>
 				<Link to='/myRecord' className='mobile-menu'>
 					<IconButton color='inherit'>
 						<EmojiEventsRoundedIcon />
@@ -134,7 +97,7 @@ const Header = ({ user }) => {
 					<p>Partidas Terminadas</p>
 				</Link>
 			</MenuItem>
-			<MenuItem onClick={handleLogoutMobileMenuClose}>
+			<MenuItem onClick={handleLogoutMenuClose}>
 				<IconButton color='inherit'>
 					<ExitToAppIcon />
 				</IconButton>
@@ -167,7 +130,7 @@ const Header = ({ user }) => {
 					</div>
 					{user ? (
 						<div className={classes.sectionMobile}>
-							<IconButton onClick={handleMobileMenuOpen} color='inherit'>
+							<IconButton onClick={handleProfileMenuOpen} color='inherit'>
 								<MoreIcon />
 							</IconButton>
 						</div>
@@ -180,7 +143,6 @@ const Header = ({ user }) => {
 					)}
 				</Toolbar>
 			</AppBar>
-			{renderMobileMenu}
 			{renderMenu}
 		</div>
 	);
