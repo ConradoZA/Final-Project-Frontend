@@ -1,9 +1,6 @@
 import store from "../../Redux/store";
 import { setNewMove } from "../../Redux/actions/checkerPlays";
-import { crownPawn } from "./GameRules";
 
-var PAWN_CAN_MOVE_1 = false;
-var PAWN_CAN_MOVE_2 = false;
 var QUEEN_CAN_MOVE_1 = false;
 var QUEEN_CAN_MOVE_2 = false;
 var QUEEN_CAN_MOVE_3 = false;
@@ -13,139 +10,14 @@ var POSIBLE_CAPTURE_2 = [];
 var POSIBLE_CAPTURE_3 = [];
 var POSIBLE_CAPTURE_4 = [];
 
-export function blackPawnCanCapture(actualPiece) {
-	const state = store.getState();
-	const pieces = state.checkersPlay?.present;
-	const SIDE = actualPiece[2][0];
-	const MX = actualPiece[0];
-	const MY = actualPiece[1];
-	const NUMBERS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-	const OBSTRUCTS = pieces.filter(
-		(piece) => (piece[0] === MX - 1 || piece[0] === MX + 1) && piece[1] === MY - 1
-	);
-	const POSIBLE_CAPTURES = OBSTRUCTS.filter((piece) => !piece[2].includes(SIDE));
-	const PIECES_TO_CAPTURE = [];
-
-	POSIBLE_CAPTURE_1 = POSIBLE_CAPTURES.filter(
-		(p) =>
-			p[0] - 1 === MX - 2 &&
-			p[1] - 1 === MY - 2 &&
-			NUMBERS.includes(MX - 2) &&
-			NUMBERS.includes(MY - 2)
-	).flat();
-	POSIBLE_CAPTURE_2 = POSIBLE_CAPTURES.filter(
-		(p) =>
-			p[0] + 1 === MX + 2 &&
-			p[1] - 1 === MY - 2 &&
-			NUMBERS.includes(MX + 2) &&
-			NUMBERS.includes(MY - 2)
-	).flat();
-	var EMPTY_CAPTURE_1 = "no";
-	var EMPTY_CAPTURE_2 = "no";
-	if (POSIBLE_CAPTURE_1.length === 4) {
-		EMPTY_CAPTURE_1 = pieces
-			.filter((piece) => piece[0] === MX - 2 && piece[1] === MY - 2)
-			.flat()
-			.toString()
-			.replace(/ /g, "");
-	}
-	if (POSIBLE_CAPTURE_2.length === 4) {
-		EMPTY_CAPTURE_2 = pieces
-			.filter((piece) => piece[0] === MX + 2 && piece[1] === MY - 2)
-			.flat()
-			.toString()
-			.replace(/ /g, "");
-	}
-	if (!!!EMPTY_CAPTURE_1) {
-		PIECES_TO_CAPTURE.push(POSIBLE_CAPTURE_1);
-	}
-	if (!!!EMPTY_CAPTURE_2) {
-		PIECES_TO_CAPTURE.push(POSIBLE_CAPTURE_2);
-	}
-	return PIECES_TO_CAPTURE;
-}
-
-export function blackPawnMove(toX, toY, actualPiece) {
-	const state = store.getState();
-	const pieces = state.checkersPlay.present;
-	const MX = actualPiece[0];
-	const MY = actualPiece[1];
-	const DX = MX - toX;
-	const DY = MY - toY;
-	PAWN_CAN_MOVE_1 = DX === 1 && DY === 1;
-	PAWN_CAN_MOVE_2 = DX === -1 && DY === 1;
-	const OBSTRUCTS = pieces.filter(
-		(piece) => (piece[0] === MX - 1 || piece[0] === MX + 1) && piece[1] === MY - 1
-	);
-	const captures = blackPawnCanCapture(actualPiece);
-
-	OBSTRUCTS.map((piece) => {
-		if (piece[0] === MX - 1) {
-			PAWN_CAN_MOVE_1 = false;
-		}
-		if (piece[0] === MX + 1) {
-			PAWN_CAN_MOVE_2 = false;
-		}
-	});
-
-	if (captures.length > 0) {
-		captures.map((piece) => {
-			if (POSIBLE_CAPTURE_1.length > 0 && piece[0] === MX - 1 && piece[1] === MY - 1) {
-				PAWN_CAN_MOVE_1 = false;
-			} else if (piece[0] === MX - 1 && piece[1] === MY - 1) {
-				PAWN_CAN_MOVE_1 = DX === 2 && DY === 2;
-			}
-			if (POSIBLE_CAPTURE_2.length > 0 && piece[0] === MX + 1 && piece[1] === MY - 1) {
-				PAWN_CAN_MOVE_2 = false;
-			} else if (piece[0] === MX + 1 && piece[1] === MY - 1) {
-				PAWN_CAN_MOVE_2 = DX === -2 && DY === 2;
-			}
-		});
-	}
-	return PAWN_CAN_MOVE_1 || PAWN_CAN_MOVE_2;
-}
-export function blackPawnResults(newPiecePosition) {
-	const state = store.getState();
-	var moved = true;
-	var newBoard = state.checkersPlay.present.filter(
-		(piece) => newPiecePosition[3] !== piece[3]
-	);
-	if (
-		POSIBLE_CAPTURE_1.length > 0 &&
-		POSIBLE_CAPTURE_1[0] - 2 === newPiecePosition[0] &&
-		POSIBLE_CAPTURE_1[1] - 2 === newPiecePosition[1]
-	) {
-		newBoard = newBoard.filter((piece) => POSIBLE_CAPTURE_1[3] !== piece[3]);
-		const chain = blackPawnCanCapture(newPiecePosition, newBoard);
-		if (chain.length > 0) {
-			moved = false;
-		}
-	} else if (
-		POSIBLE_CAPTURE_2.length > 0 &&
-		POSIBLE_CAPTURE_2[0] + 2 === newPiecePosition[0] &&
-		POSIBLE_CAPTURE_2[1] - 2 === newPiecePosition[1]
-	) {
-		newBoard = newBoard.filter((piece) => POSIBLE_CAPTURE_2[3] !== piece[3]);
-		const chain = blackPawnCanCapture(newPiecePosition, newBoard);
-		if (chain.length > 0) {
-			moved = false;
-		}
-	}
-	newBoard.push(newPiecePosition);
-	crownPawn(newBoard);
-	setNewMove(newBoard, moved);
-}
-
-export function blackQueenMove(toX, toY, actualPiece) {
+export function queenMove(toX, toY, actualPiece) {
 	const state = store.getState();
 	const pieces = state.checkersPlay.present;
 	const SIDE = actualPiece[2][0];
 	const MX = actualPiece[0];
 	const MY = actualPiece[1];
-	const DX = MX - toX;
-	const DY = MY - toY;
-	const AX = Math.abs(DX);
-	const AY = Math.abs(DY);
+	const AX = Math.abs(MX - toX);
+	const AY = Math.abs(MY - toY);
 	const NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 	const QUEEN_MOVE = AX === AY && NUMBERS.includes(AX) && NUMBERS.includes(AY);
 	QUEEN_CAN_MOVE_1 = QUEEN_MOVE && MX > toX && MY < toY;
@@ -158,7 +30,7 @@ export function blackQueenMove(toX, toY, actualPiece) {
 		const AYp = Math.abs(MY - piece[1]);
 		return AXp === AYp && NUMBERS.includes(AXp) && NUMBERS.includes(AYp);
 	});
-	const CAN_CAPTURE = blackQueenCanCapture(actualPiece);
+	const CAN_CAPTURE = queenCanCapture(actualPiece);
 	OBSTRUCTS.map((piece) => {
 		if (toX <= piece[0] && toY >= piece[1] && MX > piece[0] && MY < piece[1]) {
 			QUEEN_CAN_MOVE_1 = QUEEN_CAN_MOVE_1 && toX > piece[0] && toY < piece[1];
@@ -221,7 +93,7 @@ export function blackQueenMove(toX, toY, actualPiece) {
 	return QUEEN_CAN_MOVE_1 || QUEEN_CAN_MOVE_2 || QUEEN_CAN_MOVE_3 || QUEEN_CAN_MOVE_4;
 }
 
-export function blackQueenCanCapture(actualPiece) {
+export function queenCanCapture(actualPiece) {
 	const state = store.getState();
 	const pieces = state.checkersPlay?.present;
 	const SIDE = actualPiece[2][0];
@@ -306,7 +178,7 @@ export function blackQueenCanCapture(actualPiece) {
 	return PIECES_TO_CAPTURE;
 }
 
-export function blackQueenResults(newPiecePosition) {
+export function queenResults(newPiecePosition) {
 	const state = store.getState();
 	var moved = true;
 	var newBoard = state.checkersPlay.present.filter(
@@ -318,7 +190,7 @@ export function blackQueenResults(newPiecePosition) {
 		newPiecePosition[1] > POSIBLE_CAPTURE_1[1]
 	) {
 		newBoard = newBoard.filter((piece) => POSIBLE_CAPTURE_1[3] !== piece[3]);
-		const chain = blackQueenCanCapture(newPiecePosition, newBoard);
+		const chain = queenCanCapture(newPiecePosition, newBoard);
 		if (chain.length > 0) {
 			moved = false;
 		}
@@ -328,7 +200,7 @@ export function blackQueenResults(newPiecePosition) {
 		newPiecePosition[1] > POSIBLE_CAPTURE_2[1]
 	) {
 		newBoard = newBoard.filter((piece) => POSIBLE_CAPTURE_2[3] !== piece[3]);
-		const chain = blackQueenCanCapture(newPiecePosition, newBoard);
+		const chain = queenCanCapture(newPiecePosition, newBoard);
 		if (chain.length > 0) {
 			moved = false;
 		}
@@ -338,7 +210,7 @@ export function blackQueenResults(newPiecePosition) {
 		newPiecePosition[1] < POSIBLE_CAPTURE_3[1]
 	) {
 		newBoard = newBoard.filter((piece) => POSIBLE_CAPTURE_3[3] !== piece[3]);
-		const chain = blackQueenCanCapture(newPiecePosition, newBoard);
+		const chain = queenCanCapture(newPiecePosition, newBoard);
 		if (chain.length > 0) {
 			moved = false;
 		}
@@ -348,7 +220,7 @@ export function blackQueenResults(newPiecePosition) {
 		newPiecePosition[1] < POSIBLE_CAPTURE_4[1]
 	) {
 		newBoard = newBoard.filter((piece) => POSIBLE_CAPTURE_4[3] !== piece[3]);
-		const chain = blackQueenCanCapture(newPiecePosition, newBoard);
+		const chain = queenCanCapture(newPiecePosition, newBoard);
 		if (chain.length > 0) {
 			moved = false;
 		}

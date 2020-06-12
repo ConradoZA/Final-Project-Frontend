@@ -3,16 +3,13 @@ import Board from "../../Checkers/Board";
 import { DndProvider } from "react-dnd-multi-backend";
 import HTML5toTouch from "react-dnd-multi-backend/dist/cjs/HTML5toTouch";
 import { connect } from "react-redux";
-import { getPlay, sendMoveToOponent } from "../../Redux/actions/checkerPlays";
 import { Button } from "@material-ui/core";
-import SnackBar from "../../Components/SnackBar";
+import { getPlay, sendMoveToOponent } from "../../Redux/actions/checkerPlays";
 import { unsetGame } from "../../Redux/actions/checkerGames";
+import SnackBar from "../../Components/SnackBar";
 import { winningCondition, doesCapture } from "../../Checkers/Rules/GameRules";
 
 const CheckersGame = (props) => {
-	let turn = 0;
-	let whitePCaptured = 0;
-	let blackPCaptured = 0;
 	let captureTimer = 0;
 	const present = props.checkersPlay.present;
 	const id = props.checkersPlay.id;
@@ -52,19 +49,19 @@ const CheckersGame = (props) => {
 
 	const sendMove = () => {
 		if (doesMove(present, oldMove)) {
-			turn = props.checkersPlay.turn + 1;
+			const turn = props.checkersPlay.turn + 1;
 			if (doesCapture(present, oldMove)) {
 				captureTimer = 0;
 			} else {
 				captureTimer = props.checkersPlay.captureTimer + 1;
 			}
-			whitePCaptured = 20 - present.filter((piece) => piece[2].includes("w")).length;
-			blackPCaptured = 20 - present.filter((piece) => piece[2].includes("b")).length;
+			const whitePCaptured = 20 - present.filter((piece) => piece[2].includes("w")).length;
+			const blackPCaptured = 20 - present.filter((piece) => piece[2].includes("b")).length;
 			pastMoves.push(present);
 			const newTurn = {
 				id,
 				turn,
-				past:pastMoves,
+				past: pastMoves,
 				present,
 				whitePCaptured,
 				blackPCaptured,
