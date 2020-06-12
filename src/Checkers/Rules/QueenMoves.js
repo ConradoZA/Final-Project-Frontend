@@ -100,24 +100,49 @@ export function queenCanCapture(actualPiece) {
 	const MX = actualPiece[0];
 	const MY = actualPiece[1];
 	const NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+	const PIECES_TO_CAPTURE = [];
 	const OBSTRUCTS = pieces.filter((piece) => {
 		const AXp = Math.abs(MX - piece[0]);
 		const AYp = Math.abs(MY - piece[1]);
 		return AXp === AYp && NUMBERS.includes(AXp) && NUMBERS.includes(AYp);
 	});
 	const POSIBLE_CAPTURES = OBSTRUCTS.filter((piece) => !piece[2].includes(SIDE));
-	const PIECES_TO_CAPTURE = [];
+
 	POSIBLE_CAPTURE_1 = POSIBLE_CAPTURES.filter((piece) => {
-		return MX - piece[0] === (MY - piece[1]) * -1 && MX > piece[0] && MY < piece[1];
+		return (
+			MX - piece[0] === (MY - piece[1]) * -1 &&
+			MX > piece[0] &&
+			MY < piece[1] &&
+			NUMBERS.includes(piece[0] - 1) &&
+			NUMBERS.includes(piece[1] + 1)
+		);
 	});
 	POSIBLE_CAPTURE_2 = POSIBLE_CAPTURES.filter((piece) => {
-		return MX - piece[0] === MY - piece[1] && MX < piece[0] && MY < piece[1];
+		return (
+			MX - piece[0] === MY - piece[1] &&
+			MX < piece[0] &&
+			MY < piece[1] &&
+			NUMBERS.includes(piece[0] + 1) &&
+			NUMBERS.includes(piece[1] + 1)
+		);
 	});
 	POSIBLE_CAPTURE_3 = POSIBLE_CAPTURES.filter((piece) => {
-		return (MX - piece[0]) * -1 === MY - piece[1] && MX < piece[0] && MY > piece[1];
+		return (
+			(MX - piece[0]) * -1 === MY - piece[1] &&
+			MX < piece[0] &&
+			MY > piece[1] &&
+			NUMBERS.includes(piece[0] + 1) &&
+			NUMBERS.includes(piece[1] - 1)
+		);
 	});
 	POSIBLE_CAPTURE_4 = POSIBLE_CAPTURES.filter((piece) => {
-		return MX - piece[0] === MY - piece[1] && MX > piece[0] && MY > piece[1];
+		return (
+			MX - piece[0] === MY - piece[1] &&
+			MX > piece[0] &&
+			MY > piece[1] &&
+			NUMBERS.includes(piece[0] - 1) &&
+			NUMBERS.includes(piece[1] - 1)
+		);
 	});
 	var EMPTY_CAPTURE_1 = "no";
 	var EMPTY_CAPTURE_2 = "no";
