@@ -29,31 +29,31 @@ const drawerWidth = 190;
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		[theme.breakpoints.up("sm")]: {
+		[theme.breakpoints.up("md")]: {
 			display: "flex",
 		},
 	},
 	drawer: {
-		[theme.breakpoints.down("sm")]: {
+		[theme.breakpoints.down("md")]: {
 			width: drawerWidth,
 			flexShrink: 0,
 		},
 	},
 	appBar: {
-		[theme.breakpoints.up("sm")]: {
+		[theme.breakpoints.up("md")]: {
 			width: `calc(100% - ${drawerWidth}px)`,
 			marginLeft: drawerWidth,
 		},
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
-		[theme.breakpoints.up("sm")]: {
+		[theme.breakpoints.up("md")]: {
 			display: "none",
 		},
 	},
 	drawerPaper: {
 		width: drawerWidth,
-		[theme.breakpoints.up("sm")]: {
+		[theme.breakpoints.up("md")]: {
 			marginTop: "70px",
 		},
 	},
@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
 		paddingRight: theme.spacing(3),
 		paddingLeft: theme.spacing(1),
 		paddingTop: theme.spacing(3),
-		[theme.breakpoints.up("sm")]: {
+		[theme.breakpoints.up("md")]: {
 			paddingLeft: drawerWidth,
 		},
 	},
@@ -165,7 +165,7 @@ const Profile = (props) => {
 								{drawer}
 							</Drawer>
 						</Hidden>
-						<Hidden xsDown implementation='css'>
+						<Hidden smDown implementation='css'>
 							<Drawer
 								classes={{
 									paper: classes.drawerPaper,

@@ -10,6 +10,7 @@ import MailConfirmed from "./Views/User/MailConfirmed";
 import MainDrawer from "./Views/MyGames/MainDrawer";
 import GameList from "./Views/FinishedGames/GameList";
 import GameItem from "./Views/FinishedGames/GameItem";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 function Router() {
   return (
@@ -19,11 +20,11 @@ function Router() {
         <Route path='/' component={Home} exact />
         <Route path='/login' component={Login} exact />
         <Route path='/register' component={Register} exact />
-        <Route path='/profile' component={Profile} exact />
+        <ProtectedRoute path='/profile' component={Profile} exact />
         <Route path='/recover/:passToken' component={Recover} exact />
-        <Route path='/myGames' component={MainDrawer} exact />
-        <Route path='/myRecord' component={GameList} exact />
-        <Route path='/myRecord/:gameId' component={GameItem} exact />
+        <ProtectedRoute path='/myGames' component={MainDrawer} exact />
+        <ProtectedRoute path='/myRecord' component={GameList} exact />
+        <ProtectedRoute path='/myRecord/:gameId' component={GameItem} exact />
         <Route path='/confirm/:passToken' component={MailConfirmed} exact />
       </Switch>
     </BrowserRouter>

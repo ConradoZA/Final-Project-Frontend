@@ -125,11 +125,10 @@ export function checkTurn(id) {
 }
 
 export function doesCapture(arr1, arr2) {
-	if (arr1.length === arr2.length) {
-		return false;
-	} else {
+	if (arr1.length !== arr2.length) {
 		return true;
 	}
+		return false;
 }
 
 export function crownPawn(tablePosition) {
