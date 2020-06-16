@@ -79,9 +79,9 @@ const Profile = (props) => {
 				<div className='flex-center'>
 					<img
 						src={
-							user.image_path.includes("http")
-								? user.image_path
-								: API_URL_IMAGES + user.image_path
+							user?.image_path.includes("http")
+								? user?.image_path
+								: API_URL_IMAGES + user?.image_path
 						}
 						alt='user'
 						className='img-profile'
@@ -114,7 +114,7 @@ const Profile = (props) => {
 						/>
 						<br />
 						<InputLabel id='email'>E-mail</InputLabel>
-						{user.email_verified ? (
+						{user?.email_verified ? (
 							<Input
 								className='input-width'
 								labelId='email'
@@ -148,7 +148,7 @@ const Profile = (props) => {
 								}
 							/>
 						)}
-						{user.email_verified ? (
+						{user?.email_verified ? (
 							""
 						) : (
 							<Link

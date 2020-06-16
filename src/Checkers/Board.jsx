@@ -22,22 +22,22 @@ const Board = (props) => {
 			if (x === piece[0] && y === piece[1]) {
 				switch (piece[2]) {
 					case "wp":
-						if (whitePawnCanCapture(piece).length > 0) {
+						if (whitePawnCanCapture(piece, tablePosition).length > 0) {
 							hasToCapture = true;
 						}
 						return <WPawn color={"wp"} id={id} key={id} hasToCapture={hasToCapture} />;
 					case "wq":
-						if (queenCanCapture(piece).length > 0) {
+						if (queenCanCapture(piece, tablePosition).length > 0) {
 							hasToCapture = true;
 						}
 						return <WQueen color={"wq"} id={id} key={id} hasToCapture={hasToCapture} />;
 					case "bp":
-						if (blackPawnCanCapture(piece).length > 0) {
+						if (blackPawnCanCapture(piece, tablePosition).length > 0) {
 							hasToCapture = true;
 						}
 						return <BPawn color={"bp"} id={id} key={id} hasToCapture={hasToCapture} />;
 					case "bq":
-						if (queenCanCapture(piece).length > 0) {
+						if (queenCanCapture(piece, tablePosition).length > 0) {
 							hasToCapture = true;
 						}
 						return <BQueen color={"bq"} id={id} key={id} hasToCapture={hasToCapture} />;

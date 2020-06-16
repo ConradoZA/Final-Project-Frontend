@@ -6,10 +6,11 @@ var PAWN_CAN_MOVE_1 = false;
 var PAWN_CAN_MOVE_2 = false;
 var POSIBLE_CAPTURE_1 = [];
 var POSIBLE_CAPTURE_2 = [];
+const special_state = store.getState();
+const special_present = special_state.checkersPlay?.present;
 
-export function blackPawnCanCapture(actualPiece) {
-	const state = store.getState();
-	const pieces = state.checkersPlay?.present;
+export function blackPawnCanCapture(actualPiece, tablePosition = special_present) {
+	const pieces = tablePosition;
 	const SIDE = actualPiece[2][0];
 	const MX = actualPiece[0];
 	const MY = actualPiece[1];
@@ -70,7 +71,7 @@ export function blackPawnMove(toX, toY, actualPiece) {
 	const OBSTRUCTS = pieces.filter(
 		(piece) => (piece[0] === MX - 1 || piece[0] === MX + 1) && piece[1] === MY - 1
 	);
-	const captures = blackPawnCanCapture(actualPiece);
+	const captures = blackPawnCanCapture(actualPiece, pieces);
 
 	OBSTRUCTS.map((piece) => {
 		if (piece[0] === MX - 1 && piece[1] === MY - 1) {

@@ -1,10 +1,14 @@
-const userReducer = (state = {}, action={}) => {
+const initialState = {
+    user: {}
+}
+
+const userReducer = (state = initialState, action = {}) => {
     switch (action.type) {
         case 'LOGOUT':
         case 'DELETE_USER':
             return {
                 ...state,
-                user: false
+                user: {}
             }
         case 'LOGIN':
         case 'GET_DETAIL':

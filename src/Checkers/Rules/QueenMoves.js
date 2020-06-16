@@ -9,11 +9,12 @@ var POSIBLE_CAPTURE_1 = [];
 var POSIBLE_CAPTURE_2 = [];
 var POSIBLE_CAPTURE_3 = [];
 var POSIBLE_CAPTURE_4 = [];
+const special_state = store.getState();
+const special_present = special_state.checkersPlay?.present;
 
 export function queenMove(toX, toY, actualPiece) {
 	const state = store.getState();
 	const pieces = state.checkersPlay.present;
-	const SIDE = actualPiece[2][0];
 	const MX = actualPiece[0];
 	const MY = actualPiece[1];
 	const AX = Math.abs(MX - toX);
@@ -24,14 +25,16 @@ export function queenMove(toX, toY, actualPiece) {
 	QUEEN_CAN_MOVE_2 = QUEEN_MOVE && MX < toX && MY < toY;
 	QUEEN_CAN_MOVE_3 = QUEEN_MOVE && MX < toX && MY > toY;
 	QUEEN_CAN_MOVE_4 = QUEEN_MOVE && MX > toX && MY > toY;
-
 	const OBSTRUCTS = pieces.filter((piece) => {
 		const AXp = Math.abs(MX - piece[0]);
 		const AYp = Math.abs(MY - piece[1]);
 		return AXp === AYp && NUMBERS.includes(AXp) && NUMBERS.includes(AYp);
 	});
-	const CAN_CAPTURE = queenCanCapture(actualPiece);
-	OBSTRUCTS.map((piece) => {
+
+	const CAN_CAPTURE = queenCanCapture(actualPiece, pieces);
+	const CANT_CONTINUE = OBSTRUCTS.filter((piece1) => CAN_CAPTURE.every((piece2) => piece2[3] !== piece1[3]));
+
+	CANT_CONTINUE.map((piece) => {
 		if (toX <= piece[0] && toY >= piece[1] && MX > piece[0] && MY < piece[1]) {
 			QUEEN_CAN_MOVE_1 = QUEEN_CAN_MOVE_1 && toX > piece[0] && toY < piece[1];
 		} else if (toX >= piece[0] && toY >= piece[1] && MX < piece[0] && MY < piece[1]) {
@@ -42,60 +45,53 @@ export function queenMove(toX, toY, actualPiece) {
 			QUEEN_CAN_MOVE_4 = QUEEN_CAN_MOVE_4 && toX > piece[0] && toY > piece[1];
 		}
 	});
-	// const ENEMIES = OBSTRUCTS.filter((piece) => !piece[2].includes(SIDE));
-	// const OBSTRUCTS_2 = ENEMIES.find(
-	// 	(piece) => piece[3] !== CAN_CAPTURE.forEach((piece) => piece[3])
-	// );
-	if (POSIBLE_CAPTURE_1.length === 4) {
+
+	if ((POSIBLE_CAPTURE_1.length === 4 || POSIBLE_CAPTURE_2.length === 4 || POSIBLE_CAPTURE_3.length === 4) && POSIBLE_CAPTURE_4.length === 0)
+		QUEEN_CAN_MOVE_4 = false;
+	if ((POSIBLE_CAPTURE_1.length === 4 || POSIBLE_CAPTURE_2.length === 4 || POSIBLE_CAPTURE_4.length === 4) && POSIBLE_CAPTURE_3.length === 0)
+		QUEEN_CAN_MOVE_3 = false;
+	if ((POSIBLE_CAPTURE_1.length === 4 || POSIBLE_CAPTURE_3.length === 4 || POSIBLE_CAPTURE_4.length === 4) && POSIBLE_CAPTURE_2.length === 0)
+		QUEEN_CAN_MOVE_2 = false;
+	if ((POSIBLE_CAPTURE_2.length === 4 || POSIBLE_CAPTURE_3.length === 4 || POSIBLE_CAPTURE_4.length === 4) && POSIBLE_CAPTURE_1.length === 0)
+		QUEEN_CAN_MOVE_1 = false;
+
+	if (POSIBLE_CAPTURE_1.length === 4)
 		QUEEN_CAN_MOVE_1 =
-			QUEEN_MOVE &&
-			MX > toX &&
-			MY < toY &&
+			QUEEN_CAN_MOVE_1 &&
 			toX !== POSIBLE_CAPTURE_1[0] &&
 			toY !== POSIBLE_CAPTURE_1[1] &&
 			NUMBERS.includes(POSIBLE_CAPTURE_1[0] - 1) &&
 			NUMBERS.includes(POSIBLE_CAPTURE_1[1] + 1);
-	}
-	if (POSIBLE_CAPTURE_2.length === 4) {
+
+	if (POSIBLE_CAPTURE_2.length === 4)
 		QUEEN_CAN_MOVE_2 =
-			QUEEN_MOVE &&
-			MX < toX &&
-			MY < toY &&
+			QUEEN_CAN_MOVE_2 &&
 			toX !== POSIBLE_CAPTURE_2[0] &&
 			toY !== POSIBLE_CAPTURE_2[1] &&
 			NUMBERS.includes(POSIBLE_CAPTURE_2[0] + 1) &&
 			NUMBERS.includes(POSIBLE_CAPTURE_2[1] + 1);
-	}
-	if (POSIBLE_CAPTURE_3.length === 4) {
+
+	if (POSIBLE_CAPTURE_3.length === 4)
 		QUEEN_CAN_MOVE_3 =
-			QUEEN_MOVE &&
-			MX < toX &&
-			MY > toY &&
+			QUEEN_CAN_MOVE_3 &&
 			toX !== POSIBLE_CAPTURE_3[0] &&
 			toY !== POSIBLE_CAPTURE_3[1] &&
 			NUMBERS.includes(POSIBLE_CAPTURE_3[0] + 1) &&
 			NUMBERS.includes(POSIBLE_CAPTURE_3[1] - 1);
-	}
-	if (POSIBLE_CAPTURE_4.length === 4) {
+
+	if (POSIBLE_CAPTURE_4.length === 4)
 		QUEEN_CAN_MOVE_4 =
-			QUEEN_MOVE &&
-			MX > toX &&
-			MY > toY &&
+			QUEEN_CAN_MOVE_4 &&
 			toX !== POSIBLE_CAPTURE_4[0] &&
 			toY !== POSIBLE_CAPTURE_4[1] &&
 			NUMBERS.includes(POSIBLE_CAPTURE_4[0] - 1) &&
 			NUMBERS.includes(POSIBLE_CAPTURE_4[1] - 1);
-	}
-	// if (OBSTRUCTS_2.length > 0) {
-	// 	var a = (OBSTRUCTS_2[0] !== toX && OBSTRUCTS_2[1] !== toY);
-	// }
-	// console.log(a);
+
 	return QUEEN_CAN_MOVE_1 || QUEEN_CAN_MOVE_2 || QUEEN_CAN_MOVE_3 || QUEEN_CAN_MOVE_4;
 }
 
-export function queenCanCapture(actualPiece) {
-	const state = store.getState();
-	const pieces = state.checkersPlay?.present;
+export function queenCanCapture(actualPiece, tablePosition = special_present) {
+	const pieces = tablePosition;
 	const SIDE = actualPiece[2][0];
 	const MX = actualPiece[0];
 	const MY = actualPiece[1];
@@ -107,7 +103,6 @@ export function queenCanCapture(actualPiece) {
 		return AXp === AYp && NUMBERS.includes(AXp) && NUMBERS.includes(AYp);
 	});
 	const POSIBLE_CAPTURES = OBSTRUCTS.filter((piece) => !piece[2].includes(SIDE));
-
 	POSIBLE_CAPTURE_1 = POSIBLE_CAPTURES.filter((piece) => {
 		return (
 			MX - piece[0] === (MY - piece[1]) * -1 &&
@@ -150,7 +145,8 @@ export function queenCanCapture(actualPiece) {
 	var EMPTY_CAPTURE_4 = "no";
 
 	if (POSIBLE_CAPTURE_1.length > 0) {
-		POSIBLE_CAPTURE_1 = POSIBLE_CAPTURE_1[POSIBLE_CAPTURE_1.length - 1];
+		POSIBLE_CAPTURE_1.splice(1);
+		POSIBLE_CAPTURE_1 = POSIBLE_CAPTURE_1.flat();
 		EMPTY_CAPTURE_1 = pieces
 			.filter(
 				(piece) =>
@@ -160,7 +156,8 @@ export function queenCanCapture(actualPiece) {
 	}
 
 	if (POSIBLE_CAPTURE_2.length > 0) {
-		POSIBLE_CAPTURE_2 = POSIBLE_CAPTURE_2[POSIBLE_CAPTURE_2.length - 1];
+		POSIBLE_CAPTURE_2.splice(1);
+		POSIBLE_CAPTURE_2 = POSIBLE_CAPTURE_2.flat();
 		EMPTY_CAPTURE_2 = pieces
 			.filter(
 				(piece) =>
@@ -170,7 +167,8 @@ export function queenCanCapture(actualPiece) {
 	}
 
 	if (POSIBLE_CAPTURE_3.length > 0) {
-		POSIBLE_CAPTURE_3 = POSIBLE_CAPTURE_3[POSIBLE_CAPTURE_3.length - 1];
+		POSIBLE_CAPTURE_3.splice(1);
+		POSIBLE_CAPTURE_3 = POSIBLE_CAPTURE_3.flat();
 		EMPTY_CAPTURE_3 = pieces
 			.filter(
 				(piece) =>
@@ -180,7 +178,8 @@ export function queenCanCapture(actualPiece) {
 	}
 
 	if (POSIBLE_CAPTURE_4.length > 0) {
-		POSIBLE_CAPTURE_4 = POSIBLE_CAPTURE_4[POSIBLE_CAPTURE_4.length - 1];
+		POSIBLE_CAPTURE_4.splice(1);
+		POSIBLE_CAPTURE_4 = POSIBLE_CAPTURE_4.flat();
 		EMPTY_CAPTURE_4 = pieces
 			.filter(
 				(piece) =>
@@ -252,7 +251,6 @@ export function queenResults(newPiecePosition) {
 	} else {
 		moved = true;
 	}
-
 	newBoard.push(newPiecePosition);
 	setNewMove(newBoard, moved);
 }

@@ -46,7 +46,7 @@ export const getUserDetail = async () => {
 };
 
 export const logout = async () => {
-	await axios.get(API_URL_2 + "users/logout", {
+	const res = await axios.get(API_URL_2 + "users/logout", {
 		headers: {
 			Authorization: GET_HEADER(),
 		},
@@ -55,6 +55,7 @@ export const logout = async () => {
 	store.dispatch({
 		type: "LOGOUT",
 	});
+	return res
 };
 
 export const uploadImage = async (fd) => {
@@ -84,15 +85,16 @@ export const updateUser = async (user) => {
 };
 
 export const deleteUser = async () => {
-	await axios.delete(API_URL_2 + "users/delete", {
+	const res = await axios.delete(API_URL_2 + "users/delete", {
 		headers: {
 			Authorization: GET_HEADER(),
 		},
 	});
-	localStorage.removeItem("authToken");
 	store.dispatch({
 		type: "DELETE_USER",
 	});
+	localStorage.removeItem("authToken");
+	return res;
 };
 
 export const sendRecoverEmail = async (email) => {
