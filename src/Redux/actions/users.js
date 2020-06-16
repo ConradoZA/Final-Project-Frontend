@@ -64,7 +64,6 @@ export const uploadImage = async (fd) => {
 			Authorization: GET_HEADER(),
 		},
 	});
-	console.log(res.data)
 	store.dispatch({
 		type: "UPLOAD_IMAGE",
 		payload: res.data.user,

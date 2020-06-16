@@ -11,20 +11,11 @@ export function winningCondition() {
 	const gameId = state.checkersGame.id;
 	const captureTimer = state.checkersGame.captureTimer;
 	const whiteSide = state.checkersPlay.present.filter((piece) => piece[2].includes("w"));
-	const whitePawns = state.checkersPlay.present.filter((piece) =>
-		piece[2].includes("wp")
-	);
 	const blackSide = state.checkersPlay.present.filter((piece) => piece[2].includes("b"));
-	const blackPawns = state.checkersPlay.present.filter((piece) =>
-		piece[2].includes("bp")
-	);
+
 	if (whiteSide.length === 0) {
 		endGame(gameId, playerTwo);
 	} else if (blackSide.length === 0) {
-		endGame(gameId, playerOne);
-	} else if (whiteSide.length > 2 && whitePawns.length <= 2) {
-		endGame(gameId, playerTwo);
-	} else if (blackSide.length > 2 && blackPawns.length <= 2) {
 		endGame(gameId, playerOne);
 	}
 	if (captureTimer >= 25) {
@@ -44,14 +35,14 @@ export function checkTurn(id) {
 		const me = present.find((piece) => piece[3] === id);
 		const ownSide = present.filter((piece) => piece[2].includes("w"));
 		ownSide.map((piece) => {
-			if (piece[2].includes("p")) allPawnCaptures.push(whitePawnCanCapture(piece));
+			if (piece[2].includes("p")) allPawnCaptures.push(whitePawnCanCapture(piece, present));
 		});
 		ownSide.map((piece) => {
-			if (piece[2].includes("q")) allQueenCaptures.push(queenCanCapture(piece));
+			if (piece[2].includes("q")) allQueenCaptures.push(queenCanCapture(piece, present));
 		});
 
 		if (allPawnCaptures.flat().length > 0 && me[2].includes("p")) {
-			iCan = whitePawnCanCapture(me);
+			iCan = whitePawnCanCapture(me, present);
 			if (iCan.length > 0) {
 				return "w";
 			} else {
@@ -66,7 +57,7 @@ export function checkTurn(id) {
 		}
 
 		if (allQueenCaptures.flat().length > 0 && me[2].includes("q")) {
-			iCan = queenCanCapture(me);
+			iCan = queenCanCapture(me, present);
 			if (iCan.length > 0) {
 				return "w";
 			} else {
@@ -84,13 +75,13 @@ export function checkTurn(id) {
 		const me = present.find((piece) => piece[3] === id);
 		const ownSide = present.filter((piece) => piece[2].includes("b"));
 		ownSide.map((piece) => {
-			if (piece[2].includes("p")) allPawnCaptures.push(blackPawnCanCapture(piece));
+			if (piece[2].includes("p")) allPawnCaptures.push(blackPawnCanCapture(piece, present));
 		});
 		ownSide.map((piece) => {
-			if (piece[2].includes("q")) allQueenCaptures.push(queenCanCapture(piece));
+			if (piece[2].includes("q")) allQueenCaptures.push(queenCanCapture(piece, present));
 		});
 		if (allPawnCaptures.flat().length > 0 && me[2].includes("p")) {
-			iCan = blackPawnCanCapture(me);
+			iCan = blackPawnCanCapture(me, present);
 			if (iCan.length > 0) {
 				return "b";
 			} else {
@@ -105,7 +96,7 @@ export function checkTurn(id) {
 		}
 
 		if (allQueenCaptures.flat().length > 0 && me[2].includes("q")) {
-			iCan = queenCanCapture(me);
+			iCan = queenCanCapture(me, present);
 			if (iCan.length > 0) {
 				return "b";
 			} else {
@@ -128,7 +119,7 @@ export function doesCapture(arr1, arr2) {
 	if (arr1.length !== arr2.length) {
 		return true;
 	}
-		return false;
+	return false;
 }
 
 export function crownPawn(tablePosition) {
