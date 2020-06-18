@@ -1,6 +1,6 @@
 # Play 2 Games
 
-<p align="center"><img src="https://github.com/ConradoZA/Final-Project-Frontend/blob/master/readme_assets/title.jpg" width="80%"></p>
+<p align="center"><img src="https://github.com/ConradoZA/Readme-assets/blob/master/p2g_title.jpg" width="80%"></p>
 
 This is the frontend part of my project "Play 2 Games".<br />
 It's a web where you can play 2-player games asynchronously with other users.
@@ -35,11 +35,11 @@ Remember to start the two backends too!
 
 ## Show and Tell 🚀
 
-<p align="center"><img src="https://github.com/ConradoZA/Final-Project-Frontend/blob/master/readme_assets/image_change.gif" width="400"></p>
+<p align="center"><img src="https://github.com/ConradoZA/Readme-assets/blob/master/p2g_image_change.gif" width="400"></p>
 
-<p align="center"><img src="https://github.com/ConradoZA/Final-Project-Frontend/blob/master/readme_assets/turn_move.gif" width="400"></p>
+<p align="center"><img src="https://github.com/ConradoZA/Readme-assets/blob/master/p2g_turn_move.gif" width="400"></p>
 
-<p align="center"><img src="https://github.com/ConradoZA/Final-Project-Frontend/blob/master/readme_assets/History.gif" width="400"></p>
+<p align="center"><img src="https://github.com/ConradoZA/Readme-assets/blob/master/p2g_history.gif" width="400"></p>
 
 
 ---
