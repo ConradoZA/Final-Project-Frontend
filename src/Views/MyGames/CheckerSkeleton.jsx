@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { API_URL_IMAGES } from "../../api-config";
 import { Paper, Dialog } from "@material-ui/core";
 import { setGame } from "../../Redux/actions/checkerGames";
-import AcceptInvitation from "./AcceptInvitation";
-import AcceptDraw from "./AcceptDraw";
+import AcceptInvitation from "./Modals/AcceptInvitation";
+import AcceptDraw from "./Modals/AcceptDraw";
 
 const CheckerSkeleton = ({ game, name }) => {
 	const checkTurnNumber = () => {

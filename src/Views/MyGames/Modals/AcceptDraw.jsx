@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, Button, CardActions } from "@material-ui/core";
-import SnackBar from "../../Components/SnackBar";
-import { acceptDraw, rejectDraw } from "../../Redux/actions/checkerGames";
+import SnackBar from "../../../Components/SnackBar";
+import { acceptDraw, rejectDraw } from "../../../Redux/actions/checkerGames";
 
 const AcceptDraw = (props) => {
 	const [open, setOpen] = useState(false);
