@@ -57,15 +57,19 @@ const CheckerSkeleton = ({ game, name }) => {
 	return (
 		<Paper className='paper'>
 			<div className='flex pointer' onClick={goToGame}>
-				{ playerOne? <img
-					src={API_URL_IMAGES + "white_player.png"}
-					alt='checkers'
-					className='img-small'
-				/>: <img
-				src={API_URL_IMAGES + "black_player.png"}
-				alt='checkers'
-				className='img-small'
-			/> }
+				{playerOne === name ? (
+					<img
+						src={API_URL_IMAGES + "white_player.png"}
+						alt='checkers'
+						className='img-small'
+					/>
+				) : (
+					<img
+						src={API_URL_IMAGES + "black_player.png"}
+						alt='checkers'
+						className='img-small'
+					/>
+				)}
 				<div className='flex-column'>
 					<p>
 						<strong>Turno:</strong> {turn}
