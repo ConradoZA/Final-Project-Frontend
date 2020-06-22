@@ -57,17 +57,21 @@ const CheckerSkeleton = ({ game, name }) => {
 	return (
 		<Paper className='paper'>
 			<div className='flex pointer' onClick={goToGame}>
-				<img
-					src={API_URL_IMAGES + "warcaby-polskie.png"}
+				{ playerOne? <img
+					src={API_URL_IMAGES + "white_player.png"}
 					alt='checkers'
 					className='img-small'
-				/>
+				/>: <img
+				src={API_URL_IMAGES + "black_player.png"}
+				alt='checkers'
+				className='img-small'
+			/> }
 				<div className='flex-column'>
 					<p>
 						<strong>Turno:</strong> {turn}
 					</p>
 					<p>
-						<strong>Turno de:</strong> {turn % 2 === 0 ? "Negras" : "Blancas"}
+						<strong>Turno de:</strong> {turn % 2 === 0 ? playerTwo : playerOne}
 					</p>
 					{!initiated && playerTwo === name ? (
 						<h4 className='red-main'>¿Quieres jugar?</h4>
