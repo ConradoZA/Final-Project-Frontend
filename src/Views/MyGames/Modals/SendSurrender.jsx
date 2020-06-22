@@ -1,7 +1,7 @@
 import React from "react";
-import store from "../../Redux/store";
+import store from "../../../Redux/store";
 import { Card, CardHeader, Button, CardActions, CardContent } from "@material-ui/core";
-import { surrender, unsetGame } from "../../Redux/actions/checkerGames";
+import { surrender, unsetGame } from "../../../Redux/actions/checkerGames";
 
 const SendSurrender = ({ handleSurrenderModal, id }) => {
 	const state = store.getState();

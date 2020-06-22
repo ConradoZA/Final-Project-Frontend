@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import store from "../../Redux/store";
+import store from "../../../Redux/store";
 import {
 	Card,
 	CardContent,
@@ -10,9 +10,9 @@ import {
 	MenuItem,
 	Button,
 } from "@material-ui/core";
-import { getAllUsers } from "../../Redux/actions/users";
-import { waitForAproval } from "../../Redux/actions/checkerGames";
-import SnackBar from "../../Components/SnackBar";
+import { getAllUsers } from "../../../Redux/actions/users";
+import { waitForAproval, getAllGames } from "../../../Redux/actions/checkerGames";
+import SnackBar from "../../../Components/SnackBar";
 
 const SendInvitation = ({ handleInvitationModal }) => {
 	const [user, setUser] = useState("");
@@ -46,6 +46,7 @@ const SendInvitation = ({ handleInvitationModal }) => {
 				setMessage("Invitación enviada. Ahora a esperar");
 				setType("success");
 				openSnackBar();
+				getAllGames();
 				setTimeout(() => {
 					handleInvitationModal();
 				}, 2500);

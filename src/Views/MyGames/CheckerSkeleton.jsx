@@ -78,7 +78,7 @@ const CheckerSkeleton = ({ game, name }) => {
 						<strong>Turno de:</strong> {turn % 2 === 0 ? playerTwo : playerOne}
 					</p>
 					{!initiated && playerTwo === name ? (
-						<h4 className='red-main'>¿Quieres jugar?</h4>
+						<h4 className='draw'>¿Quieres jugar?</h4>
 					) : initiated ? (
 						<></>
 					) : (
@@ -89,6 +89,8 @@ const CheckerSkeleton = ({ game, name }) => {
 						<h4 className='red-main'>Te toca</h4>
 					) : checkTurn() && drawOffered ? (
 						<h4>Has pedido tablas</h4>
+					) : !initiated && playerTwo === name ? (
+						""
 					) : (
 						<h4>Esperando respuesta</h4>
 					)}

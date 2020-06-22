@@ -55,8 +55,9 @@ const Header = ({ user, allCheckersGame }) => {
 	const myTurn = allCheckersGame
 		.map(
 			(game) =>
-				(game.gamePlay.turn % 2 === 0 && game.playerTwo === user.name) ||
-				(game.gamePlay.turn % 2 === 1 && game.playerOne === user.name)
+				(game.gamePlay?.turn % 2 === 0 && game.playerTwo === user.name) ||
+        (game.gamePlay?.turn % 2 === 1 && game.playerOne === user.name) ||
+        (!game.initiated)
 		)
 		.filter((game) => game === true);
 

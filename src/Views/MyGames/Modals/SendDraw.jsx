@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, CardHeader, Button, CardActions } from "@material-ui/core";
-import { offerDraw, unsetGame } from "../../Redux/actions/checkerGames";
-import SnackBar from "../../Components/SnackBar";
+import { offerDraw, unsetGame } from "../../../Redux/actions/checkerGames";
+import SnackBar from "../../../Components/SnackBar";
 
 const SendDraw = ({ handleDrawModal, id }) => {
 	const [open, setOpen] = useState(false);
