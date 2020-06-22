@@ -83,6 +83,7 @@ const SendInvitation = ({ handleInvitationModal }) => {
 						})}
 					</Select>
 				</FormControl>
+				<div className="make-space"></div>
 				<Button variant='contained' color='primary' onClick={sendTicket}>
 					Enviar Invitación
 				</Button>

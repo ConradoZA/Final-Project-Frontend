@@ -55,12 +55,11 @@ const Header = ({ user, allCheckersGame }) => {
 	const myTurn = allCheckersGame
 		.map(
 			(game) =>
-				(game.gamePlay?.turn % 2 === 0 && game.playerTwo === user.name) ||
-        (game.gamePlay?.turn % 2 === 1 && game.playerOne === user.name) ||
-        (!game.initiated)
+				(game.gamePlay?.turn % 2 === 0 && game.playerTwo === user.name && !game.winner) ||
+				(game.gamePlay?.turn % 2 === 1 && game.playerOne === user.name && !game.winner) ||
+				(!game.initiated && game.playerTwo === user.name && !game.winner)
 		)
 		.filter((game) => game === true);
-
 	const handleProfileMenuOpen = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
