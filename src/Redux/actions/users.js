@@ -65,11 +65,12 @@ export const uploadImage = async (fd) => {
 			Authorization: GET_HEADER(),
 		},
 	});
-	store.dispatch({
-		type: "UPLOAD_IMAGE",
-		payload: res.data.user,
-	});
-	return res;
+	console.log(res.data)
+	// store.dispatch({
+	// 	type: "UPLOAD_IMAGE",
+	// 	payload: res.data.user,
+	// });
+	// return res;
 };
 
 export const updateUser = async (user) => {

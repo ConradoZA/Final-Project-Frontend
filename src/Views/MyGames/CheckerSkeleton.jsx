@@ -59,13 +59,13 @@ const CheckerSkeleton = ({ game, name }) => {
 			<div className='flex pointer' onClick={goToGame}>
 				{playerOne === name ? (
 					<img
-						src={API_URL_IMAGES + "white_player.png"}
+						src={API_URL_IMAGES + "images/white_player.png"}
 						alt='checkers'
 						className='img-small'
 					/>
 				) : (
 					<img
-						src={API_URL_IMAGES + "black_player.png"}
+						src={API_URL_IMAGES + "images/black_player.png"}
 						alt='checkers'
 						className='img-small'
 					/>

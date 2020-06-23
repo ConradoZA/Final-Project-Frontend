@@ -18,7 +18,7 @@ const AllGames = ({ allCheckersGame, user }) => {
 		<div className='flex-column center'>
 			{spinner}
 			{!loading && stillPlaying.length === 0 && (
-				<img src={API_URL_IMAGES + "no_game.png"} alt='' className='img-home' />
+				<img src={API_URL_IMAGES + "images/no_game.png"} alt='' className='img-home' />
 			)}
 			{!loading &&
 				stillPlaying.map((game) => {

@@ -10,8 +10,8 @@ const Home = () => {
 			<img
 				className='img-home'
 				alt=''
-				src={API_URL_IMAGES + "board-games-for-couples-1.jpg"}></img>
-			<img className='img-home' alt='' src={API_URL_IMAGES + "als_ich_kan.jpg"}></img>
+				src={API_URL_IMAGES + "images/board-games-for-couples-1.jpg"}></img>
+			<img className='img-home' alt='' src={API_URL_IMAGES + "images/als_ich_kan.jpg"}></img>
 		</main>
 	);
 };

@@ -39,11 +39,23 @@ const RecordSkeleton = ({ game, name }) => {
 		<Paper className='paper'>
 			<div className='flex pointer' onClick={goToGame}>
 				{winner === name ? (
-					<img src={API_URL_IMAGES + "winner.png"} alt='you win!' className='img-small' />
+					<img
+						src={API_URL_IMAGES + "images/winner.png"}
+						alt='you win!'
+						className='img-small'
+					/>
 				) : winner === "draw" ? (
-					<img src={API_URL_IMAGES + "draw.png"} alt='draw' className='img-small' />
+					<img
+						src={API_URL_IMAGES + "images/draw.png"}
+						alt='draw'
+						className='img-small'
+					/>
 				) : (
-					<img src={API_URL_IMAGES + "Loser.png"} alt='you lose' className='img-small' />
+					<img
+						src={API_URL_IMAGES + "images/Loser.png"}
+						alt='you lose'
+						className='img-small'
+					/>
 				)}
 				<div className='flex-column'>
 					<p className='margin-top-results'>

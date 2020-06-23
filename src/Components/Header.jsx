@@ -132,7 +132,7 @@ const Header = ({ user, allCheckersGame }) => {
 			<AppBar position='static'>
 				<Toolbar>
 					<Link to='/'>
-						<img src={API_URL_IMAGES + "logo.png"} alt='' id='title-img' />
+						<img src={API_URL_IMAGES + "images/logo.png"} alt='' id='title-img' />
 					</Link>
 					<Link to='/'>
 						<h2 id='title-name'>Play 2 Games</h2>
