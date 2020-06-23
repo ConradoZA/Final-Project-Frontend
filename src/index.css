@@ -69,7 +69,7 @@ a {
 	position: absolute;
 }
 .container {
-	margin: 2vmin auto;
+	margin: 2vh auto;
 	height: 80vmin;
 	width: 80vmin;
 	box-sizing: initial;

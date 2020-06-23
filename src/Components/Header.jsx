@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -19,6 +19,7 @@ import EmojiEventsRoundedIcon from "@material-ui/icons/EmojiEventsRounded";
 import { logout } from "../Redux/actions/users";
 import { API_URL_IMAGES } from "../api-config";
 import { Link, useHistory } from "react-router-dom";
+import { getAllGames } from "../Redux/actions/checkerGames";
 
 const useStyles = makeStyles((theme) => ({
 	grow: {
@@ -52,6 +53,9 @@ const Header = ({ user, allCheckersGame }) => {
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const isMenuOpen = Boolean(anchorEl);
+	useEffect(() => {
+		getAllGames();
+	}, [history])
 	const myTurn = allCheckersGame
 		.map(
 			(game) =>
