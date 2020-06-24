@@ -33,6 +33,15 @@ export const getAllUsers = async () => {
 	return res;
 };
 
+export const getOneUser = async (name) => {
+	const res = await axios.get(API_URL_2 + `users/one=${name}`, {
+		headers: {
+			Authorization: GET_HEADER(),
+		},
+	});
+	return res;
+};
+
 export const getUserDetail = async () => {
 	const res = await axios.get(API_URL_2 + "users", {
 		headers: {
@@ -65,12 +74,11 @@ export const uploadImage = async (fd) => {
 			Authorization: GET_HEADER(),
 		},
 	});
-	console.log(res.data)
-	// store.dispatch({
-	// 	type: "UPLOAD_IMAGE",
-	// 	payload: res.data.user,
-	// });
-	// return res;
+	store.dispatch({
+		type: "UPLOAD_IMAGE",
+		payload: res.data.user,
+	});
+	return res;
 };
 
 export const updateUser = async (user) => {

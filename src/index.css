@@ -54,6 +54,7 @@ a {
 .img-profile {
 	max-width: 25vw;
 	margin: 1rem;
+	margin-left: 0;
 	object-fit: contain;
 }
 .img-small {
@@ -62,7 +63,12 @@ a {
 	object-fit: contain;
 }
 .img-home {
-	max-width: 100vw;
+	width: 90vw;
+	object-fit: contain;
+}
+.opponent-img {
+	max-width: 6rem;
+	margin: 1rem;
 	object-fit: contain;
 }
 .absolute {
@@ -97,6 +103,7 @@ a {
 .mobile-menu {
 	color: black;
 	display: flex;
+	margin: 0.1rem 1rem;
 }
 #title-img {
 	height: 3rem;
@@ -141,7 +148,7 @@ a {
 	margin: 1% 10%;
 }
 .input-width {
-	min-width: 10rem;
+	min-width: 9rem;
 }
 .justify-center {
 	text-align: justify;

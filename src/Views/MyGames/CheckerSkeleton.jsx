@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { API_URL_IMAGES } from "../../api-config";
 import { Paper, Dialog } from "@material-ui/core";
 import { setGame } from "../../Redux/actions/checkerGames";
 import AcceptInvitation from "./Modals/AcceptInvitation";
 import AcceptDraw from "./Modals/AcceptDraw";
+import { getOneUser } from "../../Redux/actions/users";
 
 const CheckerSkeleton = ({ game, name }) => {
 	const checkTurnNumber = () => {
@@ -19,8 +20,23 @@ const CheckerSkeleton = ({ game, name }) => {
 	const initiated = game.initiated;
 	const drawOffered = game.drawOffered;
 	const turn = checkTurnNumber();
+	const opponent = () => {
+		if (playerOne === name) {
+			return playerTwo;
+		} else {
+			return playerOne;
+		}
+	};
+	const [opponentImage, setOpponentImage] = useState("");
 	const [openAcceptTicket, setOpenAcceptTicket] = useState(false);
 	const [openDrawTicket, setOpenDrawTicket] = useState(false);
+
+	useEffect(() => {
+		getOneUser(opponent()).then((res) => {
+			setOpponentImage(res.data.image_path);
+			console.log(res.data.image_path);
+		});
+	}, []);
 
 	const checkTurn = () => {
 		if (
@@ -74,9 +90,16 @@ const CheckerSkeleton = ({ game, name }) => {
 					<p>
 						<strong>Turno:</strong> {turn}
 					</p>
-					<p>
-						<strong>Turno de:</strong> {turn % 2 === 0 ? playerTwo : playerOne}
-					</p>
+					{(turn % 2 === 0 && playerTwo === name) ||
+					(turn % 2 === 1 && playerOne === name) ? (
+						<p>
+							<strong>Juegas contra:</strong> {name === playerOne ? playerTwo : playerOne}
+						</p>
+					) : (
+						<p>
+							<strong>Turno de:</strong> {name === playerOne ? playerTwo : playerOne}
+						</p>
+					)}
 					{!initiated && playerTwo === name ? (
 						<h4 className='draw'>¿Quieres jugar?</h4>
 					) : initiated ? (
@@ -95,6 +118,9 @@ const CheckerSkeleton = ({ game, name }) => {
 						<h4>Esperando respuesta</h4>
 					)}
 				</div>
+				{opponentImage && (
+					<img src={API_URL_IMAGES + opponentImage} alt='' className="opponent-img" />
+				)}
 			</div>
 			<Dialog open={openAcceptTicket} onClose={handleAcceptInvitation} fullWidth>
 				<AcceptInvitation
