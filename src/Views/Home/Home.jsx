@@ -5,7 +5,6 @@ import { API_URL_IMAGES } from "../../api-config";
 const Home = () => {
 	const history = useHistory();
 	const isToken = localStorage.getItem("authToken");
-	console.log(isToken);
 	if (isToken) {
 		history.push("/myGames");
 	}

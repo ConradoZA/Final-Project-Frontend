@@ -19,11 +19,15 @@ a {
 	min-width: 25vw;
 	margin: 1rem;
 }
-.flex-center {
+.profile {
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 	height: 100%;
 	padding: 7vmin;
+}
+.profile-container {
+	max-width: 900px;
+	margin: 1rem auto;
 }
 .space-between {
 	display: flex;
@@ -119,6 +123,7 @@ a {
 }
 .vw80 {
 	max-width: 80vw;
+	margin: 1rem;
 }
 .win {
 	color: goldenrod;

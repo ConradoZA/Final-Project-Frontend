@@ -34,7 +34,6 @@ const CheckerSkeleton = ({ game, name }) => {
 	useEffect(() => {
 		getOneUser(opponent()).then((res) => {
 			setOpponentImage(res.data.image_path);
-			console.log(res.data.image_path);
 		});
 	}, []);
 

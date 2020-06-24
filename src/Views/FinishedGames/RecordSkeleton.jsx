@@ -37,7 +37,7 @@ const RecordSkeleton = ({ game, name }) => {
 
 	return (
 		<Paper className='paper'>
-			<div className='flex pointer' onClick={goToGame}>
+			<div className='flex pointer vw80' onClick={goToGame}>
 				{winner === name ? (
 					<img
 						src={API_URL_IMAGES + "images/winner.png"}

@@ -15,7 +15,7 @@ const GameList = () => {
 	}, []);
 
 	return (
-		<>
+		<div className='flex-column center'>
 			{gamesEnded.length === 0 && (
 				<Paper className='paper flex-column center'>
 					<h2>Primero termina una partida</h2>
@@ -27,10 +27,11 @@ const GameList = () => {
 					<br />
 				</Paper>
 			)}
-			{gamesEnded.map((game) => {
-				return <RecordSkeleton game={game} name={username} key={game._id} />;
-			})}
-		</>
+			{gamesEnded.length > 0 &&
+				gamesEnded.map((game) => {
+					return <RecordSkeleton game={game} name={username} key={game._id} />;
+				})}
+		</div>
 	);
 };
 export default GameList;
